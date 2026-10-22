@@ -244,7 +244,7 @@ summary: >-
   Melodien. Alle Klänge entstehen im Browser; das Mikrofon ist freiwillig, und jede Übung geht auch ohne.
 keywords: [Noten lesen, Rhythmus klatschen, Tonleiter, Intervalle, Klaviatur, Instrumente]
 creator:
-  name: offen, vor dem Eintrag im Katalog bestätigen   # Git-Autor ist nur "Claude", kein Mensch
+  name: Oliver Jägle   # vom Creator bestätigt (GitHub-Konto der Sitzung)
 source: https://github.com/lernapps/musik
 fitness: {account: false, install: false, storage: none}
 # url und commit folgen in Commit.
