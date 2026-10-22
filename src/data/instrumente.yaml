@@ -1,0 +1,20 @@
+# Instrumente und ihre Familie (Sinfonieorchester und Tasteninstrumente).
+# Quellen: de.wikipedia.org/wiki/Orchester, de.wikipedia.org/wiki/Musikinstrument
+- { name: Geige, familie: Streicher }
+- { name: Bratsche, familie: Streicher }
+- { name: Cello, familie: Streicher }
+- { name: Kontrabass, familie: Streicher }
+- { name: Querflöte, familie: Holzbläser }
+- { name: Oboe, familie: Holzbläser }
+- { name: Klarinette, familie: Holzbläser }
+- { name: Fagott, familie: Holzbläser }
+- { name: Trompete, familie: Blechbläser }
+- { name: Horn, familie: Blechbläser }
+- { name: Posaune, familie: Blechbläser }
+- { name: Tuba, familie: Blechbläser }
+- { name: Pauke, familie: Schlagwerk }
+- { name: Triangel, familie: Schlagwerk }
+- { name: Becken, familie: Schlagwerk }
+- { name: Glockenspiel, familie: Schlagwerk }
+- { name: Klavier, familie: Tasteninstrumente }
+- { name: Orgel, familie: Tasteninstrumente }

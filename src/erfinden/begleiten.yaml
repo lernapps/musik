@@ -1,0 +1,89 @@
+# yaml-language-server: $schema=../../node_modules/@lernapps/app-templates/runtime/explainer/explainer.v1.schema.json
+title: Ein Lied begleiten
+description: Mit dem gleichmäßigen Grundschlag ein Lied begleiten und im Tempo bleiben.
+blocks:
+  - type: section
+    id: ausprobieren
+    title: Ausprobieren
+    blocks:
+      - type: text
+        text: |
+          Wähle ein Lied, das du gut kennst, und singe es leise. Lass dazu den Grundschlag laufen und klatsche oder tippe auf
+          jeden Schlag. Du kannst die Hände wechseln: einmal klatschen, einmal auf den Oberschenkel patschen. Bleibst du
+          mit dem Metronom zusammen?
+      - type: vue-component
+        component: RhythmusWerkstatt
+        props:
+          taktart: "4/4"
+          takte: 2
+          raster: viertel
+          tempo: 90
+          muster: [true, true, true, true, true, true, true, true]
+          klatschen: true
+        nojs: |
+          Ein Raster aus 8 Feldern für zwei 4/4-Takte, alle Felder sind ein Schlag. Das Metronom tickt im Grundschlag, der erste
+          Schlag jedes Takts ist betont. Mit JavaScript tickt das Metronom, und du kannst mit dem Mikrofon prüfen, ob du im Takt klatschst.
+  - type: section
+    id: merke
+    title: Das Wichtigste
+    blocks:
+      - type: text
+        text: |
+          Eine Begleitung ist eine Stimme oder ein Rhythmus, der ein Lied unterstützt. Die einfachste Begleitung ist der
+          **Grundschlag**. Er muss vor allem gleichmäßig sein. Wenn du schneller oder langsamer wirst, kommt die Gruppe
+          aus dem Takt.
+      - type: note
+        title: Körperinstrumente
+        blocks:
+          - type: text
+            text: Klatschen, Patschen, Stampfen und Schnipsen sind Körperinstrumente. Du kannst sie abwechseln, zum Beispiel stampf, klatsch, stampf, klatsch.
+  - type: section
+    id: so-uebst-du-selbst
+    title: So übst du selbst
+    blocks:
+      - type: note
+        title: Ohne Mikrofon begleiten
+        blocks:
+          - type: text
+            text: |
+              1. Stelle das Metronom auf ein Tempo, in dem du bequem singen kannst, zum Beispiel 80.
+              2. Singe das Lied und klatsche dazu bei jedem Klick des Metronoms.
+              3. Schalte das Metronom aus, wenn es klappt, und klatsche allein weiter.
+              4. Bitte eine Person, mit zu klatschen. Kommt ihr zusammen an?
+  - type: section
+    id: uebung
+    title: Übung
+    blocks:
+      - type: single-choice
+        id: begleiten-wichtig
+        text: Was ist beim Begleiten mit dem Grundschlag am wichtigsten?
+        options:
+          - text: Gleichmäßig zu bleiben
+            correct: true
+            info: Der Grundschlag trägt die Musik. Ist er gleichmäßig, können alle sicher dazu singen oder spielen.
+          - text: Möglichst laut zu sein
+            correct: false
+            info: Laut zu sein hilft nicht, wenn der Schlag wackelt. Eine Begleitung soll das Lied stützen und nicht übertönen.
+          - text: Immer schneller zu werden
+            correct: false
+            info: Wer schneller wird, bringt die Gruppe durcheinander. Das Tempo soll gleich bleiben.
+        explanation: Eine gute Begleitung hält das Tempo. Darum ist der Grundschlag gleichmäßig.
+        links:
+          - { title: Rhythmus (Musik) (Wikipedia), url: "https://de.wikipedia.org/wiki/Rhythmus_(Musik)" }
+      - type: generated
+        id: schlaege-im-lied
+        given:
+          b: { oneOf: [60, 90, 120] }
+          m: { oneOf: [2, 3, 4] }
+        task:
+          text: "Ein Lied hat das Tempo {{b}} Schläge pro Minute und dauert {{m}} Minuten. Wie viele Grundschläge begleitest du?"
+        answer: { value: "b * m", compare: number }
+        mistakes:
+          - {
+              value: "b + m",
+              message: "Du hast addiert. Pro Minute gibt es {{b}} Schläge, und das gilt für jede der {{m}} Minuten. Das multiplizierst du.",
+            }
+        hint: "Pro Minute gibt es so viele Schläge, wie das Tempo sagt."
+        steps:
+          - "{{b}} Schläge pro Minute, {{m}} Minuten."
+          - "{{b}} mal {{m}} ergibt {{answer}} Schläge."

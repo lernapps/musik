@@ -1,0 +1,73 @@
+# yaml-language-server: $schema=../../node_modules/@lernapps/app-templates/runtime/explainer/explainer.v1.schema.json
+title: Schnell und langsam
+description: Grundschlag und Tempo erleben, Schläge pro Minute rechnen und Tempowörter kennen.
+blocks:
+  - type: section
+    id: ausprobieren
+    title: Ausprobieren
+    blocks:
+      - type: text
+        text: |
+          Starte das Metronom und tippe mit dem Finger im Takt mit. Ändere dann das Tempo mit „Tempo −“ und
+          „Tempo +“. Wie fühlt sich langsam an? Und wie fühlt sich schnell an?
+      - type: vue-component
+        component: RhythmusWerkstatt
+        props: { taktart: "4/4", raster: viertel, tempo: 80, muster: [false, false, false, false], bearbeiten: false }
+        nojs: |
+          Ein Metronom mit vier Schlägen pro Takt. Der erste Schlag ist betont. Mit „Tempo −“ und „Tempo +“ stellst du
+          die Schläge pro Minute ein, zum Beispiel 80. Mit JavaScript tickt das Metronom.
+  - type: section
+    id: merke
+    title: Das Wichtigste
+    blocks:
+      - type: definition
+        term: Grundschlag
+        explanation: Der Grundschlag ist der gleichmäßige Puls der Musik. Du kannst im Grundschlag mit dem Fuß wippen oder klatschen.
+      - type: definition
+        term: Tempo
+        explanation: Das Tempo sagt, wie schnell die Musik ist. Du misst es in Schlägen pro Minute (BPM).
+      - type: table
+        caption: Tempowörter und ungefähre Schläge pro Minute (die Bereiche überlappen, je nach Quelle)
+        header: [Wort, Bedeutung, Schläge pro Minute]
+        rows:
+          - [Largo, breit und langsam, "40 bis 60"]
+          - [Adagio, ruhig und langsam, "54 bis 76"]
+          - [Andante, gehend, "69 bis 108"]
+          - [Moderato, mäßig, "92 bis 120"]
+          - [Allegro, schnell, "120 bis 180"]
+          - [Presto, sehr schnell, "168 bis 208"]
+      - type: text
+        text: |
+          Wird die Musik nach und nach schneller, schreibt man **accelerando**. Wird sie nach und nach langsamer, schreibt
+          man **ritardando**.
+  - type: section
+    id: uebung
+    title: Übung
+    blocks:
+      - type: ordering
+        id: tempo-ordnen
+        text: Bringe die Tempowörter in die Reihenfolge von langsam nach schnell. Das langsamste zuerst.
+        items: [Largo, Andante, Moderato, Allegro, Presto]
+        explanation: Largo ist sehr langsam, Presto ist sehr schnell. Dazwischen liegen Andante, Moderato und Allegro.
+        links:
+          - { title: Tempo (Musik) (Wikipedia), url: "https://de.wikipedia.org/wiki/Tempo_(Musik)" }
+      - type: generated
+        id: schlaege-zaehlen
+        given:
+          b: { oneOf: [60, 80, 100, 120, 140] }
+        task:
+          text: "Ein Lied hat das Tempo {{b}} Schläge pro Minute. Wie viele Schläge sind das in 30 Sekunden?"
+        answer: { value: "b / 2", compare: number }
+        mistakes:
+          - {
+              value: "b",
+              message: "Das sind die Schläge in einer ganzen Minute. 30 Sekunden sind nur eine halbe Minute.",
+            }
+          - {
+              value: "b * 2",
+              message: "Du hast verdoppelt. 30 Sekunden sind weniger als eine Minute, also gibt es weniger Schläge.",
+            }
+        hint: "30 Sekunden sind eine halbe Minute."
+        steps:
+          - "30 Sekunden sind die Hälfte einer Minute."
+          - "{{b}} geteilt durch 2 ergibt {{answer}} Schläge."

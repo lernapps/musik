@@ -1,0 +1,5 @@
+# Notenwerte, ihre Dauer in Achteln und Pausen. Quelle: de.wikipedia.org/wiki/Notenwert (jeder Wert ist halb so lang wie der vorige).
+- { name: Ganze, achtel: 8, pause: Ganze Pause }
+- { name: Halbe, achtel: 4, pause: Halbe Pause }
+- { name: Viertel, achtel: 2, pause: Viertelpause }
+- { name: Achtel, achtel: 1, pause: Achtelpause }

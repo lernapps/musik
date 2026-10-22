@@ -1,0 +1,75 @@
+# yaml-language-server: $schema=../../node_modules/@lernapps/app-templates/runtime/explainer/explainer.v1.schema.json
+title: Meine Stimme hat eine Tonhöhe
+description: Die eigene Stimme als Ton hören, einen Zielton singen und den Unterschied sehen.
+blocks:
+  - type: section
+    id: ausprobieren
+    title: Ausprobieren
+    blocks:
+      - type: text
+        text: |
+          Höre zuerst den Zielton. Summe ihn dann leise mit. Mit dem Mikrofon siehst du, wie hoch deine Stimme gerade ist.
+          Triffst du den grünen Streifen und hältst den Ton kurz, hast du ihn getroffen. Das Mikrofon ist freiwillig.
+          Ohne Mikrofon kannst du den Zielton trotzdem hören und mit der Anleitung unten üben.
+      - type: vue-component
+        component: Stimmspiegel
+        props: { ziel: 4, ohneOktave: true }
+        nojs: |
+          Ein Diagramm zeigt die Tonhöhe deiner Stimme als Linie. Ein grüner Streifen markiert den Zielton E. Liegt die
+          Linie 0,4 Sekunden lang im Streifen, hast du den Ton getroffen. Unter dem Bild steht, ob du zu hoch, zu tief
+          oder genau richtig singst. Mit JavaScript kannst du den Zielton hören und, wenn du es erlaubst, mit dem
+          Mikrofon singen. Die Tonhöhe wird nur in deinem Browser ausgewertet.
+  - type: section
+    id: merke
+    title: Das Wichtigste
+    blocks:
+      - type: text
+        text: |
+          Wenn du singst, schwingen deine Stimmlippen im Hals. Wie schnell sie schwingen, bestimmt die Tonhöhe. Kinderstimmen
+          liegen meist höher als Erwachsenenstimmen. Darum zählt hier nur der **Tonname**, nicht die Oktave. Du darfst
+          denselben Ton also höher oder tiefer singen.
+      - type: definition
+        term: Cent
+        explanation: Ein Cent ist ein hundertstel Halbton. Die Abweichung deiner Stimme vom Zielton wird in Cent angezeigt.
+      - type: text
+        text: Bis 50 Cent daneben zählt noch als getroffen. Das ist ein halber Halbton.
+  - type: section
+    id: so-uebst-du-selbst
+    title: So übst du selbst
+    blocks:
+      - type: note
+        title: Ohne Mikrofon singen
+        blocks:
+          - type: text
+            text: |
+              1. Spiele einen Ton auf einem Klavier, einem Keyboard oder mit der Klaviatur in diesem Kapitel.
+              2. Summe den Ton mit geschlossenem Mund. Lege eine Hand locker an den Hals und spüre das Kribbeln.
+              3. Singe den Ton auf „lu“. Spiele ihn danach noch einmal und höre, ob du höher oder tiefer warst.
+              4. Bitte eine Person, zuzuhören. Sie sagt dir, ob du zu hoch, zu tief oder genau richtig bist.
+  - type: section
+    id: uebung
+    title: Übung
+    blocks:
+      - type: single-choice
+        id: stimme-oktave
+        text: Du singst denselben Ton wie eine erwachsene Person, aber eine Oktave höher. Was stimmt?
+        options:
+          - text: Es ist derselbe Tonname, nur in einer anderen Oktave
+            correct: true
+            info: Eine Oktave höher heißt doppelte Frequenz. Der Tonname bleibt gleich, weil die Töne sehr ähnlich klingen.
+          - text: Es ist ein ganz anderer Ton
+            correct: false
+            info: Töne im Abstand einer Oktave haben denselben Namen, zum Beispiel c¹ und c².
+          - text: Der Ton ist einen Halbton höher
+            correct: false
+            info: Ein Halbton ist viel kleiner. Eine Oktave besteht aus zwölf Halbtonschritten.
+        explanation: Kinder und Erwachsene singen oft in verschiedenen Oktaven und treffen trotzdem denselben Ton.
+        links:
+          - { title: Tonhöhe (Wikipedia), url: "https://de.wikipedia.org/wiki/Tonh%C3%B6he" }
+      - type: true-false
+        id: stimme-hz
+        text: "Wahr oder falsch? Je schneller die Stimmlippen schwingen, desto höher klingt dein Ton."
+        answer: true
+        explanation: Die Tonhöhe hängt von der Zahl der Schwingungen pro Sekunde ab. Schnelleres Schwingen heißt höherer Ton.
+        links:
+          - { title: Frequenz (Wikipedia), url: "https://de.wikipedia.org/wiki/Frequenz" }

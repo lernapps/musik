@@ -1,0 +1,86 @@
+# yaml-language-server: $schema=../../node_modules/@lernapps/app-templates/runtime/explainer/explainer.v1.schema.json
+title: Rhythmus und Melodie lesen
+description: Eine kurze Melodie aus Noten ablesen, Notenwerte zusammenzählen und die Melodie anhören.
+blocks:
+  - type: section
+    id: ausprobieren
+    title: Ausprobieren
+    blocks:
+      - type: text
+        text: |
+          Lies die Melodie von links nach rechts. Achte auf zwei Dinge: Wie hoch steht jede Note, und wie lang ist sie?
+          Dann drücke auf „Alles abspielen“ und höre, ob du richtig gelesen hast. Die Taktstriche teilen die Melodie in
+          vier Takte.
+      - type: vue-component
+        component: Notenzeile
+        props:
+          noten:
+            - { ton: 7, wert: viertel }
+            - { ton: 4, wert: viertel }
+            - { ton: 4, wert: halbe }
+            - { ton: 5, wert: viertel }
+            - { ton: 2, wert: viertel }
+            - { ton: 2, wert: halbe }
+            - { ton: 0, wert: viertel }
+            - { ton: 2, wert: viertel }
+            - { ton: 4, wert: viertel }
+            - { ton: 5, wert: viertel }
+            - { ton: 7, wert: viertel }
+            - { ton: 7, wert: viertel }
+            - { ton: 7, wert: halbe }
+          taktart: "4/4"
+          namen: false
+          tempo: 90
+          beschriftung: Eine kurze Melodie in vier Takten im 4/4-Takt
+        nojs: |
+          Eine Melodie in vier Takten im 4/4-Takt. Takt 1 hat die Töne g¹, e¹ (Viertel) und e¹ (Halbe). Takt 2 hat f¹, d¹ (Viertel) und
+          d¹ (Halbe). Takt 3 hat c¹, d¹, e¹, f¹ als Viertel. Takt 4 hat g¹, g¹ (Viertel) und g¹ (Halbe). Mit JavaScript kannst du die
+          Melodie anhören.
+  - type: section
+    id: merke
+    title: Das Wichtigste
+    blocks:
+      - type: text
+        text: |
+          Beim Lesen prüfst du zwei Dinge gleichzeitig. Die **Höhe** der Note sagt dir den Ton. Der **Notenwert** sagt dir,
+          wie lange der Ton dauert. Im 4/4-Takt zählst du in jedem Takt auf vier Viertel: Eine Halbe zählt zwei, eine
+          Viertel zählt eins.
+      - type: note
+        title: Lesen Schritt für Schritt
+        blocks:
+          - type: text
+            text: |
+              1. Lies den Violinschlüssel und die Taktart am Anfang.
+              2. Zähle in jedem Takt die Notenwerte zusammen. Es müssen vier Viertel sein.
+              3. Benenne jede Note und singe oder summe die Melodie leise.
+  - type: section
+    id: uebung
+    title: Übung
+    blocks:
+      - type: number
+        id: takt-summe
+        text: Ein Takt im 4/4-Takt enthält eine Viertel, eine Viertel und eine Halbe. Wie viele Viertel dauert er insgesamt?
+        answer: 4
+        tolerance: 0
+        mistakes:
+          - { answer: 3, message: "Du hast die Halbe nur als eine Viertel gezählt. Eine Halbe dauert zwei Viertel." }
+        hint: "Eine Halbe dauert zwei Viertel."
+        explanation: 1 plus 1 plus 2 ergibt 4. Der Takt ist genau voll, wie es im 4/4-Takt sein soll.
+        links:
+          - { title: Notenwert (Wikipedia), url: "https://de.wikipedia.org/wiki/Notenwert" }
+      - type: single-choice
+        id: lesen-laenge
+        text: In der Melodie oben steht am Ende ein g¹ als Halbe. Wie lange klingt es im Vergleich zu einer Viertel?
+        options:
+          - text: Doppelt so lang
+            correct: true
+            info: Eine Halbe dauert zwei Viertel, also doppelt so lang wie eine Viertel.
+          - text: Halb so lang
+            correct: false
+            info: Das wäre eine Achtel. Eine Halbe ist länger als eine Viertel.
+          - text: Gleich lang
+            correct: false
+            info: Dann wären beide Noten Viertel. Die Halbe hat einen anderen Notenwert und dauert doppelt so lang.
+        explanation: Eine Halbe dauert zwei Viertel. Du erkennst sie am hohlen Notenkopf mit Hals.
+        links:
+          - { title: Notenwert (Wikipedia), url: "https://de.wikipedia.org/wiki/Notenwert" }

@@ -1,0 +1,77 @@
+# yaml-language-server: $schema=../../node_modules/@lernapps/app-templates/runtime/explainer/explainer.v1.schema.json
+title: Tonfolgen nachsingen
+description: Eine kurze Tonfolge hören und nachsingen, Ton für Ton.
+blocks:
+  - type: section
+    id: ausprobieren
+    title: Ausprobieren
+    blocks:
+      - type: text
+        text: |
+          Höre die Tonfolge C, D, E, F, G. Es ist der Anfang der Dur-Tonleiter. Singe danach jeden Ton nach. Du kannst auf
+          „lu“ singen. Triffst du einen Ton, springt die Anzeige zum nächsten. Das Mikrofon ist freiwillig. Unten steht,
+          wie du ohne Mikrofon übst.
+      - type: vue-component
+        component: Stimmspiegel
+        props: { folge: [0, 2, 4, 5, 7], ohneOktave: true }
+        nojs: |
+          Ein Diagramm zeigt die Tonhöhe deiner Stimme. Eine Tonfolge aus fünf Tönen (C, D, E, F, G) wird nacheinander abgefragt.
+          Singst du den ersten Ton 0,4 Sekunden lang richtig, springt die Anzeige zum zweiten. Mit JavaScript kannst du die Folge hören
+          und, wenn du es erlaubst, mit dem Mikrofon nachsingen. Die Tonhöhe wird nur in deinem Browser ausgewertet.
+  - type: section
+    id: merke
+    title: Das Wichtigste
+    blocks:
+      - type: text
+        text: |
+          Beim Nachsingen merkst du dir zuerst den Anfangston. Dann singst du Schritt für Schritt weiter. Bei einer Tonleiter
+          singst du Stufen: Die meisten Schritte sind Ganztöne, nur manche sind Halbtöne. Ein Sprung zu einem fernen Ton
+          ist ein größeres Intervall, zum Beispiel eine Quinte.
+      - type: note
+        title: Tipps zum Treffen
+        blocks:
+          - type: text
+            text: |
+              1. Atme tief ein und singe leise. Laut zu singen macht den Ton nicht richtiger.
+              2. Stell dir den Ton vorher im Kopf vor.
+              3. Halte jeden Ton ein wenig, damit du ihn hörst.
+  - type: section
+    id: so-uebst-du-selbst
+    title: So übst du selbst
+    blocks:
+      - type: note
+        title: Ohne Mikrofon nachsingen
+        blocks:
+          - type: text
+            text: |
+              1. Spiele die Tonfolge C bis G auf einem Klavier oder mit der Klaviatur auf der vorigen Seite.
+              2. Singe jeden Ton nach dem Hören auf „lu“ und halte ihn zwei Sekunden.
+              3. Spiele den Ton danach noch einmal. Klang er gleich? Dann hast du ihn getroffen.
+              4. Bitte eine Person, zuzuhören und dir zu sagen, bei welchem Ton du höher oder tiefer warst.
+  - type: section
+    id: uebung
+    title: Übung
+    blocks:
+      - type: single-choice
+        id: nachsingen-intervall
+        text: Du singst nacheinander die Töne C und E. Wie heißt der Abstand?
+        options:
+          - text: große Terz
+            correct: true
+            info: Von C bis E liegen vier Halbtonschritte und drei Stufen (C, D, E). Das ist eine große Terz.
+          - text: Quinte
+            correct: false
+            info: Eine Quinte ist größer. Sie reicht von C bis G und hat sieben Halbtonschritte.
+          - text: kleine Terz
+            correct: false
+            info: Eine kleine Terz hat nur drei Halbtonschritte, zum Beispiel von C bis Es. C bis E hat vier.
+        explanation: C bis E ist eine große Terz mit vier Halbtonschritten.
+        links:
+          - { title: Intervall (Musik) (Wikipedia), url: "https://de.wikipedia.org/wiki/Intervall_(Musik)" }
+      - type: ordering
+        id: nachsingen-ordnen
+        text: Bringe die Töne in die Reihenfolge von tief nach hoch. Den tiefsten zuerst.
+        items: [C, E, G, H]
+        explanation: Auf der Klaviatur steigt die Tonhöhe nach rechts. Die Reihenfolge der Töne in der Oktave ist C, E, G, H.
+        links:
+          - { title: Klaviatur (Wikipedia), url: "https://de.wikipedia.org/wiki/Klaviatur" }

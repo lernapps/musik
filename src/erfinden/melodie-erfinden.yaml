@@ -1,0 +1,82 @@
+# yaml-language-server: $schema=../../node_modules/@lernapps/app-templates/runtime/explainer/explainer.v1.schema.json
+title: Eine eigene Melodie erfinden und singen
+description: Eine kurze eigene Melodie aus Tönen der Dur-Tonleiter wählen, anhören und nachsingen.
+blocks:
+  - type: section
+    id: ausprobieren
+    title: Ausprobieren
+    blocks:
+      - type: text
+        text: |
+          Wähle vier Töne und baue so eine eigene Melodie. Drücke auf „Folge hören“. Gefällt sie dir? Ändere einen Ton und höre
+          noch einmal. Singe sie dann nach. Tipp: Schließe die Melodie mit dem Ton C, dem Grundton. Dann klingt sie oft wie fertig.
+      - type: vue-component
+        component: Stimmspiegel
+        props: { eigene: 4, ohneOktave: true }
+        nojs: |
+          Vier Auswahlfelder, in denen du die Töne deiner Melodie aus der Dur-Tonleiter (C bis c²) wählst. Darunter steht deine
+          Melodie als Namen, zum Beispiel „C – D – E – G“. Mit JavaScript kannst du sie hören und, wenn du es erlaubst, mit
+          dem Mikrofon nachsingen. Die Tonhöhe wird nur in deinem Browser ausgewertet.
+      - type: vue-component
+        component: Klaviatur
+        props: { start: 0, markiert: [0, 2, 4, 5, 7, 9, 11, 12] }
+        nojs: |
+          Eine Klaviatur von C bis C. Die markierten Tasten sind die Töne der C-Dur-Tonleiter, aus denen du deine Melodie wählen kannst.
+          Mit JavaScript klingt jede Taste.
+  - type: section
+    id: merke
+    title: Das Wichtigste
+    blocks:
+      - type: text
+        text: |
+          Eine Melodie ist eine Folge von Tönen mit Rhythmus. Meist bewegt sie sich in kleinen Schritten, mit gelegentlichen
+          Sprüngen. Sie endet oft auf dem Grundton, dem ersten Ton der Tonleiter. Aus den Tönen der Dur-Tonleiter klingt fast
+          jede Folge gut, weil alle Töne zusammenpassen.
+      - type: note
+        title: Ideen
+        blocks:
+          - type: text
+            text: |
+              1. Beginne auf dem C und gehe zwei Schritte nach oben.
+              2. Mache einen Sprung, zum Beispiel zum G.
+              3. Gehe in kleinen Schritten zurück zum C.
+  - type: section
+    id: so-uebst-du-selbst
+    title: So übst du selbst
+    blocks:
+      - type: note
+        title: Ohne Mikrofon singen
+        blocks:
+          - type: text
+            text: |
+              1. Wähle deine Töne und höre die Folge mehrmals an.
+              2. Singe sie nach dem Hören auf „lu“, Ton für Ton.
+              3. Spiele sie danach auf der Klaviatur und vergleiche: Klingt deine Stimme gleich?
+              4. Bitte eine Person, die Melodie zu singen, und singt sie zusammen.
+  - type: section
+    id: uebung
+    title: Übung
+    blocks:
+      - type: true-false
+        id: melodie-grundton
+        text: "Wahr oder falsch? Eine Melodie in C-Dur klingt oft fertig, wenn sie auf dem Ton C endet."
+        answer: true
+        explanation: Das C ist der Grundton der Tonleiter. Eine Melodie, die dort endet, klingt oft wie abgeschlossen.
+        links:
+          - { title: Tonleiter (Wikipedia), url: "https://de.wikipedia.org/wiki/Tonleiter" }
+      - type: generated
+        id: melodie-schritte
+        given:
+          n: { int: [3, 6], step: 1 }
+        task:
+          text: "Deine Melodie hat {{n}} Töne. Wie viele Schritte oder Sprünge liegen zwischen den Tönen?"
+        answer: { value: "n - 1", compare: number }
+        mistakes:
+          - {
+              value: "n",
+              message: "Du hast die Töne gezählt. Zwischen zwei Tönen liegt ein Schritt, darum gibt es einen weniger als Töne.",
+            }
+        hint: "Zeichne die Töne als Punkte und zähle die Lücken dazwischen."
+        steps:
+          - "Zwischen {{n}} Tönen gibt es einen Schritt weniger."
+          - "{{n}} minus 1 ergibt {{answer}}."

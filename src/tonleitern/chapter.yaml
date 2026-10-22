@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=../../node_modules/@lernapps/app-templates/runtime/explainer/explainer.v1.schema.json
+title: Tonleitern und Intervalle
+summary: Dur und Moll bauen und unterscheiden, Intervalle hören und benennen und eine Tonfolge nachsingen.
+pages: [dur-bauen, dur-moll, intervalle, nachsingen]

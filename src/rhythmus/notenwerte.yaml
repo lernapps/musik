@@ -1,0 +1,89 @@
+# yaml-language-server: $schema=../../node_modules/@lernapps/app-templates/runtime/explainer/explainer.v1.schema.json
+title: Notenwerte und Pausen
+description: Ganze, Halbe, Viertel und Achtel unterscheiden, ihre Dauer vergleichen und Pausen kennen.
+blocks:
+  - type: section
+    id: ausprobieren
+    title: Ausprobieren
+    blocks:
+      - type: text
+        text: |
+          Tippe nacheinander auf die vier Noten. Alle haben denselben Ton, aber verschiedene Längen. Welche Note klingt
+          am längsten? Und welche am kürzesten? Mit „Alles abspielen“ hörst du sie hintereinander.
+      - type: vue-component
+        component: Notenzeile
+        props:
+          noten:
+            - { ton: 7, wert: ganze }
+            - { ton: 7, wert: halbe }
+            - { ton: 7, wert: viertel }
+            - { ton: 7, wert: achtel }
+          namen: false
+          tempo: 90
+          beschriftung: Die Notenwerte Ganze, Halbe, Viertel und Achtel auf demselben Ton
+        nojs: |
+          Eine Notenzeile mit vier Noten auf dem Ton g¹. Die erste Note ist eine Ganze (ohne Hals, hohl), die zweite eine Halbe
+          (hohl, mit Hals), die dritte eine Viertel (ausgefüllt, mit Hals) und die vierte eine Achtel (ausgefüllt, mit Hals und
+          Fähnchen). Mit JavaScript kannst du jede Note anhören.
+  - type: section
+    id: merke
+    title: Das Wichtigste
+    blocks:
+      - type: definition
+        term: Notenwert
+        explanation: Der Notenwert sagt, wie lange ein Ton dauert. Jeder Notenwert ist halb so lang wie der vorige.
+      - type: table
+        caption: Notenwerte und Pausen, gemessen in Achteln
+        header: [Notenwert, Dauer in Achteln, Pause]
+        rows:
+          - [Ganze, "8", Ganze Pause]
+          - [Halbe, "4", Halbe Pause]
+          - [Viertel, "2", Viertelpause]
+          - [Achtel, "1", Achtelpause]
+      - type: text
+        text: |
+          Eine **Pause** ist Stille, die genauso lang dauert wie die Note mit demselben Namen. Pausen zählst du mit:
+          Auch wenn nichts klingt, läuft der Grundschlag weiter. Wie lang ein Notenwert in Sekunden dauert, hängt vom
+          Tempo ab.
+  - type: section
+    id: uebung
+    title: Übung
+    blocks:
+      - type: ordering
+        id: werte-ordnen
+        text: Bringe die Notenwerte in die Reihenfolge von lang nach kurz. Den längsten zuerst.
+        items: [Ganze, Halbe, Viertel, Achtel]
+        explanation: Eine Ganze dauert 8 Achtel, eine Halbe 4, eine Viertel 2 und eine Achtel 1.
+        links:
+          - { title: Notenwert (Wikipedia), url: "https://de.wikipedia.org/wiki/Notenwert" }
+      - type: generated
+        id: achtel-zaehlen
+        given:
+          n: { pick: 1, from: { data: notenwerte }, distinct: true }
+        task:
+          text: "Wie viele Achtel dauert eine {{n.name}}?"
+        answer: { value: "n.achtel", compare: number }
+        mistakes:
+          - { value: "n.achtel / 2", message: "Du hast in Vierteln gezählt. Eine Viertel dauert zwei Achtel." }
+        hint: "Eine Viertel dauert zwei Achtel. Jeder längere Notenwert ist doppelt so lang wie der kürzere."
+        steps:
+          - "Eine Achtel zählt 1. Jeder nächste Notenwert ist doppelt so lang."
+          - "Eine {{n.name}} dauert {{answer}} Achtel."
+      - type: generated
+        id: wie-viele-passen
+        given:
+          a: { pick: 1, from: { data: notenwerte }, distinct: true }
+          b: { pick: 1, from: { data: notenwerte }, distinct: true }
+        where: ["a.achtel > b.achtel", "a.achtel - b.achtel != a.achtel / b.achtel"]
+        task:
+          text: "Wie oft passt eine {{b.name}} in eine {{a.name}}?"
+        answer: { value: "a.achtel / b.achtel", compare: number }
+        mistakes:
+          - {
+              value: "a.achtel - b.achtel",
+              message: "Du hast gerechnet statt geteilt. Teile die Dauer der langen Note durch die Dauer der kurzen.",
+            }
+        hint: "Rechne beide Notenwerte in Achtel um und teile."
+        steps:
+          - "{{a.name}} = {{a.achtel}} Achtel, {{b.name}} = {{b.achtel}} Achtel."
+          - "{{a.achtel}} geteilt durch {{b.achtel}} ergibt {{answer}}."

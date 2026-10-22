@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=../../node_modules/@lernapps/app-templates/runtime/explainer/explainer.v1.schema.json
+title: Tonhöhe und Klaviatur
+summary: Hohe und tiefe Töne unterscheiden, die Tasten des Klaviers benennen und die eigene Stimme hören.
+pages: [hoch-tief, klaviatur, stimme]

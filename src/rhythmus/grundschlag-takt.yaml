@@ -1,0 +1,77 @@
+# yaml-language-server: $schema=../../node_modules/@lernapps/app-templates/runtime/explainer/explainer.v1.schema.json
+title: Grundschlag und Takt
+description: Betonte und unbetonte Schläge hören und den 2/4-, 3/4- und 4/4-Takt unterscheiden.
+blocks:
+  - type: section
+    id: ausprobieren
+    title: Ausprobieren
+    blocks:
+      - type: text
+        text: |
+          Starte das Metronom. Der erste Schlag klingt höher und lauter. Zähle dazu „1, 2, 3, 4“ und beginne bei
+          jedem hohen Klick wieder bei 1. Tippe oder klatsche mit.
+      - type: vue-component
+        component: RhythmusWerkstatt
+        props: { taktart: "4/4", raster: viertel, tempo: 90, muster: [true, true, true, true], bearbeiten: false }
+        nojs: |
+          Ein Metronom mit vier Schlägen im 4/4-Takt. Der erste Schlag ist betont und klingt höher. Gezählt wird
+          „1, 2, 3, 4, 1, 2, 3, 4“. Mit JavaScript tickt das Metronom, und du kannst das Tempo ändern.
+  - type: section
+    id: merke
+    title: Das Wichtigste
+    blocks:
+      - type: definition
+        term: Takt
+        explanation: Ein Takt ist eine kleine Gruppe von Schlägen, die sich immer wiederholt. Der erste Schlag jedes Taktes ist betont.
+      - type: definition
+        term: Taktart
+        explanation: Die Taktart sagt, wie viele Schläge in einen Takt passen. 3/4 heißt drei Viertel, also drei Schläge.
+      - type: table
+        caption: Die drei Taktarten dieser App
+        header: [Taktart, Schläge, So zählst du]
+        rows:
+          - ["2/4", zwei Schläge, "**1** 2 | **1** 2"]
+          - ["3/4", drei Schläge, "**1** 2 3 | **1** 2 3"]
+          - ["4/4", vier Schläge, "**1** 2 3 4 | **1** 2 3 4"]
+      - type: text
+        text: Der senkrechte Strich zwischen zwei Takten heißt Taktstrich. Er steht zwischen zwei Takten. Die fett gedruckte 1 ist der betonte Schlag.
+  - type: section
+    id: uebung
+    title: Übung
+    blocks:
+      - type: vue-component
+        component: HoerAufgabe
+        id: hoer-takt
+        props: { art: takt }
+        examples:
+          accepted:
+            - { seed: 1, answer: "3/4" }
+            - { seed: 2, answer: "4/4" }
+            - { seed: 3, answer: "4/4" }
+          rejected:
+            - { seed: 1, answer: "2/4" }
+            - { seed: 2, answer: "3/4" }
+            - { seed: 3, answer: "3/4" }
+      - type: single-choice
+        id: viertel-im-takt
+        text: Wie viele Viertel hat ein 3/4-Takt?
+        options:
+          - text: Drei
+            correct: true
+            info: Die obere Zahl sagt, wie viele Schläge im Takt sind. Bei 3/4 sind es drei Viertel.
+          - text: Vier
+            correct: false
+            info: Vier Viertel hat der 4/4-Takt. Beim 3/4-Takt sagt die 3 oben, dass es drei sind.
+          - text: Zwei
+            correct: false
+            info: Zwei Viertel hat der 2/4-Takt.
+        explanation: Die obere Zahl der Taktart zählt die Schläge pro Takt.
+        links:
+          - { title: Takt (Musik) (Wikipedia), url: "https://de.wikipedia.org/wiki/Takt_(Musik)" }
+      - type: true-false
+        id: erster-schlag
+        text: "Wahr oder falsch? In jedem Takt wird der erste Schlag betont."
+        answer: true
+        explanation: Der betonte erste Schlag macht den Takt hörbar. Er zeigt, wo ein neuer Takt beginnt.
+        links:
+          - { title: Rhythmus (Musik) (Wikipedia), url: "https://de.wikipedia.org/wiki/Rhythmus_(Musik)" }

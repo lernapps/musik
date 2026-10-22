@@ -1,0 +1,95 @@
+# yaml-language-server: $schema=../../node_modules/@lernapps/app-templates/runtime/explainer/explainer.v1.schema.json
+title: Ganzton, Halbton und die Dur-Tonleiter
+description: Die Dur-Tonleiter aus Ganzton- und Halbtonschritten aufbauen.
+blocks:
+  - type: section
+    id: ausprobieren
+    title: Ausprobieren
+    blocks:
+      - type: text
+        text: |
+          Die markierten Tasten sind die Töne der C-Dur-Tonleiter. Drücke „Folge abspielen“. Klingt es wie eine Treppe,
+          die nach oben führt? Jede Stufe ist ein Schritt zum nächsten Ton. Findest du die Stellen, an denen die Stufe
+          kleiner ist?
+      - type: vue-component
+        component: Klaviatur
+        props: { start: 0, markiert: [0, 2, 4, 5, 7, 9, 11, 12], folge: [0, 2, 4, 5, 7, 9, 11, 12] }
+        nojs: |
+          Eine Klaviatur von C bis C. Markiert sind alle weißen Tasten: C, D, E, F, G, A, H, C. Zwischen E und F und zwischen H und C
+          gibt es keine schwarze Taste, dort ist der Schritt klein (ein Halbton). Sonst liegt eine schwarze Taste dazwischen (ein
+          Ganzton). Mit JavaScript klingt jede Taste, und „Folge abspielen“ spielt die Tonleiter.
+  - type: section
+    id: merke
+    title: Das Wichtigste
+    blocks:
+      - type: definition
+        term: Ganzton
+        explanation: Ein Ganzton sind zwei Halbtonschritte. Zwischen den beiden Tönen liegt noch eine Taste.
+      - type: definition
+        term: Tonleiter
+        explanation: Eine Tonleiter ist eine Reihe von Tönen, die Stufe für Stufe nach oben oder unten führt.
+      - type: text
+        text: |
+          Eine **Dur-Tonleiter** hat acht Töne und immer dasselbe Muster aus Schritten: ganz, ganz, halb, ganz, ganz,
+          ganz, halb. Beginnst du auf einem anderen Ton, sieht das Muster gleich aus. Du brauchst dann aber auch
+          schwarze Tasten.
+      - type: table
+        caption: Die Dur-Tonleiter ab C, Halbtonschritte vom Grundton aus
+        header: [Stufe, Ton, Schritt davor, Halbtöne ab dem C]
+        rows:
+          - ["1", C, "–", "0"]
+          - ["2", D, ganz, "2"]
+          - ["3", E, ganz, "4"]
+          - ["4", F, halb, "5"]
+          - ["5", G, ganz, "7"]
+          - ["6", A, ganz, "9"]
+          - ["7", H, ganz, "11"]
+          - ["8", C, halb, "12"]
+  - type: section
+    id: uebung
+    title: Übung
+    blocks:
+      - type: generated
+        id: stufe-halbtoene
+        given:
+          k: { int: [2, 8], step: 1 }
+        where: ["(k - 1) * 2 != [0, 2, 4, 5, 7, 9, 11, 12][k - 1]"]
+        task:
+          text: "Du baust die C-Dur-Tonleiter. Wie viele Halbtonschritte liegt die {{k}}. Stufe über dem Grundton C?"
+        answer: { value: "[0, 2, 4, 5, 7, 9, 11, 12][k - 1]", compare: number }
+        mistakes:
+          - {
+              value: "k - 1",
+              message: "Du hast die Stufen gezählt statt der Halbtöne. Die meisten Schritte sind Ganztöne, und ein Ganzton sind zwei Halbtöne.",
+            }
+          - {
+              value: "(k - 1) * 2",
+              message: "Du hast nur Ganztöne gerechnet. Zwischen der 3. und 4. und zwischen der 7. und 8. Stufe ist der Schritt ein Halbton.",
+            }
+        hint: "Das Muster lautet ganz, ganz, halb, ganz, ganz, ganz, halb. Rechne einen Ganzton als 2, einen Halbton als 1."
+        steps:
+          - "Das Muster der Schritte ist 2, 2, 1, 2, 2, 2, 1."
+          - "Zähle die ersten {{k}} minus 1 Schritte zusammen. Das ergibt {{answer}} Halbtöne."
+      - type: single-choice
+        id: dur-muster
+        text: Welches Schrittmuster hat jede Dur-Tonleiter?
+        options:
+          - text: ganz, ganz, halb, ganz, ganz, ganz, halb
+            correct: true
+            info: Das ist das Muster der Dur-Tonleiter. Die beiden Halbtonschritte liegen zwischen der 3. und 4. und zwischen der 7. und 8. Stufe.
+          - text: ganz, halb, ganz, ganz, halb, ganz, ganz
+            correct: false
+            info: Das ist das Muster der natürlichen Moll-Tonleiter, wie du sie auf der nächsten Seite hörst.
+          - text: halb, halb, ganz, ganz, ganz, ganz, ganz
+            correct: false
+            info: So ein Muster bildet keine der Tonleitern dieser Seiten. Dur beginnt mit zwei Ganztönen.
+        explanation: Das Dur-Muster lautet ganz, ganz, halb, ganz, ganz, ganz, halb.
+        links:
+          - { title: Tonleiter (Wikipedia), url: "https://de.wikipedia.org/wiki/Tonleiter" }
+      - type: true-false
+        id: c-dur-weisse
+        text: "Wahr oder falsch? Die C-Dur-Tonleiter besteht nur aus weißen Tasten."
+        answer: true
+        explanation: Das C-Dur-Muster ergibt von C bis C genau die weißen Tasten. Bei jedem anderen Anfangston brauchst du schwarze Tasten.
+        links:
+          - { title: Tonleiter (Wikipedia), url: "https://de.wikipedia.org/wiki/Tonleiter" }

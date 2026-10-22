@@ -1,0 +1,80 @@
+# yaml-language-server: $schema=../../node_modules/@lernapps/app-templates/runtime/explainer/explainer.v1.schema.json
+title: Die Klaviatur
+description: Die Tasten des Klaviers benennen, das C finden und Halbtonschritte zählen.
+blocks:
+  - type: section
+    id: ausprobieren
+    title: Ausprobieren
+    blocks:
+      - type: text
+        text: |
+          Tippe auf die Tasten und höre zu. Gehst du nach rechts, werden die Töne höher. Gehst du nach links, werden sie
+          tiefer. Findest du die Gruppen aus zwei und drei schwarzen Tasten? Das markierte C steht immer links neben
+          der Gruppe aus zwei schwarzen Tasten.
+      - type: vue-component
+        component: Klaviatur
+        props: { markiert: [0, 12] }
+        nojs: |
+          Eine Klaviatur mit 8 weißen und 5 schwarzen Tasten, von C bis zum nächsten C. Die weißen Tasten heißen
+          C, D, E, F, G, A, H, C. Die schwarzen Tasten stehen in einer Gruppe aus zwei (zwischen C und D, D und E)
+          und einer Gruppe aus drei (zwischen F und G, G und A, A und H). Mit JavaScript klingt jede Taste.
+  - type: section
+    id: merke
+    title: Das Wichtigste
+    blocks:
+      - type: definition
+        term: Klaviatur
+        explanation: Die Klaviatur ist die Reihe der Tasten eines Klaviers oder Keyboards. Nach rechts werden die Töne höher.
+      - type: definition
+        term: Halbton
+        explanation: Ein Halbton ist der Abstand von einer Taste zur nächsten, egal ob weiß oder schwarz.
+      - type: text
+        text: |
+          Die weißen Tasten heißen C, D, E, F, G, A, H. Danach beginnt es wieder mit C. Der Abstand von einem C bis zum
+          nächsten C heißt **Oktave**. Eine Oktave hat 12 Halbtonschritte.
+      - type: note
+        title: So findest du das C
+        blocks:
+          - type: text
+            text: Suche eine Gruppe aus zwei schwarzen Tasten. Die weiße Taste links davon ist das C.
+  - type: section
+    id: uebung
+    title: Übung
+    blocks:
+      - type: single-choice
+        id: c-finden
+        text: Wo findest du auf der Klaviatur das C?
+        options:
+          - text: Links neben der Gruppe aus zwei schwarzen Tasten
+            correct: true
+            info: Das stimmt. In jeder Oktave liegt das C links neben den zwei schwarzen Tasten.
+          - text: Links neben der Gruppe aus drei schwarzen Tasten
+            correct: false
+            info: Dort liegt das F. Die Gruppe aus drei schwarzen Tasten beginnt nach dem F.
+          - text: Zwischen den beiden schwarzen Tasten einer Zweiergruppe
+            correct: false
+            info: Dort liegt das D, genau zwischen Cis und Dis.
+        explanation: Die schwarzen Tasten helfen dir beim Orientieren. Die Gruppe aus zwei schwarzen Tasten zeigt dir das C.
+        links:
+          - { title: Klaviatur (Wikipedia), url: "https://de.wikipedia.org/wiki/Klaviatur" }
+      - type: generated
+        id: halbtoene-zaehlen
+        given:
+          e: { pick: 1, from: { data: noten }, distinct: true }
+        where: ["e.halbtoene >= 2"]
+        task:
+          text: "Du startest auf dem C und gehst nach rechts bis zum Ton {{e.name}}. Wie viele Halbtonschritte sind das? Zähle weiße und schwarze Tasten."
+        answer: { value: "e.halbtoene", compare: number }
+        mistakes:
+          - {
+              value: "e.weisse",
+              message: "Du hast nur die weißen Tasten gezählt. Zähle auch die schwarzen Tasten mit.",
+            }
+          - {
+              value: "e.halbtoene + 1",
+              message: "Du hast die Starttaste C mitgezählt. Zähle erst ab der nächsten Taste.",
+            }
+        hint: "Tippe die Tasten von C bis zum Ziel an und zähle bei jedem Schritt eins weiter."
+        steps:
+          - "Gehe von C aus Taste für Taste nach rechts, weiß und schwarz."
+          - "Bis {{e.name}} sind es {{answer}} Halbtonschritte."

@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=../../node_modules/@lernapps/app-templates/runtime/explainer/explainer.v1.schema.json
+title: Rhythmus und Takt
+summary: Den Grundschlag finden, Taktarten heraushören, Notenwerte vergleichen und Rhythmen klatschen.
+pages: [grundschlag-takt, notenwerte, klatschen]

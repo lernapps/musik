@@ -1,0 +1,87 @@
+# yaml-language-server: $schema=../../node_modules/@lernapps/app-templates/runtime/explainer/explainer.v1.schema.json
+title: Notenlinien und Violinschlüssel
+description: Das Notensystem mit fünf Linien, den Violinschlüssel und die Töne auf den Linien kennenlernen.
+blocks:
+  - type: section
+    id: ausprobieren
+    title: Ausprobieren
+    blocks:
+      - type: text
+        text: |
+          Tippe die Noten von unten nach oben an. Jede Note liegt auf einer Linie, und der Ton wird höher. Wie ändert
+          sich der Klang, wenn die Note im Bild höher steht?
+      - type: vue-component
+        component: Notenzeile
+        props:
+          noten:
+            - { ton: 4, wert: viertel }
+            - { ton: 7, wert: viertel }
+            - { ton: 11, wert: viertel }
+            - { ton: 14, wert: viertel }
+            - { ton: 17, wert: viertel }
+          namen: true
+          tempo: 80
+          beschriftung: Die fünf Linien des Notensystems mit den Tönen e¹, g¹, h¹, d² und f²
+        nojs: |
+          Ein Notensystem mit fünf Linien und dem Violinschlüssel. Auf der untersten Linie steht e¹, auf der zweiten g¹, auf der
+          dritten h¹, auf der vierten d² und auf der obersten f². Je höher die Note steht, desto höher klingt der Ton. Mit
+          JavaScript kannst du jede Note anhören.
+  - type: section
+    id: merke
+    title: Das Wichtigste
+    blocks:
+      - type: definition
+        term: Notensystem
+        explanation: Das Notensystem besteht aus fünf Linien, die du von unten nach oben zählst. Auf und zwischen den Linien stehen die Noten.
+      - type: definition
+        term: Violinschlüssel
+        explanation: Der Violinschlüssel steht am Anfang jeder Zeile. Er legt fest, dass die zweite Linie von unten das g¹ ist.
+      - type: text
+        text: |
+          Die fünf Linien tragen von unten nach oben die Töne **e, g, h, d, f**. Eine Eselsbrücke dafür ist der Satz
+          „**E**in **g**uter **H**und **d**eckt **f**rüh“. In den Zwischenräumen stehen von unten nach oben die Töne
+          **f, a, c, e**. Das tiefe c¹ steht unter dem System auf einer kurzen Hilfslinie.
+  - type: section
+    id: uebung
+    title: Übung
+    blocks:
+      - type: matching
+        id: linien-zuordnen
+        text: Welcher Ton steht auf welcher Linie des Notensystems im Violinschlüssel? Du zählst von unten.
+        pairs:
+          - { left: Erste Linie, right: e¹ }
+          - { left: Zweite Linie, right: g¹ }
+          - { left: Dritte Linie, right: h¹ }
+          - { left: Vierte Linie, right: d² }
+        explanation: Von unten nach oben tragen die Linien die Töne e, g, h, d, f. Die zweite Linie ist das g¹, um das sich der Violinschlüssel windet.
+        links:
+          - { title: Violinschlüssel (Wikipedia), url: "https://de.wikipedia.org/wiki/Violinschl%C3%BCssel" }
+      - type: single-choice
+        id: linien-zaehlen
+        text: In welche Richtung zählst du die Linien im Notensystem?
+        options:
+          - text: Von unten nach oben
+            correct: true
+            info: Die unterste Linie ist die erste Linie. Von dort aus zählst du nach oben bis zur fünften Linie.
+          - text: Von oben nach unten
+            correct: false
+            info: Das ist nicht üblich. Die Tonhöhe wächst nach oben, darum beginnst du unten.
+          - text: Von links nach rechts
+            correct: false
+            info: Links nach rechts ist die Richtung, in der die Zeit vergeht und du die Noten liest, nicht die Richtung, in der du Linien zählst.
+        explanation: Linien und Zwischenräume werden von unten nach oben gezählt.
+        links:
+          - { title: Notenschrift (Wikipedia), url: "https://de.wikipedia.org/wiki/Notenschrift" }
+      - type: vue-component
+        component: NotenAufgabe
+        id: noten-linien
+        props: { bereich: linien }
+        examples:
+          accepted:
+            - { seed: 1, answer: "H" }
+            - { seed: 2, answer: "G" }
+            - { seed: 3, answer: "D" }
+          rejected:
+            - { seed: 1, answer: "C" }
+            - { seed: 2, answer: "A" }
+            - { seed: 3, answer: "E" }
