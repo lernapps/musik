@@ -5,59 +5,106 @@ description: Use for any content work in this app - researching, writing, extend
 
 # Content guide of this app
 
-<!--
-Skeleton. Delete this comment when you fill the guide.
-- When: after the plan is confirmed, before any content. Replace every placeholder comment below; none may remain
-  (`lernapps check`, rule app-content-guide, fails once the plan is in Commit).
-- Keep the headings.
-- Concrete, for an agent without your conversation: files, ids, data files, one example.
-  - No: "Use varied exercises with figures where they help."
-  - Yes: "Every page ends with section `uebung`: one `generated` exercise of pattern 'Ohmsches Gesetz' from
-    `src/data/widerstaende.yaml`, one `matching` of symbols and parts."
-- Content decision changes → update this file in the same commit.
-- Public: no personal data, no goals of one learner.
--->
+Musik erleben: Explainer für Musik, Klasse 5–7. Kinder hören, klatschen, singen und vergleichen. Alle Klänge entstehen
+im Browser (Web Audio). Das Mikrofon ist freiwillig; nichts wird gespeichert oder hochgeladen.
 
 ## Curriculum
 
-<!-- FILL IN: Land, Schulform, Jahrgang; orientation (Lehrplan: document, issuer, year, address, page and unit per
-part; welcome, not required); where the creator's material differs, and which one the app follows. -->
+- Land und Schule: Hessen, gymnasialer Bildungsgang; gilt in der Sache für Klasse 5–7 jeder weiterführenden Schule.
+- Orientierung (nicht verbindlich): Lehrplan Musik, Gymnasialer Bildungsgang, Jahrgangsstufen 5 bis 13, Hessisches
+  Kultusministerium, <https://kultus.hessen.de/sites/kultus.hessen.de/files/2021-06/g9-musik.pdf>. Quellen im Lehrplan:
+  Arbeitsbereich „Elemente der Musik ableiten und anwenden“ (S. 10: Tondauer/Rhythmus, Takt/Metrum, Tonhöhe/Melodik,
+  Zusammenklang, Instrumentation/Klangfarbe, weitere Parameter, Jahrgang 5 und 6), „Musik hören und betrachten“ (S. 9),
+  „Musikpraxis“ (S. 8), Themenblatt 5/04 „Musik – Instrument – Klang“ (S. 14). Hessen hat keine Themen für Jahrgang 7.
+- Die Reihenfolge der Kapitel ist didaktisch, nicht aus dem Lehrplan.
+- Ein Kernlehrplan NRW wurde nicht gelesen und ist keine Quelle.
 
 ## Competencies
 
-<!-- FILL IN: every competency as "Ich kann …", grouped by chapter; per competency: page or round (file, id),
-exercise ids. -->
+Kapitel-Ordner `src/<kapitel-id>/`, Seiten-Dateien `<seiten-id>.yaml`. Übungs-ids stehen in der Seite.
+
+1. `hoeren` Hören und Klang beschreiben
+   - Ich kann Lautstärke, Tempo und Klangfarbe eines Klangs mit Fachwörtern beschreiben. (`laut-leise`, `schnell-langsam`)
+   - Ich kann Instrumente den Instrumentenfamilien zuordnen. (`klangfarbe`)
+2. `tonhoehe` Tonhöhe und Klaviatur
+   - Ich kann hohe und tiefe Töne unterscheiden und der Höhe nach ordnen. (`hoch-tief`)
+   - Ich kann Töne auf der Klaviatur benennen und zeigen. (`klaviatur`, `stimme`)
+3. `rhythmus` Rhythmus und Takt
+   - Ich kann Notenwerte und Pausen benennen und ihre Dauer vergleichen. (`notenwerte`)
+   - Ich kann einen Rhythmus im Takt klatschen. (`klatschen`)
+   - Ich kann einen Takt (2/4, 3/4, 4/4) heraushören und betonen. (`takt`)
+4. `noten` Noten lesen
+   - Ich kann Noten im Violinschlüssel benennen. (`linien`, `benennen`)
+   - Ich kann einen einfachen Rhythmus oder eine kurze Melodie aus Noten ablesen. (`lesen`)
+5. `tonleitern` Tonleitern und Intervalle
+   - Ich kann Dur und Moll unterscheiden. (`dur-moll`)
+   - Ich kann eine Dur-Tonleiter aus Ganz- und Halbtonschritten aufbauen. (`dur-bauen`)
+   - Ich kann Intervalle (Sekunde bis Oktave) hören und benennen. (`intervalle`)
+   - Ich kann eine Tonfolge nachsingen. (`nachsingen`)
+6. `erfinden` Begleiten und Erfinden
+   - Ich kann ein Lied mit gleichmäßigem Grundschlag begleiten. (`begleiten`)
+   - Ich kann einen eigenen Rhythmus aus vier Takten erfinden und aufschreiben. (`rhythmus-erfinden`)
+   - Ich kann eine kurze Melodie auf der Klaviatur erfinden und mit einem Vorbild vergleichen. (`melodie-erfinden`)
 
 ## Content structure
 
-<!-- FILL IN: how a chapter, page or round is built: sections or question groups in order, ids or titles, what
-each holds; length. -->
+- Jede Seite hat Abschnitte in dieser Reihenfolge, feste ids: `ausprobieren` („Ausprobieren“), `merke` („Das
+  Wichtigste“), `so-uebst-du-selbst` („So übst du selbst“, nur auf Seiten mit Mikrofon-Werkzeug), `uebung` („Übung“).
+- `ausprobieren` zuerst: Komponente oder Abbildung mit kurzer Aufgabe in einem Satz; erst danach erklären.
+- `merke` enthält eine `definition` je neuem Fachwort und höchstens zwei kurze Absätze.
+- `so-uebst-du-selbst` ist ein `note` mit 3–5 nummerierten Schritten ohne Technik (summen, Hand an den Hals, mit Klavier
+  oder Handy vergleichen, ein Partner hört zu). Auf jeder Seite mit `RhythmusWerkstatt`-Klatschen oder `Stimmspiegel`.
+- Länge: Seite etwa 150–300 Wörter plus Komponente und Übung.
 
 ## Terminology
 
-<!-- FILL IN: terms used and avoided (why); units, notation; how learners are addressed; glossary terms with
-wording. -->
+- Du-Form. Kurze Sätze, aktive Verben, ein Fachwort pro Satz, jedes beim ersten Gebrauch erklärt (ISO 24495).
+- Benutzt: Tonhöhe, Lautstärke, Klangfarbe, Tempo, Grundschlag, Takt, Notenwert, Pause, Klaviatur, Oktave, Ganzton,
+  Halbton, Tonleiter, Dur, Moll, Intervall, Prime/Sekunde/Terz/Quarte/Quinte/Sexte/Septime/Oktave.
+- Tonnamen deutsch: C D E F G A H (nicht B). Zwei Oktaven: C bis c². Grundton C hervorgehoben.
+- Vermieden: „Moll klingt traurig“ als Regel (nur „oft“); „Intervall“ ohne Erklärung; englische Notennamen.
+- Frequenz in Hz, a¹ = 440 Hz. Tempo in Schlägen pro Minute (BPM).
 
 ## Exercise patterns
 
-<!-- FILL IN: per pattern: name, competency, archetype form (block or question type, fixed parts, what varies),
-one example (file, id), data file. -->
+- *Hören-Vergleichen*: Komponente `HoerAufgabe` (Arten `hoeher`, `lauter`, `intervall`, `dur-moll`, `takt`). Feste Seeds.
+  Beispiel: `src/tonhoehe/hoch-tief.yaml`, Block `hoer-hoeher`.
+- *Zuordnen*: `matching`. Daten: `src/data/instrumente.yaml`, `src/data/notenwerte.yaml`.
+- *Berechnen*: `generated` mit typischen Fehlern (z. B. Halbtöne zwischen zwei Tönen; Starttaste nicht mitzählen).
+  Daten: `src/data/noten.yaml`, `src/data/intervalle.yaml`.
+- *Ordnen*: `ordering`. *Urteilen*: `true-false` oder `single-choice`, jede falsche Option mit `info`.
+- *Selbst machen*: freie Aufgaben (Rhythmus, Melodie erfinden): die Komponente meldet nur Länge, Takt, Tonumfang;
+  die Pflichtfrage der Seite prüft das Wissen dahinter.
+- Jede Seite hat mindestens eine Frage oder `generated` im Abschnitt `uebung`.
 
 ## Figures
 
-<!-- FILL IN: figure kinds and images, for what; conventions (colours, labels, units, orientation, sizes); alt
-texts and captions; image origin and licence. -->
+- Komponenten zeichnen Klaviatur, Notenzeile und Welle selbst. Farben: Grundton C hervorgehoben, Zielton grün,
+  Abweichung rot; nie nur Farbe (zusätzlich Beschriftung).
+- Jede Abbildung hat `alt` und `caption`; die Abbildung zeigt die Aufgabe, nie die Antwort.
+- Eigene SVG in `src/images/`, selbst gezeichnet, Lizenz CC BY 4.0. Keine fremden Bilder.
+- Alle Abbildungen funktionieren bei 360 px Breite.
 
 ## Sources
 
-<!-- FILL IN: sources linked or relied on (Lehrplan, second explanations, videos, articles), how verified, what
-is left out; the creator's material stays local, never committed. -->
+- Lehrplan Hessen (siehe Curriculum), gelesen.
+- Zweitquellen: de.wikipedia.org (CC BY-SA, Fakten übernommen, keine Sätze): Tonhöhe, Notenschrift, Takt (Musik),
+  Tonleiter, Klaviatur, Lautstärke, Tempo (Musik), Musikinstrument, Frequenz, Violinschlüssel, Intervall (Musik),
+  Klangfarbe, Dur, Moll, Notenwert, Kammerton. Geprüft: Seite lädt und ist der Artikel zum Thema.
+- Noch nicht geprüft: Rhythmus (Musik), Pentatonik, Dynamik (Musik), Obertonreihe, Orchester. Vor einer Seite prüfen,
+  die sie braucht; sonst weglassen.
+- Das Material der Lehrkraft bleibt lokal. Keine Namen von Lernenden.
 
 ## Adding a chapter or round
 
-<!-- FILL IN: the steps for a new chapter (explainer) or round (quiz), in order, with the files: competencies,
-content, exercises from the patterns, entry topics, check, commit. -->
+1. Kompetenzen „Ich kann …“ in dieser Datei unter „Competencies“ ergänzen.
+2. Ordner `src/<id>/` mit `chapter.yaml` (Titel, Zusammenfassung, Seiten) anlegen; Kapitel in `chapters` von
+   `src/app.yaml` eintragen.
+3. Jede Seite als `<id>.yaml` mit den Abschnitten aus „Content structure“; Fakten in die Datendateien in `src/data/`.
+4. Komponenten wiederverwenden; eine neue nur, wenn kein Block und keine vorhandene reicht (mit Test und `nojs`-Text).
+5. Übungen nach den Mustern; jede falsche Option mit Grund.
+6. `npx lernapps check`, dann committen.
 
 ## Rules learned from mistakes
 
-<!-- FILL IN: one line per rule with the mistake it came from. "None yet." until the first. -->
+None yet.
