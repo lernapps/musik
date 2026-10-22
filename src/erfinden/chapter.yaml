@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=../../node_modules/@lernapps/app-templates/runtime/explainer/explainer.v1.schema.json
+title: Begleiten und Erfinden
+summary: Ein Lied im Grundschlag begleiten, einen eigenen Rhythmus erfinden und eine eigene Melodie singen.
+pages: [begleiten, rhythmus-erfinden, melodie-erfinden]

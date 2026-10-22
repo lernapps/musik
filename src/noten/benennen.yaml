@@ -1,0 +1,82 @@
+# yaml-language-server: $schema=../../node_modules/@lernapps/app-templates/runtime/explainer/explainer.v1.schema.json
+title: Noten benennen
+description: Noten auf Linien, in Zwischenräumen und auf Hilfslinien erkennen und mit ihrem Namen benennen.
+blocks:
+  - type: section
+    id: ausprobieren
+    title: Ausprobieren
+    blocks:
+      - type: text
+        text: |
+          Hier siehst du die Noten von c¹ bis c² nebeneinander. Tippe sie an und sprich ihre Namen mit. Die Reihenfolge ist
+          immer gleich: C, D, E, F, G, A, H und dann wieder C. Schaffst du es, sie im Kopf zu zählen?
+      - type: vue-component
+        component: Notenzeile
+        props:
+          noten:
+            - { ton: 0, wert: viertel }
+            - { ton: 2, wert: viertel }
+            - { ton: 4, wert: viertel }
+            - { ton: 5, wert: viertel }
+            - { ton: 7, wert: viertel }
+            - { ton: 9, wert: viertel }
+            - { ton: 11, wert: viertel }
+            - { ton: 12, wert: viertel }
+          namen: true
+          tempo: 100
+          beschriftung: Die Töne von c¹ bis c² als Noten im Violinschlüssel
+        nojs: |
+          Ein Notensystem mit acht Noten. Das c¹ steht unter dem System auf einer Hilfslinie, dann folgen d¹ (unter der ersten
+          Linie), e¹ (auf der ersten Linie), f¹ (im ersten Zwischenraum), g¹ (auf der zweiten Linie), a¹ (im zweiten Zwischenraum),
+          h¹ (auf der dritten Linie) und c² (im dritten Zwischenraum). Mit JavaScript kannst du jede Note anhören.
+  - type: section
+    id: merke
+    title: Das Wichtigste
+    blocks:
+      - type: text
+        text: |
+          Die Namen folgen immer dem Alphabet der Töne: **C D E F G A H**. Steigt die Note um eine Linie oder einen
+          Zwischenraum, geht es einen Namen weiter. So kommst du von einer Note, die du kennst, zu der gesuchten.
+      - type: note
+        title: So gehst du vor
+        blocks:
+          - type: text
+            text: |
+              1. Suche die Note, die du sicher kennst: das g¹ auf der zweiten Linie.
+              2. Zähle von dort Linie für Linie und Zwischenraum für Zwischenraum zur gesuchten Note.
+              3. Denke an die Reihenfolge C D E F G A H. Nach H kommt wieder C.
+      - type: text
+        text: Unter der untersten Linie und über der obersten Linie hilft eine kurze **Hilfslinie** weiter. Zähle auch sie mit.
+  - type: section
+    id: uebung
+    title: Übung
+    blocks:
+      - type: vue-component
+        component: NotenAufgabe
+        id: noten-alle
+        props: { bereich: alle }
+        examples:
+          accepted:
+            - { seed: 1, answer: "C" }
+            - { seed: 2, answer: "G" }
+            - { seed: 3, answer: "F" }
+          rejected:
+            - { seed: 1, answer: "D" }
+            - { seed: 2, answer: "A" }
+            - { seed: 3, answer: "G" }
+      - type: single-choice
+        id: benennen-folge
+        text: Welcher Ton kommt nach dem H?
+        options:
+          - text: C
+            correct: true
+            info: Nach H beginnt die Reihe von vorn. Das nächste C liegt eine Oktave über dem ersten.
+          - text: I
+            correct: false
+            info: Es gibt keinen Ton I. Die Namen sind C, D, E, F, G, A und H.
+          - text: A
+            correct: false
+            info: A steht vor dem H, nicht danach. Die Reihe lautet C D E F G A H.
+        explanation: Die sieben Namen wiederholen sich. Nach H beginnt wieder C.
+        links:
+          - { title: Notenschrift (Wikipedia), url: "https://de.wikipedia.org/wiki/Notenschrift" }

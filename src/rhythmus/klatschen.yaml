@@ -1,0 +1,72 @@
+# yaml-language-server: $schema=../../node_modules/@lernapps/app-templates/runtime/explainer/explainer.v1.schema.json
+title: Rhythmen klatschen
+description: Ein Rhythmus-Muster hören, nachbauen und im Takt klatschen.
+blocks:
+  - type: section
+    id: ausprobieren
+    title: Ausprobieren
+    blocks:
+      - type: text
+        text: |
+          Höre das Vorbild und baue den Rhythmus nach. Tippe dazu die Felder an, die klingen sollen. Mit „Mein Muster prüfen“
+          erfährst du, wie viele Felder noch anders sind. Wenn du magst, klatschst du den Rhythmus danach mit dem Mikrofon.
+      - type: vue-component
+        component: RhythmusWerkstatt
+        props:
+          taktart: "4/4"
+          raster: achtel
+          tempo: 70
+          vorbild: [true, false, true, true, true, false, true, false]
+          klatschen: true
+        nojs: |
+          Ein Raster aus 8 Feldern für einen 4/4-Takt, Zählhilfe „1 + 2 + 3 + 4 +“. Dunkle Felder klingen, helle sind Pausen.
+          Das Vorbild lautet: Viertel, Achtel, Achtel, Achtel, Achtelpause, Achtel, Achtelpause (hörbar mit JavaScript). Mit JavaScript
+          baust du das Muster nach und kannst es mit dem Mikrofon klatschen.
+  - type: section
+    id: merke
+    title: Das Wichtigste
+    blocks:
+      - type: definition
+        term: Rhythmus
+        explanation: Der Rhythmus ist die Folge von langen und kurzen Tönen und Pausen über dem gleichmäßigen Grundschlag.
+      - type: text
+        text: |
+          Der Grundschlag läuft gleichmäßig weiter. Der Rhythmus liegt wie ein Muster darüber. Beim Klatschen klatschst du
+          nur die Töne, nicht die Pausen. Zähle dabei laut mit: „1 + 2 + 3 + 4 +“.
+  - type: section
+    id: so-uebst-du-selbst
+    title: So übst du selbst
+    blocks:
+      - type: note
+        title: Ohne Mikrofon klatschen
+        blocks:
+          - type: text
+            text: |
+              1. Spiele das Vorbild mehrmals und zähle laut mit: „1 + 2 + 3 + 4 +“.
+              2. Klatsche nur bei den dunklen Feldern und lasse die hellen Felder still. Die Hände bleiben dabei im Grundschlag.
+              3. Stelle das Tempo langsamer, wenn du durcheinander kommst.
+              4. Bitte eine Person, mitzuhören und mitzuzählen. Sie sagt dir, wo du zu früh oder zu spät warst.
+  - type: section
+    id: uebung
+    title: Übung
+    blocks:
+      - type: true-false
+        id: pause-zaehlt
+        text: "Wahr oder falsch? Bei einer Pause läuft der Grundschlag weiter, auch wenn nichts klingt."
+        answer: true
+        explanation: Eine Pause ist Stille mit eigener Dauer. Du zählst sie mit, damit der Rhythmus im Takt bleibt.
+        links:
+          - { title: Rhythmus (Musik) (Wikipedia), url: "https://de.wikipedia.org/wiki/Rhythmus_(Musik)" }
+      - type: generated
+        id: achtel-im-takt
+        given:
+          s: { oneOf: [2, 3, 4] }
+        task:
+          text: "Ein Takt hat {{s}} Viertelschläge, zum Beispiel ein {{s}}/4-Takt. Wie viele Achtel passen in einen Takt?"
+        answer: { value: "s * 2", compare: number }
+        mistakes:
+          - { value: "s", message: "Du hast die Viertel gezählt. In jede Viertel passen zwei Achtel." }
+        hint: "In eine Viertel passen zwei Achtel."
+        steps:
+          - "In jede Viertel passen 2 Achtel."
+          - "{{s}} mal 2 ergibt {{answer}} Achtel."

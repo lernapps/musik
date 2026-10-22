@@ -82,7 +82,7 @@ export interface Lauf {
 
 export function neuerLauf(anzahl: number): Lauf {
   const n = Math.max(1, anzahl);
-  return { index: 0, anzahl: n, imBand: 0, pause: 0, fertig: false, getroffen: new Array<boolean>(n).fill(false) };
+  return { index: 0, anzahl: n, imBand: 0, pause: 0, fertig: false, getroffen: Array.from({ length: n }, () => false) };
 }
 
 /**
@@ -237,4 +237,35 @@ export function abbilden(
     zielY: yVon(zielAnzeige),
     ticks,
   };
+}
+
+/* ---------- Eigene Melodie ---------- */
+
+/** Die weißen Töne von c¹ bis c², die zur Auswahl stehen (Halbtöne ab c¹). */
+export const WEISSE_TOENE = [0, 2, 4, 5, 7, 9, 11, 12];
+
+const VORGABE = [0, 2, 4, 7, 9, 12];
+
+/** Anzahl der Auswahlfelder: 0 (aus) oder 2 bis 6. */
+export function eigeneAnzahl(eigene: number): number {
+  if (!(eigene > 0)) return 0;
+  return Math.min(6, Math.max(2, Math.round(eigene)));
+}
+
+/** Voreinstellung: C D E G A c². */
+export function standardMelodie(anzahl: number): number[] {
+  return VORGABE.slice(0, eigeneAnzahl(anzahl));
+}
+
+/** Beschriftung im Auswahlfeld, z. B. „C (c¹)“. */
+export function auswahlName(ton: number): string {
+  return `${name(ton)} (${nameMitOktave(ton)})`;
+}
+
+/** Baut die Folge aus der Auswahl: genau `anzahl` Töne; Fehlendes oder Ungültiges wird durch die Voreinstellung ersetzt. */
+export function melodie(auswahl: number[], anzahl: number): number[] {
+  return Array.from({ length: eigeneAnzahl(anzahl) }, (_, i) => {
+    const ton = auswahl[i];
+    return ton !== undefined && WEISSE_TOENE.includes(ton) ? ton : (VORGABE[i] ?? 0);
+  });
 }

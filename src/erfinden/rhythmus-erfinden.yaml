@@ -1,0 +1,90 @@
+# yaml-language-server: $schema=../../node_modules/@lernapps/app-templates/runtime/explainer/explainer.v1.schema.json
+title: Einen eigenen Rhythmus erfinden
+description: Einen eigenen Rhythmus über vier Takte erfinden, anhören und in Notenwerten aufschreiben.
+blocks:
+  - type: section
+    id: ausprobieren
+    title: Ausprobieren
+    blocks:
+      - type: text
+        text: |
+          Erfinde einen Rhythmus über vier Takte. Tippe dazu die Felder an, die klingen sollen. Drücke auf „Abspielen“ und höre
+          ihn an. Unter dem Raster steht dein Rhythmus in Notenwerten. Wenn du magst, klatschst du ihn danach. Ändere ihn so lange,
+          bis er dir gefällt.
+      - type: vue-component
+        component: RhythmusWerkstatt
+        props:
+          taktart: "4/4"
+          takte: 4
+          raster: achtel
+          tempo: 80
+          klatschen: true
+        nojs: |
+          Ein Raster für vier 4/4-Takte, jeder Takt hat acht Felder (Achtel). Dunkle Felder klingen, helle sind Pausen. Unter dem Raster
+          steht der Rhythmus in Notenwerten, zum Beispiel „Viertel, Achtel, Achtel, Viertelpause“. Mit JavaScript tippst du die
+          Felder an, spielst den Rhythmus ab und klatschst ihn mit dem Mikrofon.
+  - type: section
+    id: merke
+    title: Das Wichtigste
+    blocks:
+      - type: text
+        text: |
+          Ein guter Rhythmus hat lange und kurze Töne und ein paar Pausen. Er wiederholt sich oder ändert sich an einer Stelle,
+          damit er interessant bleibt. Ein 4/4-Takt hat Platz für **vier Viertel** oder acht Achtel. Mehr passt nicht hinein.
+      - type: note
+        title: Ideen
+        blocks:
+          - type: text
+            text: |
+              1. Wiederhole eine Idee in Takt 1 und 2.
+              2. Verändere sie in Takt 3.
+              3. Schließe in Takt 4 mit einem langen Ton oder einer Pause.
+  - type: section
+    id: so-uebst-du-selbst
+    title: So übst du selbst
+    blocks:
+      - type: note
+        title: Ohne Mikrofon klatschen
+        blocks:
+          - type: text
+            text: |
+              1. Spiele deinen Rhythmus ab und zähle laut mit: „1 + 2 + 3 + 4 +“.
+              2. Klatsche nur bei den dunklen Feldern. Bei den hellen Feldern bleiben die Hände still.
+              3. Schreibe deinen Rhythmus in Notenwerten auf, zum Beispiel auf Papier.
+              4. Bitte eine Person, ihn nachzuklatschen. Versteht sie ihn nur aus deiner Notiz?
+  - type: section
+    id: uebung
+    title: Übung
+    blocks:
+      - type: generated
+        id: viertel-in-takten
+        given:
+          t: { int: [2, 4], step: 1 }
+        task:
+          text: "Dein Rhythmus hat {{t}} Takte im 4/4-Takt. Wie viele Viertel passen insgesamt hinein?"
+        answer: { value: "t * 4", compare: number }
+        mistakes:
+          - {
+              value: "t * 8",
+              message: "Du hast Achtel gezählt. In einem 4/4-Takt sind es 4 Viertel, das sind 8 Achtel.",
+            }
+        hint: "Ein 4/4-Takt hat vier Viertel."
+        steps:
+          - "Ein 4/4-Takt hat 4 Viertel."
+          - "{{t}} mal 4 ergibt {{answer}} Viertel."
+      - type: single-choice
+        id: achtel-im-vierviertel
+        text: Wie viele Achtel passen in einen 4/4-Takt?
+        options:
+          - text: Acht
+            correct: true
+            info: Ein 4/4-Takt hat vier Viertel, und in jede Viertel passen zwei Achtel. Das sind 4 mal 2.
+          - text: Vier
+            correct: false
+            info: Vier ist die Zahl der Viertel im Takt. In jede Viertel passen zwei Achtel.
+          - text: Sechzehn
+            correct: false
+            info: Sechzehn Achtel wären zwei volle 4/4-Takte. Ein Takt hat acht.
+        explanation: Vier Viertel mal zwei Achtel ergibt acht Achtel.
+        links:
+          - { title: Notenwert (Wikipedia), url: "https://de.wikipedia.org/wiki/Notenwert" }

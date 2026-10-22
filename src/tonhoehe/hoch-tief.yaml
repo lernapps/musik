@@ -1,0 +1,98 @@
+# yaml-language-server: $schema=../../node_modules/@lernapps/app-templates/runtime/explainer/explainer.v1.schema.json
+title: Hoch und tief
+description: Hohe und tiefe Töne hören, ihre Frequenz in Hertz kennen und die Oktave als Verdopplung verstehen.
+blocks:
+  - type: section
+    id: ausprobieren
+    title: Ausprobieren
+    blocks:
+      - type: text
+        text: |
+          Schalte den Ton an und bewege den Regler für die Tonhöhe. Gehst du nach rechts, wird der Ton höher. Zähle
+          die Wellen im Bild: Bei hohen Tönen sind es mehr Wellen als bei tiefen. Mach die Lautstärke nicht höher,
+          nur die Tonhöhe ändert sich.
+      - type: vue-component
+        component: Klangbild
+        props: { regler: tonhoehe, hz: 262, laut: 20 }
+        nojs: |
+          Ein Bild einer Schallwelle mit einem Regler für die Tonhöhe. Bei einem tiefen Ton zeigt das Bild wenige Wellen
+          nebeneinander, bei einem hohen Ton viele. Der Ton c¹ hat etwa 262 Schwingungen pro Sekunde, der Ton a¹ hat 440.
+          Mit JavaScript klingt der Ton, und der Regler verändert ihn.
+  - type: section
+    id: merke
+    title: Das Wichtigste
+    blocks:
+      - type: definition
+        term: Tonhöhe
+        explanation: Die Tonhöhe sagt, wie hoch oder tief ein Ton klingt. Sie hängt davon ab, wie schnell etwas schwingt.
+      - type: definition
+        term: Hertz
+        explanation: Hertz (Hz) zählt die Schwingungen pro Sekunde. Mehr Hertz heißt, dass der Ton höher klingt.
+      - type: text
+        text: |
+          Der Kammerton a¹ hat 440 Hz. Verdoppelst du die Schwingungen auf 880 Hz, hörst du denselben Ton eine
+          **Oktave** höher. Menschen hören ungefähr von 16 Hz bis 20 000 Hz.
+      - type: note
+        title: Höher ist nicht lauter
+        blocks:
+          - type: text
+            text: Hoch und laut sind zwei verschiedene Dinge. Ein hoher Ton kann leise sein, ein tiefer Ton kann laut sein.
+  - type: section
+    id: uebung
+    title: Übung
+    blocks:
+      - type: single-choice
+        id: hz-hoeher
+        text: Welcher Ton klingt höher?
+        options:
+          - text: Ein Ton mit 880 Hz
+            correct: true
+            info: 880 Hz sind doppelt so viele Schwingungen pro Sekunde wie 440 Hz. Der Ton klingt eine Oktave höher.
+          - text: Ein Ton mit 440 Hz
+            correct: false
+            info: 440 Hz ist der Kammerton a¹. Er hat weniger Schwingungen pro Sekunde als 880 Hz und klingt tiefer.
+          - text: Beide klingen gleich hoch
+            correct: false
+            info: Zwei verschiedene Frequenzen klingen verschieden hoch. Hier liegt eine ganze Oktave dazwischen.
+        explanation: Je mehr Schwingungen pro Sekunde, desto höher klingt der Ton.
+        links:
+          - { title: Tonhöhe (Wikipedia), url: "https://de.wikipedia.org/wiki/Tonh%C3%B6he" }
+      - type: number
+        id: oktave-hz
+        text: Der Ton a¹ hat 440 Hz. Wie viele Hertz hat der Ton a² eine Oktave höher?
+        answer: 880
+        tolerance: 0
+        unit: Hz
+        mistakes:
+          - {
+              answer: 441,
+              message: "Eine Oktave ist keine kleine Stufe. Die Frequenz wird verdoppelt, nicht um eins erhöht.",
+            }
+          - {
+              answer: 220,
+              message: "Das ist die Oktave darunter. Du sollst die Oktave höher berechnen und also verdoppeln.",
+            }
+        hint: "Eine Oktave höher heißt: doppelt so viele Schwingungen pro Sekunde."
+        explanation: Eine Oktave höher bedeutet die doppelte Frequenz. 440 mal 2 ergibt 880.
+        links:
+          - { title: Kammerton (Wikipedia), url: "https://de.wikipedia.org/wiki/Kammerton" }
+      - type: true-false
+        id: hoch-ist-laut
+        text: "Wahr oder falsch? Ein hoher Ton ist immer auch ein lauter Ton."
+        answer: false
+        explanation: Tonhöhe und Lautstärke sind unabhängig. Die Tonhöhe hängt von der Frequenz ab, die Lautstärke davon, wie stark die Luft schwingt.
+        links:
+          - { title: Tonhöhe (Wikipedia), url: "https://de.wikipedia.org/wiki/Tonh%C3%B6he" }
+      - type: vue-component
+        component: HoerAufgabe
+        id: hoer-hoeher
+        props: { art: hoeher }
+        examples:
+          accepted:
+            - { seed: 1, answer: "Ton 2 ist höher" }
+            - { seed: 2, answer: "Ton 1 ist höher" }
+            - { seed: 3, answer: "Ton 2 ist höher" }
+          rejected:
+            - { seed: 1, answer: "Ton 1 ist höher" }
+            - { seed: 2, answer: "Ton 2 ist höher" }
+            - { seed: 3, answer: "Ton 1 ist höher" }

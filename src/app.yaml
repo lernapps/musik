@@ -6,7 +6,7 @@ intro: |
   Das Mikrofon ist freiwillig: Jede Übung geht auch ohne. Nichts wird aufgenommen oder gespeichert.
   Für die Klassen 5 bis 7.
 languages: [de]
-chapters: [hoeren, tonhoehe]
+chapters: [hoeren, tonhoehe, rhythmus, noten, tonleitern, erfinden]
 sources:
   - title: Lehrplan Musik, Gymnasialer Bildungsgang (Hessisches Kultusministerium)
     url: https://kultus.hessen.de/sites/kultus.hessen.de/files/2021-06/g9-musik.pdf

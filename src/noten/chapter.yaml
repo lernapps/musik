@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=../../node_modules/@lernapps/app-templates/runtime/explainer/explainer.v1.schema.json
+title: Noten lesen
+summary: Die Notenlinien und den Violinschlüssel kennen, Noten benennen und kurze Melodien ablesen.
+pages: [linien, benennen, lesen]

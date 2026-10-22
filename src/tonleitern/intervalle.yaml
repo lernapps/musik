@@ -1,0 +1,91 @@
+# yaml-language-server: $schema=../../node_modules/@lernapps/app-templates/runtime/explainer/explainer.v1.schema.json
+title: Intervalle
+description: Den Abstand zwischen zwei Tönen hören, zählen und mit dem Namen des Intervalls benennen.
+blocks:
+  - type: section
+    id: ausprobieren
+    title: Ausprobieren
+    blocks:
+      - type: text
+        text: |
+          Tippe zuerst das C an, dann ein anderes. Wie weit sind die beiden Töne voneinander entfernt? Einen kleinen
+          Abstand hörst du als eng, einen großen als weit. Probiere verschiedene Abstände aus, besonders die Quinte (C bis G)
+          und die Oktave (C bis zum nächsten C).
+      - type: vue-component
+        component: Klaviatur
+        props: { start: 0, markiert: [0, 7, 12] }
+        nojs: |
+          Eine Klaviatur von C bis C. Markiert sind C, G und das obere C. Von C zu G sind es sieben Halbtonschritte (eine Quinte),
+          von C zum oberen C zwölf (eine Oktave). Mit JavaScript klingt jede Taste.
+  - type: section
+    id: merke
+    title: Das Wichtigste
+    blocks:
+      - type: definition
+        term: Intervall
+        explanation: Ein Intervall ist der Abstand in der Tonhöhe zwischen zwei Tönen. Die Töne klingen nacheinander oder zusammen.
+      - type: text
+        text: |
+          Der Name eines Intervalls kommt vom Zählen der Stufen. Beim Zählen nimmst du den ersten Ton mit: C bis E sind
+          drei Töne (C, D, E), also eine **Terz**. C bis G sind fünf Töne, also eine **Quinte**. Terz und Sexte gibt es
+          in groß und klein, je nachdem wie viele Halbtöne dazwischen liegen.
+      - type: table
+        caption: Die Intervalle von der Prime bis zur Oktave, mit Halbtonschritten
+        header: [Intervall, Halbtonschritte]
+        rows:
+          - [Prime, "0"]
+          - [kleine Sekunde, "1"]
+          - [große Sekunde, "2"]
+          - [kleine Terz, "3"]
+          - [große Terz, "4"]
+          - [Quarte, "5"]
+          - [Quinte, "7"]
+          - [kleine Sexte, "8"]
+          - [große Sexte, "9"]
+          - [kleine Septime, "10"]
+          - [große Septime, "11"]
+          - [Oktave, "12"]
+  - type: section
+    id: uebung
+    title: Übung
+    blocks:
+      - type: vue-component
+        component: HoerAufgabe
+        id: hoer-intervall
+        props: { art: intervall }
+        examples:
+          accepted:
+            - { seed: 1, answer: "Oktave" }
+            - { seed: 2, answer: "große Terz" }
+            - { seed: 3, answer: "kleine Terz" }
+          rejected:
+            - { seed: 1, answer: "große Terz" }
+            - { seed: 2, answer: "kleine Terz" }
+            - { seed: 3, answer: "Oktave" }
+      - type: generated
+        id: intervall-halbtoene
+        given:
+          i: { pick: 1, from: { data: intervalle }, distinct: true }
+        where: ["i.stufen - 1 != i.halbtoene", "i.stufen != i.halbtoene"]
+        task:
+          text: "Wie viele Halbtonschritte hat das Intervall {{i.name}}?"
+        answer: { value: "i.halbtoene", compare: number }
+        mistakes:
+          - {
+              value: "i.stufen",
+              message: "Du hast die Stufen gezählt. Gefragt sind die Halbtonschritte, also jede Taste der Klaviatur, auch die schwarze.",
+            }
+          - {
+              value: "i.stufen - 1",
+              message: "Du hast die Stufen ohne den Starton gezählt. Zähle die Tasten, auch die schwarzen, und gehe von einem Halbton zum nächsten.",
+            }
+        hint: "Schau in die Tabelle oben oder zähle die Tasten auf der Klaviatur von C aus."
+        steps:
+          - "Das Intervall {{i.name}} hat {{answer}} Halbtonschritte."
+      - type: true-false
+        id: quinte-sieben
+        text: "Wahr oder falsch? Eine Quinte hat sieben Halbtonschritte."
+        answer: true
+        explanation: Von C bis G liegen sieben Halbtonschritte. Zählst du die Stufen, sind es fünf Töne, darum heißt das Intervall Quinte.
+        links:
+          - { title: Intervall (Musik) (Wikipedia), url: "https://de.wikipedia.org/wiki/Intervall_(Musik)" }

@@ -40,8 +40,7 @@ blocks:
           - [
               Streicher,
               "Geige, Bratsche, Cello, Kontrabass",
-              Eine Saite schwingt,
-              zum Beispiel durch das Streichen mit dem Bogen.,
+              "Eine Saite schwingt, zum Beispiel durch das Streichen mit dem Bogen.",
             ]
           - [Holzbläser, "Querflöte, Oboe, Klarinette, Fagott", Luft strömt durch das Instrument oder über einen Rand.]
           - [Blechbläser, "Trompete, Horn, Posaune, Tuba", Die Lippen schwingen im Mundstück.]
@@ -60,10 +59,10 @@ blocks:
         id: familien-zuordnen
         text: Welches Instrument gehört zu welcher Familie?
         pairs:
-          - [Geige, Streicher]
-          - [Oboe, Holzbläser]
-          - [Trompete, Blechbläser]
-          - [Pauke, Schlagwerk]
+          - { left: Geige, right: Streicher }
+          - { left: Oboe, right: Holzbläser }
+          - { left: Trompete, right: Blechbläser }
+          - { left: Pauke, right: Schlagwerk }
         explanation: Die Geige hat Saiten (Streicher). Die Oboe wird geblasen und gehört zu den Holzbläsern. Die Trompete hat ein Mundstück aus Metall (Blechbläser). Die Pauke schlägt man (Schlagwerk).
         links:
           - { title: Orchester (Wikipedia), url: "https://de.wikipedia.org/wiki/Orchester" }

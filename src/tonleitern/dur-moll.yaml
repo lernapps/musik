@@ -1,0 +1,84 @@
+# yaml-language-server: $schema=../../node_modules/@lernapps/app-templates/runtime/explainer/explainer.v1.schema.json
+title: Dur und Moll hören
+description: Dur und Moll am Klang unterscheiden und den kleinen Unterschied im Aufbau erkennen.
+blocks:
+  - type: section
+    id: ausprobieren
+    title: Ausprobieren
+    blocks:
+      - type: text
+        text: |
+          Spiele zuerst C-Dur und dann C-Moll. Beide beginnen auf dem C. Hörst du den Unterschied? Schaue auch auf die
+          Tasten: Welche Töne sind in Moll anders?
+      - type: vue-component
+        component: Klaviatur
+        props: { start: 0, markiert: [0, 2, 4, 5, 7, 9, 11, 12], folge: [0, 2, 4, 5, 7, 9, 11, 12] }
+        nojs: |
+          C-Dur auf der Klaviatur. Markiert sind C, D, E, F, G, A, H, C. Mit JavaScript spielt „Folge abspielen“ die Tonleiter.
+      - type: vue-component
+        component: Klaviatur
+        props: { start: 0, markiert: [0, 2, 3, 5, 7, 8, 10, 12], folge: [0, 2, 3, 5, 7, 8, 10, 12] }
+        nojs: |
+          C-Moll auf der Klaviatur. Markiert sind C, D, Es (schwarze Taste), F, G, As (schwarze Taste), B (schwarze Taste), C. Der dritte,
+          sechste und siebte Ton liegen einen Halbton tiefer als in C-Dur. Mit JavaScript spielt „Folge abspielen“ die Tonleiter.
+  - type: section
+    id: merke
+    title: Das Wichtigste
+    blocks:
+      - type: definition
+        term: Dur
+        explanation: Dur ist ein Tongeschlecht mit einer großen Terz über dem Grundton. Die Terz hat vier Halbtonschritte.
+      - type: definition
+        term: Moll
+        explanation: Moll ist ein Tongeschlecht mit einer kleinen Terz über dem Grundton. Die Terz hat drei Halbtonschritte.
+      - type: text
+        text: |
+          Dur klingt oft hell und fröhlich, Moll oft dunkel oder ernst. Aber das stimmt nicht immer: Es gibt auch fröhliche Lieder in Moll und
+          traurige Lieder in Dur. Verlasse dich darum auf den Aufbau, nicht nur auf das Gefühl.
+      - type: table
+        caption: Dur und Moll im Vergleich, Schritte der Tonleiter
+        header: [Tonleiter, Schrittmuster]
+        rows:
+          - [Dur, "ganz, ganz, halb, ganz, ganz, ganz, halb"]
+          - [natürliches Moll, "ganz, halb, ganz, ganz, halb, ganz, ganz"]
+  - type: section
+    id: uebung
+    title: Übung
+    blocks:
+      - type: vue-component
+        component: HoerAufgabe
+        id: hoer-dur-moll
+        props: { art: dur-moll }
+        examples:
+          accepted:
+            - { seed: 1, answer: "Moll" }
+            - { seed: 2, answer: "Dur" }
+            - { seed: 3, answer: "Dur" }
+          rejected:
+            - { seed: 1, answer: "Dur" }
+            - { seed: 2, answer: "Moll" }
+            - { seed: 3, answer: "Moll" }
+      - type: single-choice
+        id: terz-unterschied
+        text: Was unterscheidet Dur und Moll am deutlichsten?
+        options:
+          - text: Die Terz über dem Grundton ist in Dur groß und in Moll klein
+            correct: true
+            info: In Dur hat die Terz vier Halbtonschritte, in Moll drei. Dieser eine Halbton macht den Klang anders.
+          - text: Dur ist immer schneller als Moll
+            correct: false
+            info: Wie schnell ein Stück ist, sagt das Tempo. Es hat nichts mit Dur oder Moll zu tun.
+          - text: Moll hat mehr Töne als Dur
+            correct: false
+            info: Beide Tonleitern haben acht Töne, wenn du den Grundton oben mitzählst.
+        explanation: Dur und Moll unterscheiden sich vor allem in der Terz, dem dritten Ton der Tonleiter.
+        links:
+          - { title: Dur (Wikipedia), url: "https://de.wikipedia.org/wiki/Dur" }
+          - { title: Moll (Wikipedia), url: "https://de.wikipedia.org/wiki/Moll" }
+      - type: true-false
+        id: moll-traurig
+        text: "Wahr oder falsch? Alle Lieder in Moll klingen traurig."
+        answer: false
+        explanation: Moll klingt oft ernst oder dunkel. Es gibt aber auch fröhliche Lieder in Moll. Das Gefühl hängt auch von Tempo, Rhythmus und Text ab.
+        links:
+          - { title: Moll (Wikipedia), url: "https://de.wikipedia.org/wiki/Moll" }
