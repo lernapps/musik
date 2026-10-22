@@ -4,7 +4,7 @@
 # Archetype, null until chosen in Explore. Allowed values: explainer, interactive, quiz.
 archetype: explainer
 # Current phase. Allowed values: explore, plan, code, commit. Change the value line below, never this comment.
-phase: plan
+phase: code
 # prePushFailures: written by the pre-push hook. Never change it.
 prePushFailures: 0
 # failedChecks: failed rules and runs, written by lernapps check and the hooks. Never change it.
@@ -250,9 +250,9 @@ fitness: {account: false, install: false, storage: none}
       learners see after each). Words alone are not enough.
 - [x] Show the creator, short: goal, competencies by chapter, entry draft, tasks, sketches; the content method in
       plain words (what learners see and do, what it cannot do). At most 2 questions.
-- [ ] **Checkpoint:** confirm the plan and the content method, with the sketches shown. Stop and wait for an
+- [x] **Checkpoint:** confirm the plan and the content method, with the sketches shown. Stop and wait for an
       explicit yes. Changes → change, ask again. No `create` before the yes.
-- [ ] Set `phase: code`: change the value line (`grep '^phase:'` prints `phase: code`).
+- [x] Set `phase: code`: change the value line (`grep '^phase:'` prints `phase: code`).
 
 ### Seiten (Abbildung der Inhalte)
 
