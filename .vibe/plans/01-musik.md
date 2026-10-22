@@ -45,8 +45,8 @@ bleibt auf dem Gerät.
   Komponenten (Noten, Rhythmus, Klaviatur, Ton-Visualisierung) tragen das Erleben. Die Lehrkraft wünscht einen Explainer.
 - Klänge nur synthetisch im Browser (Web Audio), nichts wird hochgeladen. Reihenfolge: Hören → Tonhöhe → Rhythmus →
   Noten → Tonleitern und Intervalle → Begleiten und Erfinden.
-- Lehrplan-Orientierung: Gymnasium NRW, Fach Musik, Sekundarstufe I (Wahl der Lehrkraft als Rückfall). (guess)
-  Der Lehrplantext war nicht abrufbar; die Reihenfolge der Kapitel folgt der Didaktik, nicht einer geprüften Stelle.
+- Lehrplan-Orientierung: Hessen, Lehrplan Musik Gymnasialer Bildungsgang (Link vom Creator, gelesen). Die Reihenfolge
+  der Kapitel folgt der Didaktik; der Lehrplan gibt keine feste Reihenfolge vor.
 - Jede Mikrofon-Übung hat eine Alternative ohne Mikrofon, die beschreibt, wie man selbst übt. Das Mikrofon ist nie
   Pflicht und braucht eine Einwilligung des Browsers.
 - Sprache: nur Deutsch, einfache Sprache (ISO 24495). (guess)
@@ -56,14 +56,29 @@ bleibt auf dem Gerät.
 
 ### Lehrplan
 
-- Orientierung: Kernlehrplan Musik, Gymnasium Sekundarstufe I, Nordrhein-Westfalen (Ministerium für Schule und
-  Bildung NRW, Heft 3406, 1. Auflage 2019, Runderlass vom 23.06.2019,
-  <https://lehrplannavigator.nrw.de/system/files/media/document/file/g9_mu_klp_3406_2019_06_23_0.pdf>). Titel, Heft und
-  Jahr stammen aus einer Suche. **Nicht gelesen:** das PDF und die Seite des Landes antworteten mehrfach mit Fehler 503
-  bzw. Verbindungsabbruch. Keine Inhaltsfeld- oder Seitenangabe, nichts aus dem Gedächtnis zitiert. Der Lehrplan gibt nach Auskunft von Suchergebnissen keine verbindlichen
-  musikalischen Strukturen vor; die Fachkonferenz legt sie fest. Er ist hier nur Orientierung für Stufe und Reihenfolge.
-- **Offen:** Weitere Versuche (Landesportal, Schulportal-Spiegelung) scheiterten ebenfalls mit 503. Die
-  (guess)-Markierungen bleiben bis zu einem späteren Abruf stehen; der Plan sagt das offen.
+- Orientierung (vom Creator genannt, gelesen): Lehrplan Musik, Gymnasialer Bildungsgang, Jahrgangsstufen 5 bis 13,
+  Hessisches Kultusministerium, PDF aus 2021-06 (Datei-Datum; das Dokument nennt kein Erscheinungsjahr),
+  <https://kultus.hessen.de/sites/kultus.hessen.de/files/2021-06/g9-musik.pdf>. Gelesen: Arbeitsbereich „Elemente der
+  Musik ableiten und anwenden“ (gedruckte S. 10), „Musik hören und betrachten“ (S. 9), „Musikpraxis“ (S. 8), Themenblatt
+  5/04 „Musik – Instrument – Klang“ (S. 14), 6/09 „Musik und Form“ (S. 19). Hessen hat keine Themen für Jahrgang 7; die
+  App deckt Jahrgang 5 und 6 ab und gilt für 5–7.
+- Passung zu den Kapiteln (Lernfeld, Jahrgang):
+  - Hören/Klang: „Beschreiben von Höreindrücken (Tonhöhe, Tondauer, Tonstärke, Tempo, Klangfarbe, Metrum/Takt)“ (5);
+    Dynamik laut/leise, pp–ff, Tempo langsam–schnell (5).
+  - Instrumentenfamilien, Ensembles, Besetzungen; Tonerzeugung (5, Thema 5/04).
+  - Tonhöhe: hoch/tief; Violinschlüssel; Klaviertastatur, Ganz- und Halbtonschritt, Oktav-Einteilung; Stammtöne und
+    abgeleitete Töne; Tonschritt/Tonsprung (5).
+  - Rhythmus: Noten- und Pausenwerte, Punktierung, Grundschlag/Puls/Beat, betont/unbetont, Taktarten 2/4, 4/4, 3/4,
+    Volltakt/Auftakt (5); Triole, Synkope, weitere Taktarten (6, fakultativ in dieser Version: nein, draußen).
+  - Tonleitern/Intervalle: Struktur der Dur- und Molltonleitern, genauere Intervallbestimmung (6); Grund-Intervalle,
+    Dreiklang (5).
+  - Erfinden: „Erfinden einfacher Rhythmen und Melodien“ (5), „Erfinden von Rhythmen und Melodien“ (6);
+    Musizieren: Begleitungen zu Liedern, Rhythmen mit Körperinstrumenten (5).
+  - Singen/Stimme: „Singen einfacher Melodien“, Stimmtechnik, Tonaufnahme (5, 6).
+- Der Lehrplan sagt, Stichpunkte sind Planungsgrundlage mit pädagogisch verantworteter Auswahl (S. 4). Reihenfolge der
+  Kapitel ist unsere Didaktik; der Lehrplan nennt keine feste Reihenfolge der Lernfelder.
+- Der frühere Anker Kernlehrplan NRW (Heft 3406) wurde nicht gelesen (PDF nicht abrufbar) und entfällt als Orientierung;
+  die (guess)-Markierung dazu ist damit geklärt.
 
 ### Kompetenzen nach Kapitel
 
