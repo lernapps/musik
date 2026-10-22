@@ -362,7 +362,7 @@ const ansage = computed(() => {
       <button type="button" :disabled="beschaeftigt" aria-label="Muster abspielen" @click="abspielen(felder, true)">
         ▶ Abspielen
       </button>
-      <button type="button" :disabled="!beschaeftigt" aria-label="Abspielen stoppen" @click="stopp">■ Stopp</button>
+      <button type="button" :disabled="!beschaeftigt" @click="stopp">■ Stopp</button>
       <button v-if="hatVorbild" type="button" :disabled="beschaeftigt" @click="abspielen(vorbildFelder, false)">
         Vorbild hören
       </button>
