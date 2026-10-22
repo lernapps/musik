@@ -430,18 +430,20 @@ in `chapter.yaml` und Kapitel in `src/app.yaml` eintragen; Komponenten wiederver
 - [x] Push `work`, open the preview pull request, see its checks to green as the skill says.
 - [x] **Checkpoint:** publish. Show what the app does and the preview link from the comment "Vorschau der App"; ask
       whether it may go online; put any open click into the same question. Wait for the yes.
-- [ ] Load skill `lernapps-commit`. Publish as skill `lernapps-github` says: `work` into `main` as one squash commit
+- [x] Load skill `lernapps-commit`. Publish as skill `lernapps-github` says: `work` into `main` as one squash commit
       with the message from this plan, the run of `Pages` watched to the end.
-- [ ] Open the address the job `deploy` printed; confirm the app shows. Use that address, never a derived one.
+- [x] Open the address the job `deploy` printed; confirm the app shows. Use that address, never a derived one.
 - [ ] Load skill `lernapps-listing`. Complete the entry draft (e.g. the address).
-- [ ] Fill the retrospective.
-- [ ] Commit this plan on `main` and push it: the listing check and the review read it there.
+- [x] Fill the retrospective.
+- [x] Commit this plan on `main` and push it: the listing check and the review read it there.
 - [ ] **Checkpoint:** list. Open the listing pull request as the skill says, without asking first: the pull request
       is the review. See it to "bestanden", then show the creator the pull request and its result; change nothing in
       it without their word.
 - [ ] Plan changed since its last push → commit it on `main`, push again.
 
 ### Completed
+
+Veröffentlicht unter http://lernapps.net/musik/ (Job `deploy` erfolgreich, Seiten und Komponenten geprüft). Listing im Katalog: nicht Teil dieses Auftrags, offen.
 
 ## Retrospective
 
