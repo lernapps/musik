@@ -43,6 +43,12 @@
       "skillPath": "skills/content/lernapps-exercise-patterns/SKILL.md",
       "computedHash": "173e341a776970dbd87ce1d1d72c98b44499c7725399aee4cd2fc799eb5245c8"
     },
+    "lernapps-explainer": {
+      "source": "lernapps/tooling",
+      "sourceType": "github",
+      "skillPath": "skills/archetypes/lernapps-explainer/SKILL.md",
+      "computedHash": "5135be0d222d1b12fcc006244b28899b467ff62fed47a83320993ab419fdb7d5"
+    },
     "lernapps-github": {
       "source": "lernapps/tooling",
       "sourceType": "github",
