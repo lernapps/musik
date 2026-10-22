@@ -4,7 +4,7 @@
 # Archetype, null until chosen in Explore. Allowed values: explainer, interactive, quiz.
 archetype: explainer
 # Current phase. Allowed values: explore, plan, code, commit. Change the value line below, never this comment.
-phase: explore
+phase: plan
 # prePushFailures: written by the pre-push hook. Never change it.
 prePushFailures: 0
 # failedChecks: failed rules and runs, written by lernapps check and the hooks. Never change it.
@@ -62,6 +62,8 @@ bleibt auf dem Gerät.
   Jahr stammen aus einer Suche. **Nicht gelesen:** das PDF und die Seite des Landes antworteten mehrfach mit Fehler 503
   bzw. Verbindungsabbruch. Keine Inhaltsfeld- oder Seitenangabe, nichts aus dem Gedächtnis zitiert. Der Lehrplan gibt nach Auskunft von Suchergebnissen keine verbindlichen
   musikalischen Strukturen vor; die Fachkonferenz legt sie fest. Er ist hier nur Orientierung für Stufe und Reihenfolge.
+- **Offen:** Weitere Versuche (Landesportal, Schulportal-Spiegelung) scheiterten ebenfalls mit 503. Die
+  (guess)-Markierungen bleiben bis zu einem späteren Abruf stehen; der Plan sagt das offen.
 
 ### Kompetenzen nach Kapitel
 
@@ -111,6 +113,8 @@ bleibt auf dem Gerät.
 - Draußen: Bassschlüssel, Vorzeichen-Lehre, Akkordlehre, Musikgeschichte, Komponisten, Musikverständnis nach Epochen.
   Grund: Umfang der ersten Version; später als Erweiterung.
 - Sprache: Deutsch. Klänge: synthetisch (Web Audio), keine Aufnahmen Dritter.
+- Singen ist in Kapitel 5 und 6 gut sichtbar (Tonfolge nachsingen, eigene Melodie singen und vergleichen); Stimme und
+  Mikrofon sind der Kern (Wunsch der Lehrkraft).
 - Mikrofon: Tonhöhe der Stimme und Klatschen werden lokal im Browser gemessen. Jede Übung hat eine Alternative ohne
   Mikrofon („So übst du selbst“). Kein Upload, keine Speicherung.
 
@@ -176,10 +180,10 @@ Geprüft = Seite lädt und ist der Artikel zum Thema (de.wikipedia.org, CC BY-SA
 - [x] Fetch https://lernapps.net/apps/schemas/entry.v1.schema.json and read each property's description. Ask what
       helps teachers and parents find the app. Fill "Entry draft". Search words: one or two words each, as people
       type them.
-- [ ] **Checkpoint:** research. Show in plain words: curriculum orientation, competencies by chapter, didactic
+- [x] **Checkpoint:** research. Show in plain words: curriculum orientation, competencies by chapter, didactic
       approach, scope, every "(guess)", sources and how you checked them, what is unchecked, archetype and reason.
       Stop and wait. Changes → change, ask again.
-- [ ] Set `phase: plan`: change the value line (`grep '^phase:'` prints `phase: plan`).
+- [x] Set `phase: plan`: change the value line (`grep '^phase:'` prints `phase: plan`).
 
 ### Answers
 
@@ -217,7 +221,7 @@ summary: >-
   Melodien. Alle Klänge entstehen im Browser; das Mikrofon ist freiwillig, und jede Übung geht auch ohne.
 keywords: [Noten lesen, Rhythmus klatschen, Tonleiter, Intervalle, Klaviatur, Instrumente]
 creator:
-  name: Musiklehrkraft (Name offen)
+  name: offen, vor dem Eintrag im Katalog bestätigen   # Git-Autor ist nur "Claude", kein Mensch
 source: https://github.com/lernapps/musik
 fitness: {account: false, install: false, storage: none}
 # url und commit folgen in Commit.
@@ -237,23 +241,104 @@ fitness: {account: false, install: false, storage: none}
 
 ### Tasks
 
-- [ ] `grep '^phase:'` prints `phase: plan`; else set it.
-- [ ] Map the content as skill `lernapps-<archetype>-design` says; reread it if it is no longer in view.
-- [ ] Choose a pattern per competency as skill `lernapps-exercise-patterns` says (loaded in Explore; reread it if it
+- [x] `grep '^phase:'` prints `phase: plan`; else set it.
+- [x] Map the content as skill `lernapps-<archetype>-design` says; reread it if it is no longer in view.
+- [x] Choose a pattern per competency as skill `lernapps-exercise-patterns` says (loaded in Explore; reread it if it
       is no longer in view). Write "Content method".
-- [ ] Write the Code tasks under "Code": pages or screens, their content, what each shows. Each ends in a commit.
-- [ ] Each screen, component or interactive exercise: a sketch (static SVG or image, or the steps with what
+- [x] Write the Code tasks under "Code": pages or screens, their content, what each shows. Each ends in a commit.
+- [x] Each screen, component or interactive exercise: a sketch (static SVG or image, or the steps with what
       learners see after each). Words alone are not enough.
-- [ ] Show the creator, short: goal, competencies by chapter, entry draft, tasks, sketches; the content method in
+- [x] Show the creator, short: goal, competencies by chapter, entry draft, tasks, sketches; the content method in
       plain words (what learners see and do, what it cannot do). At most 2 questions.
 - [ ] **Checkpoint:** confirm the plan and the content method, with the sketches shown. Stop and wait for an
       explicit yes. Changes → change, ask again. No `create` before the yes.
 - [ ] Set `phase: code`: change the value line (`grep '^phase:'` prints `phase: code`).
 
+### Seiten (Abbildung der Inhalte)
+
+Kapitel 1 Hören und Klang beschreiben
+- 1.1 Laut und leise: `Klangbild` (Lautstärke); `merke` leise/laut, p/f; Übung `true-false`, `ordering`.
+- 1.2 Schnell und langsam: `RhythmusWerkstatt` (Tempo, Metronom); Übung `single-choice`.
+- 1.3 Klangfarbe und Instrumentenfamilien: `Klangbild` (Wellenform), `table` und `labelled-figure` Orchester; Übung
+  `matching` aus `instrumente.yaml`.
+
+Kapitel 2 Tonhöhe und Klaviatur
+- 2.1 Hoch und tief: `Klangbild` (Tonhöhe), `HoerAufgabe` höher/tiefer; Irrtum „laut = hoch“.
+- 2.2 Die Klaviatur: `Klaviatur`; Muster 2 und 3 schwarze Tasten, C finden, Tonnamen C–H; `generated` Taste → Name.
+- 2.3 Meine Stimme hat eine Tonhöhe: `Stimmspiegel` (Einzelton); `so-uebst-du-selbst`; Übung `single-choice`.
+
+Kapitel 3 Rhythmus und Takt
+- 3.1 Grundschlag und Takt: `RhythmusWerkstatt`, `HoerAufgabe` Taktart; 2/4, 3/4, 4/4.
+- 3.2 Notenwerte und Pausen: `table`/Abbildung Ganze bis Achtel (jeder Wert halb so lang); `generated` Dauer in Achteln.
+- 3.3 Rhythmen klatschen: `RhythmusWerkstatt` mit Klatschen; `so-uebst-du-selbst`; Übung `ordering`.
+
+Kapitel 4 Noten lesen
+- 4.1 Notenlinien und Violinschlüssel: `Notenzeile`; Linien und Zwischenräume; Übung `matching`.
+- 4.2 Noten benennen: `Notenzeile`; `generated` (gezeigte Note → Name; Abbildung zeigt die Aufgabe, nicht die Antwort).
+- 4.3 Rhythmus und Melodie lesen: `Notenzeile` abspielen; Übung `single-choice` (Welcher Rhythmus erklingt?).
+
+Kapitel 5 Tonleitern und Intervalle
+- 5.1 Ganzton, Halbton, Dur-Tonleiter: `Klaviatur`; `generated` Ton nach Schrittmuster.
+- 5.2 Dur und Moll hören: `HoerAufgabe` Dur/Moll; Irrtum „Moll = traurig“.
+- 5.3 Intervalle: `HoerAufgabe` Intervall; Tabelle aus `intervalle.yaml`; `generated` Halbtöne zwischen Tönen.
+- 5.4 Nachsingen: `Stimmspiegel` (Tonfolge); `so-uebst-du-selbst`; Übung `ordering` (Tonfolge nach Höhe).
+
+Kapitel 6 Begleiten und Erfinden
+- 6.1 Begleiten mit Grundschlag: `RhythmusWerkstatt`; `so-uebst-du-selbst`; Übung `single-choice`.
+- 6.2 Eigenen Rhythmus erfinden: `RhythmusWerkstatt` (4 Takte) + `Notenzeile` Anzeige; Übung `generated` (Wie viele Achtel
+  hat ein 4/4-Takt? Passt dein Rhythmus?).
+- 6.3 Eigene Melodie erfinden und singen: `Klaviatur` + `Stimmspiegel` + `Notenzeile`; Vergleich mit Vorbild;
+  `so-uebst-du-selbst`; Übung `true-false`.
+
 ### Content method
 
-<!-- One line each: exercise patterns and where; figures and how they are made; data files; each component, what it
-checks and cannot; how a later agent adds a chapter. Becomes the content guide in Code. -->
+**Aufbau jeder Seite** (feste Abschnitte, gleiche ids): `ausprobieren` (Komponente oder Abbildung), `merke`
+(Definition/Regel in einfacher Sprache), `so-uebst-du-selbst` (nur wo ein Mikrofon-Werkzeug steht: Kasten `note`
+mit Schritten ohne Mikrofon: summen/singen, Hand auf den Hals, mit Klavier oder Handy-App vergleichen, Partner:in
+hört zu; ohne Technik), `uebung` (mindestens eine Frage oder `generated`).
+
+**Muster**
+- *Hören-Vergleichen* (assign/compare): `HoerAufgabe` (Übungskomponente): zwei Töne oder Tonfolgen, die Antwort wird
+  gehört und gewählt. Arten: höher/tiefer, lauter/leiser, Intervall nennen, Dur/Moll, Taktart. Feste Seeds, 50 Seeds
+  getestet. Grenze: Klang nur synthetisch; kein echter Instrumentenklang.
+- *Zuordnen* (assign): `matching` Instrument ↔ Familie, Notenwert ↔ Name, Taste ↔ Tonname.
+- *Berechnen* (`generated`): Dauer in Achteln, Halbtonschritte zwischen zwei Tönen, Ton nach n Halbtönen, Ton in
+  einer Dur-Tonleiter. Typische Fehler mit Meldung ("Du hast die Starttaste mitgezählt").
+- *Ordnen* (`ordering`): Töne nach Höhe, Notenwerte nach Dauer.
+- *Urteilen* (`true-false`, `single-choice`): Aussagen zu Taktarten, Dur/Moll, „laut = hoch?“; jede falsche Option mit
+  Grund.
+- *Selbst machen* (freie Aufgabe): Rhythmus erfinden, Melodie erfinden. Hier gibt es kein „falsch“; die Komponente
+  meldet nur Länge, Takt und Tonumfang; die Pflichtfrage der Seite prüft das Wissen dahinter.
+
+**Komponenten** (alle in `src/components/`, ≤ 20 kB gzip; gemeinsamer Klang-Helfer `Klang.ts` mit Web Audio,
+Töne erst nach Klick; Mikrofon nur nach Klick und Einwilligung des Browsers, nur im Browser, nichts gespeichert;
+Skizzen in `.vibe/plans/sketches/`)
+1. `Klaviatur`: spielbare Tastatur C bis c² mit Namen; Props: markierte Töne, Namen an/aus. Grenze: kein
+   Anschlagsstärke, keine Pedale.
+2. `Klangbild`: Welle eines Tons mit Reglern Tonhöhe, Lautstärke, Klangfarbe (Sinus/Dreieck/Rechteck). Grenze:
+   synthetische Wellenformen, keine echten Instrumente.
+3. `Notenzeile`: Noten im Violinschlüssel aus Props (Tonname, Wert), antippen = Name und Klang, „Alles abspielen“.
+   Grenze: nur Violinschlüssel, keine Vorzeichen außer in Kapitel 5.
+4. `RhythmusWerkstatt`: 8 oder 12 oder 16 Felder, Taktart, Tempo, Metronom, Abspielen; optional Klatschen mit
+   Mikrofon (Lautstärkesprünge werden erkannt, Vergleich mit dem Muster). Grenze: erkennt Klatschen, keine Töne.
+5. `Stimmspiegel`: Mikrofon, Tonhöhe der Stimme (Autokorrelation), Linie gegen Zielton, Abweichung in Cent; Modus
+   Einzelton und Tonfolge. Grenze: einstimmig, ruhige Umgebung, Kinderstimmen unter ca. 200 Hz werden schlecht
+   erkannt (siehe Alternative). Ohne Mikrofon: Zielton nur hören und selbst üben.
+6. `HoerAufgabe`: Übungskomponente, siehe oben. `generate`, `check`, `solution`, `wrong` und Begründung rein, getestet.
+
+**Mikrofon-Alternative:** Jedes Werkzeug mit Mikrofon (`RhythmusWerkstatt` mit Klatschen, `Stimmspiegel`) hat im
+Abschnitt `so-uebst-du-selbst` eine schriftliche Anleitung ohne Technik und ist ohne Mikrofon voll nutzbar
+(Zielton hören, Muster abspielen). Kein Lernschritt hängt am Mikrofon.
+
+**Daten:** `src/data/instrumente.yaml` (Name, Familie, Beschreibung), `src/data/noten.yaml` (Tonname, Position,
+Frequenz, Taste), `src/data/intervalle.yaml` (Name, Halbtöne, Beispiel-Ton, Eselsbrücke-Hinweis), `src/data/notenwerte.yaml`.
+Jede Tatsache einmal.
+
+**Abbildungen:** Klaviatur, Notenzeile und Wellen entstehen in Komponenten oder als SVG in `src/images/` mit
+einheitlichen Farben (Ton C hervorgehoben, Zielton grün, Abweichung rot) und Textalternative.
+
+**Neues Kapitel später:** Ordner mit `chapter.yaml` und Seiten im Seitenaufbau oben, Fakten in die Datendateien, Seite
+in `chapter.yaml` und Kapitel in `src/app.yaml` eintragen; Komponenten wiederverwenden.
 
 ### Completed
 
@@ -278,9 +363,23 @@ checks and cannot; how a later agent adds a chapter. Becomes the content guide i
 - [ ] Fill the content guide `.agents/skills/app-content/SKILL.md` from "Notes" and "Content method"
       (`app-content-guide`). `grep -c "FILL IN" .agents/skills/app-content/SKILL.md` prints 0. Commit it before
       any content.
-- [ ] Load skill `lernapps-<archetype>` and the content guide. Questions with options and feedback: also skill
-      `lernapps-content-questions`.
-- [ ] <the tasks written in Plan; after each, commit on `work`>
+- [ ] Load skill `lernapps-explainer`, the content guide and `lernapps-content-questions`.
+- [ ] Gemeinsam: `app.yaml` (Titel „Musik erleben“, Sprache de), Datendateien `instrumente`, `noten`, `intervalle`,
+      `notenwerte`; Beispielkapitel „Prozent“ entfernen. Commit.
+- [ ] Komponente `Klang.ts` (Web Audio, Töne) und `Klaviatur`, mit Test. Commit.
+- [ ] Komponente `Klangbild`, mit Test. Commit.
+- [ ] Komponente `Notenzeile`, mit Test. Commit.
+- [ ] Komponente `RhythmusWerkstatt` (mit Mikrofon-Klatschen als Option), mit Test. Commit.
+- [ ] Komponente `Stimmspiegel` (Tonhöhenerkennung, Mikrofon als Option), mit Test. Commit.
+- [ ] Übungskomponente `HoerAufgabe` (50 Seeds getestet). Commit.
+- [ ] Kapitel 1 (Seiten 1.1–1.3), Fakten vorher an Quellen prüfen. Commit.
+- [ ] Kapitel 2 (2.1–2.3). Commit.
+- [ ] Kapitel 3 (3.1–3.3), Quelle „Rhythmus (Musik)“ vorher prüfen. Commit.
+- [ ] Kapitel 4 (4.1–4.3). Commit.
+- [ ] Kapitel 5 (5.1–5.4), Quelle Pentatonik nur falls genutzt. Commit.
+- [ ] Kapitel 6 (6.1–6.3). Commit.
+- [ ] Jede Mikrofon-Übung hat „So übst du selbst“ (nur Text, ohne Technik) und läuft ohne Mikrofon (Prüfung per Test
+      ohne `getUserMedia`).
 - [ ] The content guide matches what was built (`app-content-matches`).
 - [ ] `npx lernapps check` passes.
 - [ ] Look at a screenshot of every screen and state (start, each mode, pause, end), desktop and 360 px. Compare
