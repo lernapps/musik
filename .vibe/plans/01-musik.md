@@ -425,10 +425,10 @@ in `chapter.yaml` und Kapitel in `src/app.yaml` eintragen; Komponenten wiederver
 ### Tasks
 
 - [x] `grep '^phase:'` prints `phase: commit`; else set it.
-- [ ] Load skill `lernapps-github`. Repo and Pages as it says: ask the repo name and every click only the creator can
+- [x] Load skill `lernapps-github`. Repo and Pages as it says: ask the repo name and every click only the creator can
       make in one message.
-- [ ] Push `work`, open the preview pull request, see its checks to green as the skill says.
-- [ ] **Checkpoint:** publish. Show what the app does and the preview link from the comment "Vorschau der App"; ask
+- [x] Push `work`, open the preview pull request, see its checks to green as the skill says.
+- [x] **Checkpoint:** publish. Show what the app does and the preview link from the comment "Vorschau der App"; ask
       whether it may go online; put any open click into the same question. Wait for the yes.
 - [ ] Load skill `lernapps-commit`. Publish as skill `lernapps-github` says: `work` into `main` as one squash commit
       with the message from this plan, the run of `Pages` watched to the end.
@@ -449,12 +449,25 @@ in `chapter.yaml` und Kapitel in `src/app.yaml` eintragen; Komponenten wiederver
 
 ### Phases reached
 
-<!-- Last phase completed, checkpoints passed. E.g. "commit; confirmed, published". -->
+commit; Recherche, Plan und Veröffentlichen bestätigt. Das Listing im Katalog war nicht Teil dieses Auftrags.
 
 ### Creator turns after the plan
 
-<!-- Number of creator messages after the confirmation, topic of each. Target: at most 3. -->
+6 Nachrichten des Nutzers nach der Plan-Bestätigung: Link zum hessischen Lehrplan; Erlaubnis zur Websuche; Erlaubnis zum
+Pushen und zu allem in `lernapps/musik`; Urheber bestätigt; Hinweis „keine interaktiven Elemente“ in der Vorschau;
+„veröffentliche“. Dazu Antworten der Lehrkraft-Sitzung auf den Checkpoints (Recherche, Plan).
 
 ### Where I had to guess
 
-<!-- Each gap in plan, skills, messages or answers, and your choice. "None" if none. -->
+- Lehrplan NRW (Heft 3406) war nicht abrufbar; der Nutzer schickte später den hessischen Lehrplan, der als Orientierung dient.
+- Reihenfolge der Kapitel ist didaktisch (der Lehrplan nennt keine feste Reihenfolge).
+- Sprache nur Deutsch, Seitenzahl und Umfang (Erwartung 2–4 Seiten je Kapitel), Fachwörter: eigene Annahmen.
+- Sieben statt sechs Komponenten (`NotenAufgabe` kam hinzu), weil `generated` kein wechselndes Bild zeigen kann.
+- Schwelle der Klatsch-Erkennung (0,08) und Genauigkeit bei echten Kinderstimmen: nur mit künstlichem Mikrofon geprüft.
+- Lücke in der Vorlage: Vue-Bausteine mit Unterstrich im Dateinamen (`_plugin-vue_export-helper`) lieferte GitHub Pages
+  (Jekyll) nicht aus, die Komponenten starteten nicht. Ich habe `public/.nojekyll` ergänzt und auf `gh-pages` gelegt; das
+  gehört in die Vorlage (lernapps/app-templates), eine Meldung steht noch aus.
+- Der Pre-Push-Hook scheiterte auf einem leeren Start-Commit (keine App im Baum). `main` und `gh-pages` entstanden über
+  das GitHub-Werkzeug, mit einem Platzhalter `.gitkeep`, den die erste Version wieder entfernt.
+- Die Komponenten `Klang.ts`-Helfer wurden mit Hilfsagenten parallel gebaut; die Berichte nennen Browser-Prüfungen, die ohne
+  echte Hardware nicht möglich waren.
