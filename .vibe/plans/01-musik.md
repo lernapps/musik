@@ -4,7 +4,7 @@
 # Archetype, null until chosen in Explore. Allowed values: explainer, interactive, quiz.
 archetype: explainer
 # Current phase. Allowed values: explore, plan, code, commit. Change the value line below, never this comment.
-phase: code
+phase: commit
 # prePushFailures: written by the pre-push hook. Never change it.
 prePushFailures: 0
 # failedChecks: failed rules and runs, written by lernapps check and the hooks. Never change it.
@@ -132,6 +132,14 @@ bleibt auf dem Gerät.
   Mikrofon sind der Kern (Wunsch der Lehrkraft).
 - Mikrofon: Tonhöhe der Stimme und Klatschen werden lokal im Browser gemessen. Jede Übung hat eine Alternative ohne
   Mikrofon („So übst du selbst“). Kein Upload, keine Speicherung.
+
+### Umsetzung (Abweichungen vom Plan)
+
+- Sieben statt sechs Komponenten: `NotenAufgabe` kam hinzu, weil eine `generated`-Aufgabe kein wechselndes Notenbild zeigen
+  kann. `Stimmspiegel` hat den Modus „eigene Melodie“ (Auswahl der Töne) für Seite 6.3.
+- Tonumfang c¹ bis c³ (nicht „C bis c²“).
+- Im 4/4-Achtelraster zeigt `RhythmusWerkstatt` zwei Zeilen je Takt (360 px); 4 Takte im Achtelraster werden dadurch lang.
+- Lehrplan: der hessische Lehrplan (Link vom Creator) ersetzt die NRW-Vermutung.
 
 ### Quellen (Zweitquellen)
 
@@ -372,35 +380,35 @@ in `chapter.yaml` und Kapitel in `src/app.yaml` eintragen; Komponenten wiederver
 
 ### Tasks
 
-- [ ] `grep '^phase:'` prints `phase: code`; else set it.
-- [ ] Load skill `lernapps-check`. Create the app in this plan's folder as it says. `create` keeps this plan. Never
+- [x] `grep '^phase:'` prints `phase: code`; else set it.
+- [x] Load skill `lernapps-check`. Create the app in this plan's folder as it says. `create` keeps this plan. Never
       write the app by hand.
-- [ ] Fill the content guide `.agents/skills/app-content/SKILL.md` from "Notes" and "Content method"
+- [x] Fill the content guide `.agents/skills/app-content/SKILL.md` from "Notes" and "Content method"
       (`app-content-guide`). `grep -c "FILL IN" .agents/skills/app-content/SKILL.md` prints 0. Commit it before
       any content.
-- [ ] Load skill `lernapps-explainer`, the content guide and `lernapps-content-questions`.
-- [ ] Gemeinsam: `app.yaml` (Titel „Musik erleben“, Sprache de), Datendateien `instrumente`, `noten`, `intervalle`,
+- [x] Load skill `lernapps-explainer`, the content guide and `lernapps-content-questions`.
+- [x] Gemeinsam: `app.yaml` (Titel „Musik erleben“, Sprache de), Datendateien `instrumente`, `noten`, `intervalle`,
       `notenwerte`; Beispielkapitel „Prozent“ entfernen. Commit.
-- [ ] Komponente `Klang.ts` (Web Audio, Töne) und `Klaviatur`, mit Test. Commit.
-- [ ] Komponente `Klangbild`, mit Test. Commit.
-- [ ] Komponente `Notenzeile`, mit Test. Commit.
-- [ ] Komponente `RhythmusWerkstatt` (mit Mikrofon-Klatschen als Option), mit Test. Commit.
-- [ ] Komponente `Stimmspiegel` (Tonhöhenerkennung, Mikrofon als Option), mit Test. Commit.
-- [ ] Übungskomponente `HoerAufgabe` (50 Seeds getestet). Commit.
-- [ ] Kapitel 1 (Seiten 1.1–1.3), Fakten vorher an Quellen prüfen. Commit.
-- [ ] Kapitel 2 (2.1–2.3). Commit.
-- [ ] Kapitel 3 (3.1–3.3), Quelle „Rhythmus (Musik)“ vorher prüfen. Commit.
-- [ ] Kapitel 4 (4.1–4.3). Commit.
-- [ ] Kapitel 5 (5.1–5.4), Quelle Pentatonik nur falls genutzt. Commit.
-- [ ] Kapitel 6 (6.1–6.3). Commit.
-- [ ] Jede Mikrofon-Übung hat „So übst du selbst“ (nur Text, ohne Technik) und läuft ohne Mikrofon (Prüfung per Test
+- [x] Komponente `Klang.ts` (Web Audio, Töne) und `Klaviatur`, mit Test. Commit.
+- [x] Komponente `Klangbild`, mit Test. Commit.
+- [x] Komponente `Notenzeile`, mit Test. Commit.
+- [x] Komponente `RhythmusWerkstatt` (mit Mikrofon-Klatschen als Option), mit Test. Commit.
+- [x] Komponente `Stimmspiegel` (Tonhöhenerkennung, Mikrofon als Option), mit Test. Commit.
+- [x] Übungskomponente `HoerAufgabe` (50 Seeds getestet). Commit.
+- [x] Kapitel 1 (Seiten 1.1–1.3), Fakten vorher an Quellen prüfen. Commit.
+- [x] Kapitel 2 (2.1–2.3). Commit.
+- [x] Kapitel 3 (3.1–3.3), Quelle „Rhythmus (Musik)“ vorher prüfen. Commit.
+- [x] Kapitel 4 (4.1–4.3). Commit.
+- [x] Kapitel 5 (5.1–5.4), Quelle Pentatonik nur falls genutzt. Commit.
+- [x] Kapitel 6 (6.1–6.3). Commit.
+- [x] Jede Mikrofon-Übung hat „So übst du selbst“ (nur Text, ohne Technik) und läuft ohne Mikrofon (Prüfung per Test
       ohne `getUserMedia`).
-- [ ] The content guide matches what was built (`app-content-matches`).
-- [ ] `npx lernapps check` passes.
-- [ ] Look at a screenshot of every screen and state (start, each mode, pause, end), desktop and 360 px. Compare
+- [x] The content guide matches what was built (`app-content-matches`).
+- [x] `npx lernapps check` passes.
+- [x] Look at a screenshot of every screen and state (start, each mode, pause, end), desktop and 360 px. Compare
       each with the confirmed sketches.
-- [ ] Every box of Explore, Plan and Code ticked.
-- [ ] Set `phase: commit`: change the value line (`grep '^phase:'` prints `phase: commit`).
+- [x] Every box of Explore, Plan and Code ticked.
+- [x] Set `phase: commit`: change the value line (`grep '^phase:'` prints `phase: commit`).
       No checkpoint here: set it before you ask or report anything, then start Commit in the same message.
 
 ### Completed
@@ -416,7 +424,7 @@ in `chapter.yaml` und Kapitel in `src/app.yaml` eintragen; Komponenten wiederver
 
 ### Tasks
 
-- [ ] `grep '^phase:'` prints `phase: commit`; else set it.
+- [x] `grep '^phase:'` prints `phase: commit`; else set it.
 - [ ] Load skill `lernapps-github`. Repo and Pages as it says: ask the repo name and every click only the creator can
       make in one message.
 - [ ] Push `work`, open the preview pull request, see its checks to green as the skill says.

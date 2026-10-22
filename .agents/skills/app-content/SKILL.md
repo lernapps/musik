@@ -32,7 +32,7 @@ Kapitel-Ordner `src/<kapitel-id>/`, Seiten-Dateien `<seiten-id>.yaml`. Übungs-i
 3. `rhythmus` Rhythmus und Takt
    - Ich kann Notenwerte und Pausen benennen und ihre Dauer vergleichen. (`notenwerte`)
    - Ich kann einen Rhythmus im Takt klatschen. (`klatschen`)
-   - Ich kann einen Takt (2/4, 3/4, 4/4) heraushören und betonen. (`takt`)
+   - Ich kann einen Takt (2/4, 3/4, 4/4) heraushören und betonen. (`grundschlag-takt`)
 4. `noten` Noten lesen
    - Ich kann Noten im Violinschlüssel benennen. (`linien`, `benennen`)
    - Ich kann einen einfachen Rhythmus oder eine kurze Melodie aus Noten ablesen. (`lesen`)
@@ -61,7 +61,7 @@ Kapitel-Ordner `src/<kapitel-id>/`, Seiten-Dateien `<seiten-id>.yaml`. Übungs-i
 - Du-Form. Kurze Sätze, aktive Verben, ein Fachwort pro Satz, jedes beim ersten Gebrauch erklärt (ISO 24495).
 - Benutzt: Tonhöhe, Lautstärke, Klangfarbe, Tempo, Grundschlag, Takt, Notenwert, Pause, Klaviatur, Oktave, Ganzton,
   Halbton, Tonleiter, Dur, Moll, Intervall, Prime/Sekunde/Terz/Quarte/Quinte/Sexte/Septime/Oktave.
-- Tonnamen deutsch: C D E F G A H (nicht B). Zwei Oktaven: C bis c². Grundton C hervorgehoben.
+- Tonnamen deutsch: C D E F G A H; schwarze Tasten Cis, Dis … mit zweitem Namen Des, Es … , B ist das b. Tonumfang c¹ bis c³ (zwei Oktaven); Töne werden in Halbtönen ab c¹ gezählt (c¹ = 0). Das C ist auf der Klaviatur hervorgehoben.
 - Vermieden: „Moll klingt traurig“ als Regel (nur „oft“); „Intervall“ ohne Erklärung; englische Notennamen.
 - Frequenz in Hz, a¹ = 440 Hz. Tempo in Schlägen pro Minute (BPM).
 
@@ -76,6 +76,18 @@ Kapitel-Ordner `src/<kapitel-id>/`, Seiten-Dateien `<seiten-id>.yaml`. Übungs-i
 - *Selbst machen*: freie Aufgaben (Rhythmus, Melodie erfinden): die Komponente meldet nur Länge, Takt, Tonumfang;
   die Pflichtfrage der Seite prüft das Wissen dahinter.
 - Jede Seite hat mindestens eine Frage oder `generated` im Abschnitt `uebung`.
+- Komponenten in `src/components/` (alle mit Test): `Klaviatur` (Tasten, `start` 0 oder 12, `markiert`, `folge`),
+  `Klangbild` (Welle, `regler`, `hz`, `form`, `laut`), `Notenzeile` (`noten` mit `ton` in Halbtönen ab c¹, `wert`
+  ganze/halbe/viertel/achtel, `pause`; `taktart`, `namen`, `tempo`), `NotenAufgabe` (Übung, `bereich`),
+  `RhythmusWerkstatt` (`taktart`, `takte`, `raster`, `tempo`, `muster`, `vorbild`, `klatschen`), `Stimmspiegel` (`ziel`,
+  `folge`, `eigene`, `ohneOktave`), `HoerAufgabe` (Übung, `art` hoeher, lauter, intervall, dur-moll, takt). Logik in
+  `Musik.ts` (Töne, Frequenzen, Tonleitern), `Analyse.ts` (Tonhöhe, Klatschen), `Klang.ts` (Web Audio, Mikrofon).
+- Übungskomponenten brauchen `examples` mit `seed`: Antworten aus `solution(generate(seed, props))` und `wrong(...)`
+  berechnen (z. B. mit `node`), nicht raten.
+- Eine `generated`-Aufgabe darf keine Falschantwort haben, die bei einem Wert mit der richtigen übereinstimmt: mit
+  `where` ausschließen (sonst scheitert der Build).
+- Jede Komponente mit Mikrofon (`RhythmusWerkstatt` mit `klatschen`, `Stimmspiegel`) hat auf der Seite den Abschnitt
+  `so-uebst-du-selbst` und funktioniert ohne Mikrofon.
 
 ## Figures
 
@@ -84,6 +96,7 @@ Kapitel-Ordner `src/<kapitel-id>/`, Seiten-Dateien `<seiten-id>.yaml`. Übungs-i
 - Jede Abbildung hat `alt` und `caption`; die Abbildung zeigt die Aufgabe, nie die Antwort.
 - Eigene SVG in `src/images/`, selbst gezeichnet, Lizenz CC BY 4.0. Keine fremden Bilder.
 - Alle Abbildungen funktionieren bei 360 px Breite.
+- Browser-Globals (`navigator` …) in Komponenten nur in `onMounted`; der Build prüft das statisch, auch in `.ts`-Dateien.
 
 ## Sources
 
@@ -91,8 +104,11 @@ Kapitel-Ordner `src/<kapitel-id>/`, Seiten-Dateien `<seiten-id>.yaml`. Übungs-i
 - Zweitquellen: de.wikipedia.org (CC BY-SA, Fakten übernommen, keine Sätze): Tonhöhe, Notenschrift, Takt (Musik),
   Tonleiter, Klaviatur, Lautstärke, Tempo (Musik), Musikinstrument, Frequenz, Violinschlüssel, Intervall (Musik),
   Klangfarbe, Dur, Moll, Notenwert, Kammerton. Geprüft: Seite lädt und ist der Artikel zum Thema.
-- Noch nicht geprüft: Rhythmus (Musik), Pentatonik, Dynamik (Musik), Obertonreihe, Orchester. Vor einer Seite prüfen,
-  die sie braucht; sonst weglassen.
+- Zusätzlich gelesen und geprüft: Rhythmus (Musik), Dynamik (Musik), Orchester, Tonhöhe (Hörbereich 16 bis 20 000 Hz,
+  Oktave = doppelte Frequenz), Tempo (Musik) (Tempowörter mit Bereichen), Klangfarbe, Lautstärke, Musikinstrument,
+  Kammerton (a¹ = 440 Hz), Intervall (Musik) (Halbtöne je Intervall), Notenwert.
+- Nicht genutzt und nicht geprüft: Pentatonik, Obertonreihe. Nicht ohne Prüfung verwenden.
+- Lehrplan Hessen ist der einzige gelesene Lehrplan.
 - Das Material der Lehrkraft bleibt lokal. Keine Namen von Lernenden.
 
 ## Adding a chapter or round
@@ -107,4 +123,6 @@ Kapitel-Ordner `src/<kapitel-id>/`, Seiten-Dateien `<seiten-id>.yaml`. Übungs-i
 
 ## Rules learned from mistakes
 
-None yet.
+- Ein Komma in einem YAML-Tabellenfeld ohne Anführungszeichen teilt die Zelle: Tabellenzellen mit Komma in Anführungszeichen setzen.
+- `matching` braucht `pairs` als `{ left, right }`, nicht als Liste.
+- Ein Doppelpunkt mit Leerzeichen in einem unquotierten YAML-Text (`summary: Laut: leise`) bricht das YAML: in Anführungszeichen setzen.
