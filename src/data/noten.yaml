@@ -1,0 +1,13 @@
+# Die zwölf Töne einer Oktave ab C. Ein Halbton ist der Abstand zur nächsten Taste, schwarz oder weiß.
+- { name: C, halbtoene: 0, weisse: 0, taste: weiß }
+- { name: Cis, halbtoene: 1, weisse: 0, taste: schwarz }
+- { name: D, halbtoene: 2, weisse: 1, taste: weiß }
+- { name: Dis, halbtoene: 3, weisse: 1, taste: schwarz }
+- { name: E, halbtoene: 4, weisse: 2, taste: weiß }
+- { name: F, halbtoene: 5, weisse: 3, taste: weiß }
+- { name: Fis, halbtoene: 6, weisse: 3, taste: schwarz }
+- { name: G, halbtoene: 7, weisse: 4, taste: weiß }
+- { name: Gis, halbtoene: 8, weisse: 4, taste: schwarz }
+- { name: A, halbtoene: 9, weisse: 5, taste: weiß }
+- { name: Ais, halbtoene: 10, weisse: 5, taste: schwarz }
+- { name: H, halbtoene: 11, weisse: 6, taste: weiß }

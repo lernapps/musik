@@ -1,0 +1,14 @@
+# Intervalle bis zur Oktave. Stufen: wie viele Töne der Tonleiter du zählst (Start mitgezählt). Halbtöne: Halbtonschritte.
+# Quelle: de.wikipedia.org/wiki/Intervall_(Musik)
+- { name: Prime, stufen: 1, halbtoene: 0 }
+- { name: kleine Sekunde, stufen: 2, halbtoene: 1 }
+- { name: große Sekunde, stufen: 2, halbtoene: 2 }
+- { name: kleine Terz, stufen: 3, halbtoene: 3 }
+- { name: große Terz, stufen: 3, halbtoene: 4 }
+- { name: Quarte, stufen: 4, halbtoene: 5 }
+- { name: Quinte, stufen: 5, halbtoene: 7 }
+- { name: kleine Sexte, stufen: 6, halbtoene: 8 }
+- { name: große Sexte, stufen: 6, halbtoene: 9 }
+- { name: kleine Septime, stufen: 7, halbtoene: 10 }
+- { name: große Septime, stufen: 7, halbtoene: 11 }
+- { name: Oktave, stufen: 8, halbtoene: 12 }

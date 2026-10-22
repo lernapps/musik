@@ -1,0 +1,78 @@
+# yaml-language-server: $schema=../../node_modules/@lernapps/app-templates/runtime/explainer/explainer.v1.schema.json
+title: Laut und leise
+description: Lautstärke hören, sehen und mit den Fachwörtern piano und forte beschreiben.
+blocks:
+  - type: section
+    id: ausprobieren
+    title: Ausprobieren
+    blocks:
+      - type: text
+        text: |
+          Schalte den Ton an und schiebe den Regler für die Lautstärke hin und her. Beobachte die Welle: Was
+          passiert mit ihr, wenn der Ton lauter wird? Stelle zuerst deine Lautsprecher leise ein, damit der Ton dich
+          nicht erschreckt.
+      - type: vue-component
+        component: Klangbild
+        props: { regler: lautstaerke, laut: 20 }
+        nojs: |
+          Ein Bild einer Schallwelle mit einem Regler für die Lautstärke. Wird der Ton lauter, schlägt die Welle
+          höher aus. Wird er leiser, wird die Welle flacher. Mit JavaScript spielt ein Knopf den Ton, und der Regler
+          verändert ihn sofort.
+  - type: section
+    id: merke
+    title: Das Wichtigste
+    blocks:
+      - type: definition
+        term: Lautstärke
+        explanation: Die Lautstärke sagt, wie laut oder leise ein Klang ist. Bei einem lauten Ton schwingt die Luft stärker.
+      - type: text
+        text: |
+          In Noten steht die Lautstärke als Buchstaben, oft aus dem Italienischen. **p** heißt leise, **f** heißt laut.
+          Ein **m** davor heißt „mittel“. Doppelte Buchstaben bedeuten „sehr“.
+      - type: table
+        caption: Die Lautstärken in den Noten, von leise bis laut
+        header: [Zeichen, Wort, Bedeutung]
+        rows:
+          - [pp, pianissimo, sehr leise]
+          - [p, piano, leise]
+          - [mp, mezzo piano, mittelleise]
+          - [mf, mezzo forte, mittellaut]
+          - [f, forte, laut]
+          - [ff, fortissimo, sehr laut]
+      - type: definition
+        term: Crescendo
+        explanation: Crescendo heißt, dass es nach und nach lauter wird. Das Gegenteil ist Decrescendo, dabei wird es nach und nach leiser.
+  - type: section
+    id: uebung
+    title: Übung
+    blocks:
+      - type: ordering
+        id: lautstaerken-ordnen
+        text: Bringe die Lautstärken in die Reihenfolge von leise nach laut. Das leiseste zuerst.
+        items: [pianissimo, piano, mezzo forte, forte, fortissimo]
+        explanation: Piano ist leise, forte ist laut. Mit „mezzo“ liegt der Ton in der Mitte, und die Endung „-issimo“ steigert das Wort.
+        links:
+          - { title: Dynamik (Musik) (Wikipedia), url: "https://de.wikipedia.org/wiki/Dynamik_(Musik)" }
+      - type: single-choice
+        id: forte-bedeutung
+        text: In den Noten steht ein f. Wie sollst du spielen oder singen?
+        options:
+          - text: Laut
+            correct: true
+            info: Forte heißt laut. Das f steht für das italienische Wort „forte“, das „stark“ bedeutet.
+          - text: Schnell
+            correct: false
+            info: Wie schnell du spielst, sagt das Tempo, zum Beispiel „Allegro“. Das f sagt nur etwas über die Lautstärke.
+          - text: Leise
+            correct: false
+            info: Leise heißt piano und wird mit p geschrieben. Das f ist das Gegenteil.
+        explanation: Die Buchstaben p und f beschreiben die Lautstärke. p ist leise, f ist laut.
+        links:
+          - { title: Dynamik (Musik) (Wikipedia), url: "https://de.wikipedia.org/wiki/Dynamik_(Musik)" }
+      - type: true-false
+        id: welle-hoch
+        text: "Wahr oder falsch? Je höher die Welle im Bild ausschlägt, desto lauter ist der Ton."
+        answer: true
+        explanation: Bei einem lauteren Ton schwingt die Luft stärker. Im Bild siehst du das als höhere Welle.
+        links:
+          - { title: Lautstärke (Wikipedia), url: "https://de.wikipedia.org/wiki/Lautst%C3%A4rke" }
