@@ -18,6 +18,7 @@ blocks:
           takte: 4
           raster: achtel
           tempo: 80
+          durchgaenge: 2
           klatschen: true
         nojs: |
           Ein Raster für vier 4/4-Takte, jeder Takt hat acht Felder (Achtel). Dunkle Felder klingen, helle sind Pausen. Unter dem Raster

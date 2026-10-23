@@ -86,6 +86,13 @@ Kapitel-Ordner `src/<kapitel-id>/`, Seiten-Dateien `<seiten-id>.yaml`. Übungs-i
   berechnen (z. B. mit `node`), nicht raten.
 - Eine `generated`-Aufgabe darf keine Falschantwort haben, die bei einem Wert mit der richtigen übereinstimmt: mit
   `where` ausschließen (sonst scheitert der Build).
+- Klang: `spiele` klingt standardmäßig wie ein Klavier (`Klavier.ts`: Obertöne, Abklingen, leicht verstimmte Saiten); Metronomklicks
+  bleiben Klicks; im `Klangbild` bleiben die Wellenformen (Lernstoff). Jede Komponente mit Ton zeigt `<Lautstaerke />`
+  (ein gemeinsamer Regler, 80 % am Anfang, nicht gespeichert). Im `Klangbild` mit dem Regler „Lautstärke“ (Höhe der Welle) gibt es keinen zweiten Regler: ein Regler genügt. „Stopp“ ruft `stoppeAlles()` auf.
+- Rhythmus: `RhythmusWerkstatt` und `Notenzeile` haben „Wie oft?“ (1, 2, 4, 8, dauerhaft; Props `durchgaenge`, `dauerhaft`).
+  Metronomseiten setzen `dauerhaft: true`. Das Einzählen (ein Takt Klicks, große Zahl im Bild) steht im Klatschmodus immer
+  und davor ein Kasten „So läuft die Übung“.
+- Eine angetippte Note in `Notenzeile` klingt so lange wie ihr Notenwert beim eingestellten Tempo.
 - Jede Komponente mit Mikrofon (`RhythmusWerkstatt` mit `klatschen`, `Stimmspiegel`) hat auf der Seite den Abschnitt
   `so-uebst-du-selbst` und funktioniert ohne Mikrofon.
 
@@ -127,3 +134,4 @@ Kapitel-Ordner `src/<kapitel-id>/`, Seiten-Dateien `<seiten-id>.yaml`. Übungs-i
 - `matching` braucht `pairs` als `{ left, right }`, nicht als Liste.
 - Ein Doppelpunkt mit Leerzeichen in einem unquotierten YAML-Text (`summary: Laut: leise`) bricht das YAML: in Anführungszeichen setzen.
 - Töne auf dem iPhone: Der gemeinsame Audiokontext kommt aus `holeKontext()` in `Klang.ts` (nicht eigene `AudioContext` anlegen). Er stellt die Audio-Sitzung auf Wiedergabe, spielt ein stilles Audio und setzt den Kontext fort. Jede Klangkomponente ruft in `onMounted` `merkeSitzung(navigator.audioSession)` auf.
+- Jede Komponente, die im Template eine andere Komponente benutzt, muss sie importieren; `vue-tsc` meldet fehlende Importe nicht, aber die Insel bleibt leer (Insel-Test der Prüfung schlägt fehl).

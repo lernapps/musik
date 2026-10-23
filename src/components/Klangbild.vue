@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import { naechsterTon } from "./Analyse.ts";
-import { holeKontext, merkeSitzung } from "./Klang.ts";
+import { ausgang, holeKontext, merkeSitzung } from "./Klang.ts";
+import Lautstaerke from "./Lautstaerke.vue";
 import { nameMitOktave } from "./Musik.ts";
 import {
   FORMEN,
@@ -84,7 +85,7 @@ function starten(): void {
   const t = ctx.currentTime;
   huelle.gain.setValueAtTime(0, t);
   huelle.gain.linearRampToValueAtTime(gainVon(lautProzent.value), t + 0.05);
-  osc.connect(huelle).connect(ctx.destination);
+  osc.connect(huelle).connect(ausgang());
   osc.start();
   an.value = true;
 }
@@ -162,6 +163,9 @@ onMounted(() => {
         {{ aktuelleForm === f.form ? "✓ " : "" }}{{ f.name }}
       </button>
     </div>
+
+    <!-- Der Regler für die Lautstärke des Tons ist zugleich der einzige Lautstärkeregler: zwei Regler wären verwirrend. -->
+    <Lautstaerke v-if="!zeigeLaut" />
 
     <button type="button" class="ton" :aria-pressed="an" @click="umschalten">
       {{ an ? "■ Ton aus" : "▶ Ton an" }}

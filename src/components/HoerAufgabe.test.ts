@@ -1,6 +1,17 @@
 import { describe as beschreibe, expect, it } from "vitest";
 import { INTERVALLE, tonleiter } from "./Musik.ts";
-import { about, check, describe, generate, klicks, reason, solution, wrong, type Art } from "./HoerAufgabe.ts";
+import {
+  about,
+  check,
+  describe,
+  generate,
+  klicks,
+  reason,
+  solution,
+  wiedergabe,
+  wrong,
+  type Art,
+} from "./HoerAufgabe.ts";
 
 const ARTEN: Art[] = ["hoeher", "lauter", "intervall", "dur-moll", "takt"];
 
@@ -36,12 +47,12 @@ beschreibe("HoerAufgabe", () => {
     }
   });
 
-  it("lauter: gleiche Höhe, Verhältnis mindestens 2:1", () => {
+  it("lauter: gleiche Höhe, Verhältnis mindestens 3:1", () => {
     for (let seed = 1; seed <= 200; seed++) {
       const t = generate(seed, { art: "lauter" });
       expect(t.toene[0]).toBe(t.toene[1]);
       const [x = 1, y = 1] = t.laut;
-      expect(Math.max(x, y) / Math.min(x, y)).toBeGreaterThanOrEqual(2);
+      expect(Math.max(x, y) / Math.min(x, y)).toBeGreaterThanOrEqual(3);
     }
   });
 
@@ -87,6 +98,16 @@ beschreibe("HoerAufgabe", () => {
       expect(k).toHaveLength(n * 3);
       k.forEach((klick, i) => expect(klick.betont).toBe(i % n === 0));
       expect(t.optionen.slice().sort()).toEqual(["2/4", "3/4", "4/4"]);
+    }
+  });
+
+  it("spielt Töne mit Klavier-Standard und gut hörbarer Dauer", () => {
+    for (const art of ARTEN.filter((a) => a !== "takt")) {
+      const t = generate(1, { art });
+      for (const ton of wiedergabe(t, "alle")) {
+        expect("form" in ton).toBe(false);
+        expect(ton.dauer).toBeGreaterThanOrEqual(0.45);
+      }
     }
   });
 

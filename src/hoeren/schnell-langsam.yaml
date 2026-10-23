@@ -8,11 +8,19 @@ blocks:
     blocks:
       - type: text
         text: |
-          Starte das Metronom und tippe mit dem Finger im Takt mit. Ändere dann das Tempo mit „Tempo −“ und
+          Starte das Metronom. Es läuft, bis du auf „Stopp“ drückst. Tippe mit dem Finger im Takt mit. Ändere dann das Tempo mit „Tempo −“ und
           „Tempo +“. Wie fühlt sich langsam an? Und wie fühlt sich schnell an?
       - type: vue-component
         component: RhythmusWerkstatt
-        props: { taktart: "4/4", raster: viertel, tempo: 80, muster: [false, false, false, false], bearbeiten: false }
+        props:
+          {
+            taktart: "4/4",
+            raster: viertel,
+            tempo: 80,
+            muster: [false, false, false, false],
+            bearbeiten: false,
+            dauerhaft: true,
+          }
         nojs: |
           Ein Metronom mit vier Schlägen pro Takt. Der erste Schlag ist betont. Mit „Tempo −“ und „Tempo +“ stellst du
           die Schläge pro Minute ein, zum Beispiel 80. Mit JavaScript tickt das Metronom.

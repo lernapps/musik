@@ -8,11 +8,19 @@ blocks:
     blocks:
       - type: text
         text: |
-          Starte das Metronom. Der erste Schlag klingt höher und lauter. Zähle dazu „1, 2, 3, 4“ und beginne bei
+          Starte das Metronom. Es läuft, bis du auf „Stopp“ drückst. Der erste Schlag klingt höher und lauter. Zähle dazu „1, 2, 3, 4“ und beginne bei
           jedem hohen Klick wieder bei 1. Tippe oder klatsche mit.
       - type: vue-component
         component: RhythmusWerkstatt
-        props: { taktart: "4/4", raster: viertel, tempo: 90, muster: [true, true, true, true], bearbeiten: false }
+        props:
+          {
+            taktart: "4/4",
+            raster: viertel,
+            tempo: 90,
+            muster: [true, true, true, true],
+            bearbeiten: false,
+            dauerhaft: true,
+          }
         nojs: |
           Ein Metronom mit vier Schlägen im 4/4-Takt. Der erste Schlag ist betont und klingt höher. Gezählt wird
           „1, 2, 3, 4, 1, 2, 3, 4“. Mit JavaScript tickt das Metronom, und du kannst das Tempo ändern.

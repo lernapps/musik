@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from "vue";
 import { klick, spiele, merkeSitzung } from "./Klang.ts";
+import Lautstaerke from "./Lautstaerke.vue";
 import { frage, generate, klicks, reason, tonText, wiedergabe, type Art } from "./HoerAufgabe.ts";
 
 const props = withDefaults(
@@ -64,6 +65,7 @@ onMounted(() => {
       </template>
       <button v-else type="button" @click="abspielen('alle')">▶ Anhören</button>
     </div>
+    <Lautstaerke />
     <div class="knoepfe" role="group" aria-label="Antworten">
       <button
         v-for="option in aufgabe.optionen"

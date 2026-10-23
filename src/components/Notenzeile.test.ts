@@ -159,3 +159,84 @@ describe("Notenzeile: Texte", () => {
     expect(beschriftung({ ton: 0, wert: "halbe", pause: true })).toBe("Pause, Halbe");
   });
 });
+
+import {
+  begrenzeDurchgaenge,
+  durchgang,
+  durchgangsText,
+  faellig,
+  klangDauer,
+  stand,
+  tonDauer,
+  wiederholungen,
+} from "./Notenzeile.ts";
+
+describe("Notenzeile: Dauer einer angetippten Note", () => {
+  it("Viertel = 60 / Tempo, Ganze 4, Halbe 2, Achtel 0,5 Viertel", () => {
+    expect(tonDauer("viertel", 60)).toBe(1);
+    expect(tonDauer("ganze", 60)).toBe(4);
+    expect(tonDauer("halbe", 60)).toBe(2);
+    expect(tonDauer("achtel", 60)).toBe(0.5);
+    expect(tonDauer("viertel", 80)).toBeCloseTo(0.75);
+    expect(tonDauer("halbe", 120)).toBe(1);
+    expect(tonDauer("viertel", 0)).toBeCloseTo(0.75);
+  });
+  it("klingt in einer Folge etwas kürzer, aber nie unter 0,1 s", () => {
+    expect(klangDauer(1)).toBeCloseTo(0.95);
+    expect(klangDauer(0.1)).toBe(0.1);
+  });
+});
+
+describe("Notenzeile: Wiederholung", () => {
+  it("begrenzt die Durchgänge auf 1 bis 8", () => {
+    expect(begrenzeDurchgaenge(0)).toBe(1);
+    expect(begrenzeDurchgaenge(3.4)).toBe(3);
+    expect(begrenzeDurchgaenge(99)).toBe(8);
+    expect(begrenzeDurchgaenge(Number.NaN)).toBe(1);
+  });
+  it("bietet 1, 2, 4, 8 und einen Wert dazwischen an", () => {
+    expect(wiederholungen(1)).toEqual([1, 2, 4, 8]);
+    expect(wiederholungen(3)).toEqual([1, 2, 3, 4, 8]);
+  });
+  it("schreibt die Durchgangszeile", () => {
+    expect(durchgangsText(2, 4)).toBe("Durchgang 2 von 4");
+    expect(durchgangsText(3, undefined)).toBe("Durchgang 3 (dauerhaft)");
+    expect(durchgangsText(1, 1)).toBe("");
+    expect(durchgangsText(5, 4)).toBe("Durchgang 4 von 4");
+  });
+  const z: Zeichen[] = [
+    { ton: 0, wert: "viertel" },
+    { ton: 2, wert: "viertel", pause: true },
+    { ton: 4, wert: "halbe" },
+  ];
+  it("kennt die Klänge und die Länge eines Durchgangs ohne Pausen", () => {
+    const d = durchgang(z, 60);
+    expect(d.laenge).toBe(4);
+    expect(d.klaenge.map((k) => [k.index, k.start, k.platz])).toEqual([
+      [0, 0, 1],
+      [2, 2, 2],
+    ]);
+  });
+  it("sagt, welche Note in welchem Durchgang klingt", () => {
+    expect(stand(z, 60, 0.5)).toEqual({ durchgang: 0, index: 0 });
+    expect(stand(z, 60, 1.5)).toEqual({ durchgang: 0, index: undefined });
+    expect(stand(z, 60, 2.5)).toEqual({ durchgang: 0, index: 2 });
+    expect(stand(z, 60, 4.5)).toEqual({ durchgang: 1, index: 0 });
+    expect(stand([], 60, 1)).toEqual({ durchgang: 0, index: undefined });
+  });
+  it("plant ohne Lücke: die Durchgänge folgen auf einer festen Zeitachse", () => {
+    const { klaenge, laenge } = durchgang(z, 60);
+    const a = faellig(klaenge, laenge, { d: 0, i: 0 }, 3, 2);
+    expect(a.toene.map((t) => t.abs)).toEqual([0, 2]);
+    const b = faellig(klaenge, laenge, a.zeiger, 100, 2);
+    expect(b.toene.map((t) => t.abs)).toEqual([4, 6]);
+    expect(faellig(klaenge, laenge, b.zeiger, 100, 2).toene).toEqual([]);
+  });
+  it("plant dauerhaft weiter, ohne zu enden", () => {
+    const { klaenge, laenge } = durchgang(z, 60);
+    const a = faellig(klaenge, laenge, { d: 0, i: 0 }, 12, undefined);
+    expect(a.toene.map((t) => t.abs)).toEqual([0, 2, 4, 6, 8, 10]);
+    expect(faellig(klaenge, laenge, a.zeiger, 20, undefined).toene.map((t) => t.abs)).toEqual([12, 14, 16, 18]);
+    expect(faellig([], 0, { d: 0, i: 0 }, 10, undefined).toene).toEqual([]);
+  });
+});

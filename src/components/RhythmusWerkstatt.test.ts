@@ -2,6 +2,14 @@ import { describe, expect, it } from "vitest";
 import { einsaetze } from "./Analyse.ts";
 import {
   aktiveFelder,
+  durchgangEreignisse,
+  durchgangNr,
+  durchgangText,
+  einzaehlZahl,
+  feldImDurchgang,
+  naechstesFeld,
+  sollZeitenAlle,
+  waehleDurchgaenge,
   effektivwert,
   einzaehlDauer,
   ergebnisText,
@@ -159,6 +167,22 @@ describe("Klatsch-Vergleich", () => {
     return wertAus(muster, einsaetze(verlauf, MESS_SCHRITT), tempo, "achtel", beginn);
   }
 
+  it("zählt bei mehreren Durchgängen alle zusammen", () => {
+    const dauer = 8 * 0.25; // ein Durchgang: 2 s
+    const alle = sollZeitenAlle(muster, tempo, "achtel", beginn, 2);
+    expect(alle).toHaveLength(8);
+    expect(alle[4]).toBeCloseTo(beginn + dauer);
+    const verlauf = lautstaerke(
+      alle.filter((_, i) => i !== 5),
+      beginn + 2 * dauer + 0.5,
+    );
+    const erg = wertAus(muster, einsaetze(verlauf, MESS_SCHRITT), tempo, "achtel", beginn, 2);
+    expect(erg.getroffen).toBe(7);
+    expect(erg.soll).toBe(8);
+    expect(erg.felder.filter((f) => !f.getroffen)).toEqual([{ index: 2, durchgang: 2, getroffen: false }]);
+    expect(ergebnisText(erg)).toBe("7 von 8 Schlägen getroffen");
+  });
+
   it("trifft alle, wenn nah an den Sollzeiten geklatscht wird (± 0,05 s)", () => {
     const erg = lauf(soll.map((z, i) => z + (i % 2 === 0 ? 0.05 : -0.05)));
     expect(erg.getroffen).toBe(4);
@@ -200,5 +224,57 @@ describe("Nachbauen", () => {
     expect(unterschiede([true, false, true], [false, false, false])).toBe(2);
     expect(nachbauText(0)).toContain("Genau");
     expect(nachbauText(1)).toBe("Noch 1 Feld ist anders als beim Vorbild. Hör es dir noch einmal an.");
+  });
+});
+
+describe("Durchgänge und Einzählen", () => {
+  const basis = {
+    muster: [true, false, true, false],
+    taktart: "2/4" as const,
+    takte: 1,
+    raster: "achtel" as const,
+    tempo: 120, // Achtel 0,25 s, Durchgang 1 s
+    ton: true,
+    metronom: true,
+  };
+
+  it("plant mehrere Durchgänge ohne Lücke", () => {
+    const plan = zeitplan({ ...basis, einzaehlen: true, durchgaenge: 3 });
+    expect(plan.beginn).toBe(1);
+    expect(plan.dauer).toBe(4);
+    const toene = plan.ereignisse.filter((e) => e.art === "ton").map((e) => e.start);
+    expect(toene).toEqual([1, 1.5, 2, 2.5, 3, 3.5]);
+    const klicks = plan.ereignisse.filter((e) => e.art === "klick").map((e) => e.start);
+    expect(klicks).toEqual([0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5]);
+    expect(plan.ereignisse.filter((e) => e.betont).map((e) => e.start)).toEqual([0, 1, 2, 3]);
+  });
+
+  it("plant einzelne Durchgänge für dauerhaftes Spielen", () => {
+    const d = durchgangEreignisse(basis, 5, 0);
+    expect(d.filter((e) => e.art === "ton").map((e) => e.start)).toEqual([5, 5.5]);
+    expect(zeitplan({ ...basis, einzaehlen: false }).dauer).toBe(1);
+  });
+
+  it("wählt die nächste Auswahl und beschreibt den Durchgang", () => {
+    expect([1, 2, 3, 5, 8, 20, Number.NaN].map(waehleDurchgaenge)).toEqual([1, 2, 4, 4, 8, 8, 1]);
+    expect(durchgangText(2, 4, false)).toBe("Durchgang 2 von 4");
+    expect(durchgangText(3, 1, true)).toBe("Durchgang 3 (dauerhaft)");
+    expect(durchgangNr(-1, 1)).toBe(0);
+    expect(durchgangNr(1.2, 1)).toBe(2);
+    expect(durchgangNr(9, 1, 4)).toBe(4);
+    expect(feldImDurchgang(1.3, 1, 120, "achtel", 4)).toBe(1);
+  });
+
+  it("zeigt beim Einzählen die Zahl des Schlags", () => {
+    expect([0, 0.4, 0.5, 0.99, 1, -0.1].map((t) => einzaehlZahl(t, "2/4", 120))).toEqual([1, 1, 2, 2, 0, 0]);
+  });
+
+  it("findet das nächste Feld zum Klatschen", () => {
+    const m = [true, false, true, true];
+    expect(naechstesFeld(m, -0.5, 120, "achtel", false)).toBe(0);
+    expect(naechstesFeld(m, 0.1, 120, "achtel", false)).toBe(0);
+    expect(naechstesFeld(m, 0.2, 120, "achtel", false)).toBe(2);
+    expect(naechstesFeld(m, 0.9, 120, "achtel", false)).toBe(-1);
+    expect(naechstesFeld(m, 0.9, 120, "achtel", true)).toBe(0);
   });
 });

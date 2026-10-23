@@ -1,6 +1,6 @@
 // Logik der Übung „Note benennen“: Aufgabe aus dem Samen, Prüfung, Rückmeldung mit dem typischen Fehler. Rein.
 import { name, nameMitOktave, zufall } from "./Musik.ts";
-import { anzahlHilfslinien, lage } from "./Notenzeile.ts";
+import { anzahlHilfslinien, lage, tonDauer } from "./Notenzeile.ts";
 
 export type Bereich = "linien" | "zwischenraeume" | "alle";
 
@@ -62,6 +62,14 @@ function wertText(wert: Aufgabe["wert"]): string {
 /** Beschreibung des Bildes für aria-label (verrät den Namen nicht). */
 export function bildText(task: Aufgabe): string {
   return `${wertText(task.wert)} ${position(task.ton)} im Violinschlüssel`;
+}
+
+/** Tempo, in dem „Ton hören“ die Note spielt (Viertel 0,75 s, Halbe 1,5 s). */
+export const HOER_TEMPO = 80;
+
+/** Klingende Dauer der Note in Sekunden. */
+export function hoerDauer(task: Aufgabe): number {
+  return tonDauer(task.wert, HOER_TEMPO);
 }
 
 /** Der richtige Name: "G". */

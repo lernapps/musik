@@ -6,6 +6,7 @@ import {
   check,
   describe,
   generate,
+  hoerDauer,
   position,
   reason,
   solution,
@@ -126,5 +127,12 @@ gruppe("NotenAufgabe: Beschreibung", () => {
       expect(d.solution.trim()).not.toBe("");
     }
     expect(about.mistakes.length).toBeGreaterThanOrEqual(3);
+  });
+});
+
+gruppe("NotenAufgabe: Ton hören", () => {
+  it("spielt Viertel und Halbe bei Tempo 80 mit ihrer Dauer", () => {
+    expect(hoerDauer({ ton: 4, wert: "viertel" })).toBeCloseTo(0.75);
+    expect(hoerDauer({ ton: 4, wert: "halbe" })).toBeCloseTo(1.5);
   });
 });

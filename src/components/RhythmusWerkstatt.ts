@@ -165,11 +165,23 @@ export interface Ereignis {
   betont: boolean;
 }
 
-/**
- * Der ganze Zeitplan eines Durchlaufs, nach Beginn sortiert. `ton`: das Muster klingt; `metronom`: Klicks;
- * `einzaehlen`: davor ein Takt Klick (das Muster beginnt dann nach der Einzählung).
- */
-export function zeitplan(opts: {
+/** Auswahl im Feld „Wie oft?“. */
+export const DURCHGANG_WAHL = [1, 2, 4, 8] as const;
+
+/** Die Auswahl, die zu einer Zahl von Durchgängen (1 bis 8) am besten passt. */
+export function waehleDurchgaenge(n: number): number {
+  const zahl = Number.isFinite(n) ? Math.min(8, Math.max(1, Math.round(n))) : 1;
+  let beste: number = DURCHGANG_WAHL[0];
+  for (const w of DURCHGANG_WAHL) if (Math.abs(w - zahl) <= Math.abs(beste - zahl)) beste = w;
+  return beste;
+}
+
+/** Dauer eines Durchgangs in Sekunden (alle Takte). */
+export function durchgangDauer(taktart: Taktart, takte: number, raster: Raster, tempo: number): number {
+  return gesamtDauer(taktart, takte, raster, tempo);
+}
+
+export interface PlanOptionen {
   muster: boolean[];
   taktart: Taktart;
   takte: number;
@@ -177,33 +189,92 @@ export function zeitplan(opts: {
   tempo: number;
   ton: boolean;
   metronom: boolean;
-  einzaehlen: boolean;
-}): { ereignisse: Ereignis[]; beginn: number; dauer: number } {
-  const beginn = opts.einzaehlen ? einzaehlDauer(opts.taktart, opts.tempo) : 0;
-  const ereignisse: Ereignis[] = [];
-  if (opts.einzaehlen) {
-    for (const k of klickPlan(opts.taktart, 1, opts.tempo))
-      ereignisse.push({ start: k.start, art: "klick", betont: k.betont });
-  }
+}
+
+/** Klicks der Einzählung: ein Takt, ab Zeit 0. */
+export function einzaehlEreignisse(taktart: Taktart, tempo: number): Ereignis[] {
+  return klickPlan(taktart, 1, tempo).map((k) => ({ start: k.start, art: "klick", betont: k.betont }));
+}
+
+/**
+ * Ereignisse des Durchgangs `nr` (0-basiert). Der Durchgang beginnt bei `beginn + nr * Durchgangsdauer`;
+ * die Durchgänge schließen darum ohne Lücke aneinander an.
+ */
+export function durchgangEreignisse(opts: PlanOptionen, nr: number, beginn: number): Ereignis[] {
+  const start = beginn + nr * durchgangDauer(opts.taktart, opts.takte, opts.raster, opts.tempo);
+  const liste: Ereignis[] = [];
   if (opts.metronom) {
-    for (const k of klickPlan(opts.taktart, opts.takte, opts.tempo, beginn)) {
-      ereignisse.push({ start: k.start, art: "klick", betont: k.betont });
+    for (const k of klickPlan(opts.taktart, opts.takte, opts.tempo, start)) {
+      liste.push({ start: k.start, art: "klick", betont: k.betont });
     }
   }
   if (opts.ton) {
-    for (const zeit of sollZeiten(opts.muster, opts.tempo, opts.raster, beginn)) {
-      ereignisse.push({ start: zeit, art: "ton", betont: false });
+    for (const zeit of sollZeiten(opts.muster, opts.tempo, opts.raster, start)) {
+      liste.push({ start: zeit, art: "ton", betont: false });
     }
   }
-  ereignisse.sort((a, b) => a.start - b.start);
-  return { ereignisse, beginn, dauer: beginn + gesamtDauer(opts.taktart, opts.takte, opts.raster, opts.tempo) };
+  return liste.sort((a, b) => a.start - b.start);
 }
 
-/** Welches Feld klingt zur Zeit `t` (ab Beginn des Musters)? -1 vor dem Start oder nach dem Ende. */
+/**
+ * Der ganze Zeitplan über `durchgaenge` Durchgänge, nach Beginn sortiert. `einzaehlen`: ein Takt Klick vorweg,
+ * nur einmal am Anfang; das Muster beginnt dann nach der Einzählung.
+ */
+export function zeitplan(opts: PlanOptionen & { einzaehlen: boolean; durchgaenge?: number }): {
+  ereignisse: Ereignis[];
+  beginn: number;
+  dauer: number;
+} {
+  const beginn = opts.einzaehlen ? einzaehlDauer(opts.taktart, opts.tempo) : 0;
+  const anzahl = Math.min(8, Math.max(1, Math.round(opts.durchgaenge ?? 1)));
+  const ereignisse: Ereignis[] = opts.einzaehlen ? einzaehlEreignisse(opts.taktart, opts.tempo) : [];
+  for (let nr = 0; nr < anzahl; nr++) ereignisse.push(...durchgangEreignisse(opts, nr, beginn));
+  ereignisse.sort((a, b) => a.start - b.start);
+  return {
+    ereignisse,
+    beginn,
+    dauer: beginn + anzahl * durchgangDauer(opts.taktart, opts.takte, opts.raster, opts.tempo),
+  };
+}
+
+/** Welches Feld klingt zur Zeit `t` (ab Beginn des Musters, innerhalb eines Durchgangs)? -1 vor dem Start oder nach dem Ende. */
 export function laufendesFeld(t: number, tempo: number, raster: Raster, anzahl: number): number {
   if (t < 0) return -1;
   const i = Math.floor(t / feldDauer(tempo, raster));
   return i >= anzahl ? -1 : i;
+}
+
+/** Nummer des Durchgangs (1-basiert) zur Zeit `t` ab Beginn des Musters; 0 davor. `maximal`: letzter Durchgang. */
+export function durchgangNr(t: number, dauer: number, maximal = Infinity): number {
+  if (t < 0 || dauer <= 0) return 0;
+  return Math.min(maximal, Math.floor(t / dauer) + 1);
+}
+
+/** Feld im aktuellen Durchgang zur Zeit `t` (ab Beginn des Musters), über Durchgangsgrenzen hinweg. */
+export function feldImDurchgang(t: number, dauer: number, tempo: number, raster: Raster, anzahl: number): number {
+  if (t < 0 || dauer <= 0) return -1;
+  return laufendesFeld(t % dauer, tempo, raster, anzahl);
+}
+
+/** Zahl des Schlags beim Einzählen (1-basiert) zur Zeit `t` ab Start; 0 außerhalb der Einzählung. */
+export function einzaehlZahl(t: number, taktart: Taktart, tempo: number): number {
+  if (t < 0 || t >= einzaehlDauer(taktart, tempo)) return 0;
+  return Math.floor(t / viertelDauer(klemmeTempo(tempo))) + 1;
+}
+
+/** Das nächste Feld, das geklatscht werden soll (aktives Feld), zur Zeit `t` ab Beginn des Musters im Durchgang. */
+export function naechstesFeld(muster: boolean[], t: number, tempo: number, raster: Raster, weitere: boolean): number {
+  const dauer = feldDauer(tempo, raster);
+  const aktive = aktiveFelder(muster);
+  const zeit = t % (dauer * muster.length);
+  const naechste = aktive.find((i) => i * dauer >= (t < 0 ? 0 : zeit) - dauer / 2);
+  if (naechste !== undefined) return naechste;
+  return weitere ? (aktive[0] ?? -1) : -1;
+}
+
+/** Text zur Anzeige des Durchgangs: „Durchgang 2 von 4“ oder „Durchgang 3 (dauerhaft)“. */
+export function durchgangText(nr: number, von: number, dauerhaft: boolean): string {
+  return dauerhaft ? `Durchgang ${nr} (dauerhaft)` : `Durchgang ${nr} von ${von}`;
 }
 
 /** Effektivwert (Lautstärke) der letzten `n` Abtastwerte eines Blocks; ohne `n` des ganzen Blocks. */
@@ -228,16 +299,30 @@ export function fuelleVerlauf(verlauf: number[], schritt: number, zeit: number, 
 }
 
 export interface Klatschergebnis {
-  /** Welche aktiven Felder getroffen wurden, in Reihenfolge der aktiven Felder. */
-  felder: { index: number; getroffen: boolean }[];
+  /** Welche aktiven Felder in welchem Durchgang (1-basiert) getroffen wurden. */
+  felder: { index: number; durchgang: number; getroffen: boolean }[];
   getroffen: number;
   soll: number;
   zuviel: number;
 }
 
+/** Soll-Zeiten über mehrere Durchgänge hintereinander. */
+export function sollZeitenAlle(
+  muster: boolean[],
+  tempo: number,
+  raster: Raster,
+  beginn: number,
+  durchgaenge: number,
+): number[] {
+  const dauer = muster.length * feldDauer(tempo, raster);
+  const zeiten: number[] = [];
+  for (let nr = 0; nr < durchgaenge; nr++) zeiten.push(...sollZeiten(muster, tempo, raster, beginn + nr * dauer));
+  return zeiten;
+}
+
 /**
- * Vergleicht geklatschte Zeiten (ab Start der Aufnahme) mit dem Muster. Klicks der Einzählung (vor `beginn`)
- * zählen nicht als Klatschen.
+ * Vergleicht geklatschte Zeiten (ab Start der Aufnahme) mit dem Muster über alle Durchgänge zusammen. Klicks der
+ * Einzählung (vor `beginn`) zählen nicht als Klatschen.
  */
 export function wertAus(
   muster: boolean[],
@@ -245,9 +330,10 @@ export function wertAus(
   tempo: number,
   raster: Raster,
   beginn: number,
+  durchgaenge = 1,
   toleranz = TOLERANZ,
 ): Klatschergebnis {
-  const soll = sollZeiten(muster, tempo, raster, beginn);
+  const soll = sollZeitenAlle(muster, tempo, raster, beginn, durchgaenge);
   const indizes = aktiveFelder(muster);
   const nutzbar = ist.filter((z) => z >= beginn - 0.1);
   const frei = [...nutzbar];
@@ -269,7 +355,11 @@ export function wertAus(
   });
   const gesamt = vergleiche(soll, nutzbar, toleranz);
   return {
-    felder: indizes.map((index, i) => ({ index, getroffen: treffer[i] === true })),
+    felder: soll.map((_, i) => ({
+      index: indizes[i % Math.max(1, indizes.length)] ?? 0,
+      durchgang: Math.floor(i / Math.max(1, indizes.length)) + 1,
+      getroffen: treffer[i] === true,
+    })),
     getroffen: gesamt.getroffen,
     soll: soll.length,
     zuviel: gesamt.zuviel,

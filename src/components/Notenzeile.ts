@@ -115,6 +115,106 @@ export function gesamtdauer(noten: readonly Zeichen[], tempo: number): number {
   return z === undefined ? 0 : z.start + z.dauer;
 }
 
+/** Dauer einer Note oder Pause in Sekunden bei `tempo` Vierteln pro Minute (Viertel = 60 / tempo). */
+export function tonDauer(wert: Wert, tempo: number): number {
+  return viertelAnzahl(wert) * (60 / (tempo > 0 ? tempo : 80));
+}
+
+/** Klingende Länge in einer Folge: etwas kürzer als der Platz, damit gleiche Töne getrennt klingen. */
+export function klangDauer(platz: number): number {
+  return Math.max(0.1, platz - 0.05);
+}
+
+/** Anzahl der Durchgänge auf eine ganze Zahl von 1 bis 8 bringen. */
+export function begrenzeDurchgaenge(n: number): number {
+  return Number.isFinite(n) ? Math.min(8, Math.max(1, Math.round(n))) : 1;
+}
+
+/** Wahlmöglichkeiten für „Wie oft?“: 1, 2, 4, 8 und der gegebene Wert, falls er dazwischen liegt. */
+export function wiederholungen(durchgaenge: number): number[] {
+  const wahl = new Set([1, 2, 4, 8, begrenzeDurchgaenge(durchgaenge)]);
+  return [...wahl].sort((a, b) => a - b);
+}
+
+/** Textzeile zum Durchgang (1-basiert): "Durchgang 2 von 4" oder "Durchgang 3 (dauerhaft)"; bei einem Durchgang leer. */
+export function durchgangsText(nr: number, gesamt: number | undefined): string {
+  if (gesamt === undefined) return `Durchgang ${nr} (dauerhaft)`;
+  return gesamt > 1 ? `Durchgang ${Math.min(nr, gesamt)} von ${gesamt}` : "";
+}
+
+export interface Klang {
+  index: number;
+  ton: number;
+  /** Beginn im Durchgang in Sekunden. */
+  start: number;
+  /** Platz der Note in Sekunden. */
+  platz: number;
+  /** Klingende Länge in Sekunden. */
+  dauer: number;
+}
+
+/** Die klingenden Noten eines Durchgangs (Pausen fehlen) und die Länge des Durchgangs in Sekunden. */
+export function durchgang(noten: readonly Zeichen[], tempo: number): { klaenge: Klang[]; laenge: number } {
+  const zeiten = startzeiten(noten, tempo);
+  const klaenge: Klang[] = [];
+  noten.forEach((n, index) => {
+    const z = zeiten[index];
+    if (n.pause === true || z === undefined) return;
+    klaenge.push({ index, ton: n.ton, start: z.start, platz: z.dauer, dauer: klangDauer(z.dauer) });
+  });
+  return { klaenge, laenge: gesamtdauer(noten, tempo) };
+}
+
+/** Wo die Wiedergabe `t` Sekunden nach dem Start steht: Durchgang (ab 0) und die gerade klingende Note, falls eine. */
+export function stand(
+  noten: readonly Zeichen[],
+  tempo: number,
+  t: number,
+): { durchgang: number; index: number | undefined } {
+  const { klaenge, laenge } = durchgang(noten, tempo);
+  if (laenge <= 0 || t < 0) return { durchgang: 0, index: undefined };
+  const nr = Math.floor(t / laenge);
+  const im = t - nr * laenge;
+  const treffer = klaenge.find((k) => im >= k.start && im < k.start + k.platz);
+  return { durchgang: nr, index: treffer?.index };
+}
+
+export interface Zeiger {
+  /** Durchgang (ab 0) und Nummer in der Liste der Klänge. */
+  d: number;
+  i: number;
+}
+
+/**
+ * Die Töne, die vor dem Zeitpunkt `bis` (Sekunden nach dem Start) beginnen, ab dem Zeiger; so lässt sich die
+ * Wiedergabe schrittweise und ohne Lücke einplanen. `maxDurchgaenge` fehlt bei „dauerhaft“.
+ */
+export function faellig(
+  klaenge: readonly Klang[],
+  laenge: number,
+  zeiger: Zeiger,
+  bis: number,
+  maxDurchgaenge: number | undefined,
+): { toene: (Klang & { abs: number })[]; zeiger: Zeiger } {
+  const toene: (Klang & { abs: number })[] = [];
+  let { d, i } = zeiger;
+  if (klaenge.length === 0 || laenge <= 0) return { toene, zeiger: { d, i } };
+  for (;;) {
+    if (maxDurchgaenge !== undefined && d >= maxDurchgaenge) break;
+    const k = klaenge[i];
+    if (k === undefined) {
+      d += 1;
+      i = 0;
+      continue;
+    }
+    const abs = d * laenge + k.start;
+    if (abs >= bis) break;
+    toene.push({ ...k, abs });
+    i += 1;
+  }
+  return { toene, zeiger: { d, i } };
+}
+
 /** Anzahl der Viertel pro Takt; 0 bei "ohne". */
 export function viertelProTakt(takt: Takt): number {
   return takt === "ohne" ? 0 : Number(takt.charAt(0));
