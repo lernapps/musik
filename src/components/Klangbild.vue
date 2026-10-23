@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import { naechsterTon } from "./Analyse.ts";
-import { holeKontext, merkeSitzung } from "./Klang.ts";
+import { ausgang, holeKontext, merkeSitzung } from "./Klang.ts";
+import Lautstaerke from "./Lautstaerke.vue";
 import { nameMitOktave } from "./Musik.ts";
 import {
   FORMEN,
@@ -84,7 +85,7 @@ function starten(): void {
   const t = ctx.currentTime;
   huelle.gain.setValueAtTime(0, t);
   huelle.gain.linearRampToValueAtTime(gainVon(lautProzent.value), t + 0.05);
-  osc.connect(huelle).connect(ctx.destination);
+  osc.connect(huelle).connect(ausgang());
   osc.start();
   an.value = true;
 }
@@ -145,7 +146,7 @@ onMounted(() => {
       <span class="wert">{{ hzText }} Hz ({{ tonname }})</span>
     </div>
     <div v-if="zeigeLaut" class="regler">
-      <label for="kb-laut">Lautstärke</label>
+      <label for="kb-laut">Lautstärke des Tons</label>
       <input id="kb-laut" type="range" min="0" max="100" step="1" :value="lautProzent" @input="setzeLaut" />
       <span class="wert">{{ wort }}, {{ Math.round(lautProzent) }} %</span>
     </div>
@@ -162,6 +163,8 @@ onMounted(() => {
         {{ aktuelleForm === f.form ? "✓ " : "" }}{{ f.name }}
       </button>
     </div>
+
+    <Lautstaerke titel="Gesamtlautstärke" />
 
     <button type="button" class="ton" :aria-pressed="an" @click="umschalten">
       {{ an ? "■ Ton aus" : "▶ Ton an" }}

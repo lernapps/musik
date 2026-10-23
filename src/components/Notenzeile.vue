@@ -1,14 +1,21 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import { frequenz, name } from "./Musik.ts";
-import { spiele, merkeSitzung } from "./Klang.ts";
+import { holeKontext, merkeSitzung, spiele } from "./Klang.ts";
+import Lautstaerke from "./Lautstaerke.vue";
 import {
   ABSTAND,
   ansageNote,
   beschriftung as notenBeschriftung,
-  gesamtdauer,
+  begrenzeDurchgaenge,
+  durchgang,
+  durchgangsText,
+  faellig,
   plane,
-  startzeiten,
+  stand,
+  tonDauer,
+  wiederholungen,
+  type Zeiger,
 } from "./Notenzeile.ts";
 
 const props = withDefaults(
@@ -19,7 +26,7 @@ const props = withDefaults(
     taktart?: "2/4" | "3/4" | "4/4" | "ohne";
     /** Notennamen unter den Noten zeigen. */
     namen?: boolean;
-    /** Tempo in Vierteln pro Minute für „Alles abspielen“. */
+    /** Tempo in Vierteln pro Minute für „Alles abspielen“ und für die Dauer einer angetippten Note. */
     tempo?: number;
     /** Knopf „Alles abspielen“ zeigen. */
     abspielbar?: boolean;
@@ -27,8 +34,21 @@ const props = withDefaults(
     beschriftung?: string;
     /** Noten antippbar (Name und Klang). Aus, wenn der Name nicht verraten werden soll. */
     antippbar?: boolean;
+    /** Voreingestellte Anzahl der Durchgänge von „Alles abspielen“ (1 bis 8). */
+    durchgaenge?: number;
+    /** „Dauerhaft“ voreinstellen: spielt, bis „Stopp“ gedrückt wird. */
+    dauerhaft?: boolean;
   }>(),
-  { taktart: "ohne", namen: false, tempo: 80, abspielbar: true, beschriftung: "", antippbar: true },
+  {
+    taktart: "ohne",
+    namen: false,
+    tempo: 80,
+    abspielbar: true,
+    beschriftung: "",
+    antippbar: true,
+    durchgaenge: 1,
+    dauerhaft: false,
+  },
 );
 
 const plan = computed(() => plane(props.noten, props.taktart, { namen: props.namen }));
@@ -36,7 +56,11 @@ const gewaehlt = ref<number | undefined>(undefined);
 const aktiv = ref<number | undefined>(undefined);
 const spielt = ref(false);
 const ansage = ref("");
-let zeitgeber: ReturnType<typeof setTimeout>[] = [];
+const wahl = ref(props.dauerhaft ? "dauer" : String(begrenzeDurchgaenge(props.durchgaenge)));
+const durchgangZeile = ref("");
+const optionen = computed(() => wiederholungen(props.durchgaenge));
+let tippZeit: ReturnType<typeof setTimeout> | undefined;
+let takt: ReturnType<typeof setInterval> | undefined;
 
 const bildName = computed(() =>
   props.beschriftung !== ""
@@ -46,53 +70,59 @@ const bildName = computed(() =>
 
 function tippe(index: number): void {
   const zeichen = props.noten[index];
-  if (zeichen === undefined || !props.antippbar || zeichen.pause === true) return;
+  if (zeichen === undefined || !props.antippbar || zeichen.pause === true || spielt.value) return;
   gewaehlt.value = index;
   ansage.value = ansageNote(zeichen);
-  spiele([{ hz: frequenz(zeichen.ton), start: 0, dauer: 0.7 }]);
+  const dauer = tonDauer(zeichen.wert, props.tempo);
+  spiele([{ hz: frequenz(zeichen.ton), start: 0, dauer }]);
+  clearTimeout(tippZeit);
+  aktiv.value = index;
+  tippZeit = setTimeout(() => {
+    if (aktiv.value === index) aktiv.value = undefined;
+  }, dauer * 1000);
 }
 
-function stoppeZeitgeber(): void {
-  for (const z of zeitgeber) clearTimeout(z);
-  zeitgeber = [];
+function stoppe(): void {
+  clearInterval(takt);
+  takt = undefined;
+  clearTimeout(tippZeit);
+  spielt.value = false;
+  aktiv.value = undefined;
+  durchgangZeile.value = "";
 }
 
 function spieleAlle(): void {
   if (spielt.value) return;
-  const zeiten = startzeiten(props.noten, props.tempo);
-  const toene = props.noten.flatMap((n, i) =>
-    n.pause === true
-      ? []
-      : [{ hz: frequenz(n.ton), start: zeiten[i]?.start ?? 0, dauer: Math.max(0.1, (zeiten[i]?.dauer ?? 0.5) - 0.05) }],
-  );
-  spiele(toene);
+  const { klaenge, laenge } = durchgang(props.noten, props.tempo);
+  if (laenge <= 0) return;
+  const ctx = holeKontext();
+  const gesamt = wahl.value === "dauer" ? undefined : begrenzeDurchgaenge(Number(wahl.value));
+  const start = ctx.currentTime + 0.1;
+  let zeiger: Zeiger = { d: 0, i: 0 };
+  clearTimeout(tippZeit);
   spielt.value = true;
   gewaehlt.value = undefined;
-  props.noten.forEach((n, i) => {
-    const z = zeiten[i];
-    if (n.pause === true || z === undefined) return;
-    zeitgeber.push(setTimeout(() => (aktiv.value = i), (z.start + 0.05) * 1000));
-    zeitgeber.push(
-      setTimeout(
-        () => {
-          if (aktiv.value === i) aktiv.value = undefined;
-        },
-        (z.start + z.dauer + 0.05) * 1000,
-      ),
-    );
-  });
-  zeitgeber.push(
-    setTimeout(
-      () => {
-        spielt.value = false;
-        aktiv.value = undefined;
-      },
-      (gesamtdauer(props.noten, props.tempo) + 0.1) * 1000,
-    ),
-  );
+  durchgangZeile.value = durchgangsText(1, gesamt);
+  // Ohne Lücke: Alle 50 ms werden die Töne der nächsten 0,3 s auf der festen Zeitachse eingeplant; „Stopp“ lässt
+  // höchstens den gerade klingenden Ton ausklingen.
+  takt = setInterval(() => {
+    const jetzt = ctx.currentTime - start;
+    const plan = faellig(klaenge, laenge, zeiger, jetzt + 0.3, gesamt);
+    zeiger = plan.zeiger;
+    const vor = ctx.currentTime + 0.05;
+    spiele(plan.toene.map((k) => ({ hz: frequenz(k.ton), start: Math.max(0, start + k.abs - vor), dauer: k.dauer })));
+    const st = stand(props.noten, props.tempo, jetzt);
+    if (gesamt !== undefined && jetzt >= gesamt * laenge) {
+      stoppe();
+      return;
+    }
+    aktiv.value = st.index;
+    const zeile = durchgangsText(st.durchgang + 1, gesamt);
+    if (zeile !== durchgangZeile.value) durchgangZeile.value = zeile;
+  }, 50);
 }
 
-onBeforeUnmount(stoppeZeitgeber);
+onBeforeUnmount(stoppe);
 
 const SCHLUESSEL =
   "M 11 14 C 11 21 1 21 1 14 C 1 9 8 8 10 13 C 12 18 11 6 12 -4 C 13 -16 15 -34 11 -44 C 8 -52 2 -48 2 -41 C 2 -32 13 -24 17 -14 C 20 -5 15 3 8 3 C 0 3 -4 -6 3 -11 C 9 -14 14 -10 12 -6";
@@ -258,7 +288,17 @@ onMounted(() => {
       <button type="button" :disabled="spielt" :aria-label="`Alles abspielen, Tempo ${tempo}`" @click="spieleAlle">
         {{ spielt ? "♪ spielt …" : "▶ Alles abspielen" }}
       </button>
+      <button type="button" :disabled="!spielt" @click="stoppe">■ Stopp</button>
+      <label class="oft">
+        Wie oft?
+        <select v-model="wahl" :disabled="spielt">
+          <option v-for="n in optionen" :key="n" :value="String(n)">{{ n }}</option>
+          <option value="dauer">Dauerhaft</option>
+        </select>
+      </label>
     </div>
+    <p v-if="abspielbar" class="durchgang" aria-live="polite">{{ durchgangZeile }}</p>
+    <Lautstaerke v-if="abspielbar || antippbar" />
   </figure>
 </template>
 
@@ -373,6 +413,34 @@ onMounted(() => {
 }
 .ansage {
   margin: 0.5rem 0;
+  min-height: 1.5em;
+}
+.knoepfe {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+.oft {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.oft select {
+  font: inherit;
+  min-height: 44px;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid var(--page-border);
+  border-radius: 6px;
+  background: var(--page-surface);
+  color: var(--page-text);
+}
+.oft select:focus-visible {
+  outline: 3px solid var(--page-accent);
+  outline-offset: 2px;
+}
+.durchgang {
+  margin: 0.25rem 0;
   min-height: 1.5em;
 }
 .knoepfe button {

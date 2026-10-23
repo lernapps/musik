@@ -2,8 +2,9 @@
 import { computed, onMounted, ref, watch } from "vue";
 import { frequenz, nameMitOktave } from "./Musik.ts";
 import { spiele, merkeSitzung } from "./Klang.ts";
+import Lautstaerke from "./Lautstaerke.vue";
 import Notenzeile from "./Notenzeile.vue";
-import { NAMEN, bildText, check, generate, reason, solution } from "./NotenAufgabe.ts";
+import { NAMEN, bildText, check, generate, hoerDauer, reason, solution } from "./NotenAufgabe.ts";
 
 const props = defineProps<{
   /** Samen der Aufgabe; die Seite vergibt ihn. */
@@ -41,7 +42,7 @@ const rueckmeldung = computed(() => {
 });
 
 function hoeren(): void {
-  spiele([{ hz: frequenz(aufgabe.value.ton), start: 0, dauer: 0.9 }]);
+  spiele([{ hz: frequenz(aufgabe.value.ton), start: 0, dauer: hoerDauer(aufgabe.value) }]);
 }
 // iPhone: Die Audio-Sitzung auf Wiedergabe stellen, damit der Stummschalter die Töne nicht verstummen lässt.
 onMounted(() => {
@@ -76,7 +77,10 @@ onMounted(() => {
       </button>
     </div>
     <p class="rueckmeldung" aria-live="polite">{{ rueckmeldung }}</p>
-    <button v-if="gewaehlt !== undefined" type="button" class="hoeren" @click="hoeren">▶ Ton hören</button>
+    <div v-if="gewaehlt !== undefined">
+      <button type="button" class="hoeren" @click="hoeren">▶ Ton hören</button>
+      <Lautstaerke />
+    </div>
   </div>
 </template>
 

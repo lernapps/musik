@@ -1,30 +1,39 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
-import { klick, oeffneMikrofon, spiele, merkeSitzung } from "./Klang.ts";
+import { klick, oeffneMikrofon, spiele } from "./Klang.ts";
 import type { Mikrofon } from "./Klang.ts";
+import Lautstaerke from "./Lautstaerke.vue";
 import {
   TEMPO_MAX,
   TEMPO_MIN,
   TEMPO_SCHRITT,
   aufSchlag,
+  durchgangDauer,
+  durchgangEreignisse,
+  durchgangNr,
+  durchgangText,
   effektivwert,
+  einzaehlDauer,
+  einzaehlEreignisse,
+  einzaehlZahl,
   ergebnisText,
+  feldImDurchgang,
   feldName,
   felderProTakt,
   felderZahl,
   fuelleVerlauf,
   klemmeTakte,
   klemmeTempo,
-  laufendesFeld,
   MESS_SCHRITT,
   nachbauText,
+  naechstesFeld,
   notenwerteText,
   passeMusterAn,
   unterschiede,
+  waehleDurchgaenge,
   wertAus,
   zaehlhilfe,
   zaehlhilfeText,
-  zeitplan,
 } from "./RhythmusWerkstatt.ts";
 import type { Ereignis, Klatschergebnis } from "./RhythmusWerkstatt.ts";
 import { einsaetze } from "./Analyse.ts";
@@ -49,6 +58,10 @@ const props = withDefaults(
     klatschen?: boolean;
     /** Metronom-Klicks beim Abspielen. */
     metronom?: boolean;
+    /** Wie oft das Muster gespielt wird (1 bis 8); die Auswahl kennt 1, 2, 4 und 8. */
+    durchgaenge?: number;
+    /** Startet mit der Auswahl „Dauerhaft“ (läuft bis „Stopp“). */
+    dauerhaft?: boolean;
   }>(),
   {
     taktart: "4/4",
@@ -60,6 +73,8 @@ const props = withDefaults(
     bearbeiten: true,
     klatschen: false,
     metronom: true,
+    durchgaenge: 1,
+    dauerhaft: false,
   },
 );
 
@@ -71,8 +86,16 @@ const proTakt = computed(() => felderProTakt(props.taktart, props.raster));
 const felder = ref<boolean[]>(passeMusterAn(props.muster, anzahl.value));
 const tempoWert = ref(klemmeTempo(props.tempo));
 const metronomAn = ref(props.metronom);
+const einzaehlenAn = ref(true);
+const wahl = ref(props.dauerhaft ? "dauer" : String(waehleDurchgaenge(props.durchgaenge)));
 const phase = ref<Phase>("ruhe");
 const laufend = ref(-1);
+const dran = ref(-1);
+const zahlAnzeige = ref(0);
+const durchgang = ref(0);
+const durchgangVon = ref(1);
+const durchgangDauerhaft = ref(false);
+const hoerenText = ref("");
 const meldung = ref("");
 const mikrofonFehler = ref(false);
 const ergebnis = ref<Klatschergebnis | undefined>(undefined);
@@ -94,6 +117,12 @@ watch(
   () => props.metronom,
   (neu) => {
     metronomAn.value = neu;
+  },
+);
+watch(
+  () => [props.durchgaenge, props.dauerhaft] as const,
+  () => {
+    wahl.value = props.dauerhaft ? "dauer" : String(waehleDurchgaenge(props.durchgaenge));
   },
 );
 
@@ -121,6 +150,13 @@ const vorbildFelder = computed(() => passeMusterAn(props.vorbild, anzahl.value))
 const hatVorbild = computed(() => props.vorbild.some((an) => an));
 const klatschZiel = computed(() => (hatVorbild.value ? vorbildFelder.value : felder.value));
 const beschaeftigt = computed(() => phase.value !== "ruhe");
+const dauerWahl = computed(() => wahl.value === "dauer");
+const wahlZahl = computed(() => (dauerWahl.value ? 1 : Number(wahl.value) || 1));
+const durchgangZeile = computed(() =>
+  phase.value !== "ruhe" && durchgang.value > 0
+    ? durchgangText(durchgang.value, durchgangVon.value, durchgangDauerhaft.value)
+    : "",
+);
 
 function umschalten(i: number): void {
   if (!props.bearbeiten) return;
@@ -172,13 +208,17 @@ function aufraeumen(): void {
     mikrofon = undefined;
   }
   laufend.value = -1;
+  dran.value = -1;
+  zahlAnzeige.value = 0;
+  durchgang.value = 0;
+  hoerenText.value = "";
   phase.value = "ruhe";
 }
 
 function stopp(): void {
   abgebrochen = true;
   aufraeumen();
-  if (meldung.value !== "") meldung.value = "Gestoppt.";
+  meldung.value = "Gestoppt.";
 }
 
 onBeforeUnmount(() => {
@@ -188,36 +228,85 @@ onBeforeUnmount(() => {
 
 const VORAUS = 0.2; // Sekunden, die der Plan im Voraus an die Web-Audio-Uhr übergeben wird
 
+interface Lauf {
+  muster: boolean[];
+  /** Mit Einzählung (ein Takt Klick vorweg, nur einmal am Anfang). */
+  einzaehlen: boolean;
+  /** Anzahl der Durchgänge; `Infinity` = dauerhaft. */
+  durchgaenge: number;
+  ton: boolean;
+  /** Das Metronom klickt leise (beim Klatschen). */
+  leise: boolean;
+  /** Zeigt, welches Feld klingt. */
+  feldZeigen: boolean;
+  /** Zeigt, welches Feld als Nächstes geklatscht werden soll. */
+  danZeigen: boolean;
+  beiMessung?: (t: number) => void;
+  beiEnde: () => void;
+}
+
 /**
- * Spielt einen Zeitplan: Alle 25 ms werden die Ereignisse der nächsten 0,2 s an Web Audio übergeben, damit es nicht
- * ruckelt. Dieselbe Uhr lässt das Feld mitlaufen und liest bei Bedarf das Mikrofon.
+ * Spielt einen Lauf. Alle 25 ms werden die Ereignisse der nächsten 0,2 s an Web Audio übergeben, damit es nicht
+ * ruckelt. Die Durchgänge werden erst kurz vor ihrem Beginn geplant (so geht „Dauerhaft“), aber taktgenau
+ * aneinander: Durchgang n beginnt bei Beginn + n × Dauer. Dieselbe Uhr lässt das Feld mitlaufen.
  */
-function laufe(
-  ereignisse: Ereignis[],
-  beginn: number,
-  dauer: number,
-  leiseKlick: boolean,
-  beiTick: (t: number) => void,
-  beiEnde: () => void,
-): void {
+function laufe(lauf: Lauf): void {
   if (!zeitgeber) return;
   const uhr = zeitgeber;
+  const opts = {
+    muster: lauf.muster,
+    taktart: props.taktart,
+    takte: anzahlTakte.value,
+    raster: props.raster,
+    tempo: tempoWert.value,
+    ton: lauf.ton,
+    metronom: metronomAn.value,
+  };
+  const beginn = lauf.einzaehlen ? einzaehlDauer(props.taktart, opts.tempo) : 0;
+  const dauer = durchgangDauer(props.taktart, opts.takte, props.raster, opts.tempo);
+  const ende = beginn + (Number.isFinite(lauf.durchgaenge) ? lauf.durchgaenge * dauer : Infinity);
+  const queue: Ereignis[] = lauf.einzaehlen ? einzaehlEreignisse(props.taktart, opts.tempo) : [];
+  let geplant = 0;
+  durchgangVon.value = Number.isFinite(lauf.durchgaenge) ? lauf.durchgaenge : 1;
+  durchgangDauerhaft.value = !Number.isFinite(lauf.durchgaenge);
+  durchgang.value = 0;
   const t0 = uhr.jetzt() + 0.1;
-  let naechstes = 0;
   const tick = (): void => {
     const t = uhr.jetzt() - t0;
-    while (naechstes < ereignisse.length && (ereignisse[naechstes]?.start ?? Infinity) <= t + VORAUS) {
-      const e = ereignisse[naechstes];
-      naechstes++;
+    // Durchgänge rechtzeitig nachplanen.
+    while (geplant < lauf.durchgaenge && beginn + geplant * dauer <= t + VORAUS) {
+      queue.push(...durchgangEreignisse(opts, geplant, beginn));
+      geplant++;
+    }
+    while (queue.length > 0 && (queue[0]?.start ?? Infinity) <= t + VORAUS) {
+      const e = queue.shift();
       if (!e) break;
       const in_ = Math.max(0, e.start - t);
-      if (e.art === "ton") spiele([{ hz: 220, start: in_, dauer: 0.12, form: "triangle" }]);
-      else if (leiseKlick && e.start >= beginn)
+      if (e.art === "ton") spiele([{ hz: 262, start: in_, dauer: 0.25, laut: 0.35 }]);
+      else if (lauf.leise && e.start >= beginn)
         spiele([{ hz: e.betont ? 1500 : 1000, start: in_, dauer: 0.05, laut: 0.07, form: "square" }]);
       else klick(in_, e.betont);
     }
-    beiTick(t);
-    if (t >= dauer + 0.15) beiEnde();
+    const zahl = lauf.einzaehlen ? einzaehlZahl(t, props.taktart, opts.tempo) : 0;
+    zahlAnzeige.value = zahl;
+    const tm = t - beginn;
+    if (zahl > 0) {
+      if (phase.value !== "einzaehlen") phase.value = "einzaehlen";
+    } else if (tm >= 0) {
+      if (phase.value === "einzaehlen" || hoerenText.value === "") {
+        phase.value = lauf.danZeigen ? "klatschen" : "spielt";
+        hoerenText.value = lauf.danZeigen ? "Jetzt du: klatsche das Muster!" : "Hör zu";
+        meldung.value = hoerenText.value;
+      }
+    }
+    if (tm >= 0)
+      durchgang.value = durchgangNr(tm, dauer, Number.isFinite(lauf.durchgaenge) ? lauf.durchgaenge : Infinity);
+    laufend.value = lauf.feldZeigen ? feldImDurchgang(tm, dauer, opts.tempo, props.raster, lauf.muster.length) : -1;
+    dran.value = lauf.danZeigen
+      ? naechstesFeld(lauf.muster, tm, opts.tempo, props.raster, tm + dauer < ende - beginn + 1e-9 && tm >= 0)
+      : -1;
+    lauf.beiMessung?.(t);
+    if (t >= ende + 0.15) lauf.beiEnde();
   };
   timer = uhr.alle(tick, 25);
   tick();
@@ -226,28 +315,22 @@ function laufe(
 function abspielen(muster: boolean[], zeigen: boolean): void {
   if (!zeitgeber || beschaeftigt.value) return;
   abgebrochen = false;
-  const plan = zeitplan({
-    muster,
-    taktart: props.taktart,
-    takte: anzahlTakte.value,
-    raster: props.raster,
-    tempo: tempoWert.value,
-    ton: true,
-    metronom: metronomAn.value,
-    einzaehlen: false,
-  });
-  phase.value = "spielt";
   meldung.value = "";
-  laufe(
-    plan.ereignisse,
-    0,
-    plan.dauer,
-    false,
-    (t) => {
-      laufend.value = zeigen ? laufendesFeld(t, tempoWert.value, props.raster, anzahl.value) : -1;
+  phase.value = einzaehlenAn.value ? "einzaehlen" : "spielt";
+  if (einzaehlenAn.value) meldung.value = "Einzählen …";
+  laufe({
+    muster,
+    einzaehlen: einzaehlenAn.value,
+    durchgaenge: dauerWahl.value ? Infinity : wahlZahl.value,
+    ton: true,
+    leise: false,
+    feldZeigen: zeigen,
+    danZeigen: false,
+    beiEnde: () => {
+      aufraeumen();
+      meldung.value = "";
     },
-    aufraeumen,
-  );
+  });
 }
 
 function pruefeNachbau(): void {
@@ -280,40 +363,31 @@ async function ueben(): Promise<void> {
     return;
   }
   mikrofon = mik;
-  const plan = zeitplan({
-    muster: ziel,
-    taktart: props.taktart,
-    takte: anzahlTakte.value,
-    raster: props.raster,
-    tempo: tempoWert.value,
-    ton: false,
-    metronom: metronomAn.value,
-    einzaehlen: true,
-  });
+  // Beim Klatschen zählt immer eine feste Zahl von Durchgängen; „Dauerhaft“ wird zu einem Durchgang.
+  const durchgaenge = wahlZahl.value;
+  const beginn = einzaehlDauer(props.taktart, tempoWert.value);
   const verlauf: number[] = [];
   const fenster = Math.max(1, Math.round(mik.abtastrate * MESS_SCHRITT));
+  const tempoStart = tempoWert.value;
   meldung.value = "Gleich geht’s los";
-  laufe(
-    plan.ereignisse,
-    plan.beginn,
-    plan.dauer,
-    true,
-    (t) => {
+  laufe({
+    muster: ziel,
+    einzaehlen: true,
+    durchgaenge,
+    ton: false,
+    leise: true,
+    feldZeigen: true,
+    danZeigen: !hatVorbild.value,
+    beiMessung: (t) => {
       if (mikrofon) fuelleVerlauf(verlauf, MESS_SCHRITT, t, effektivwert(mikrofon.lesen(), fenster));
-      if (t >= plan.beginn && phase.value === "einzaehlen") {
-        phase.value = "klatschen";
-        meldung.value = "Jetzt du: klatsche das Muster!";
-      }
-      laufend.value =
-        t >= plan.beginn ? laufendesFeld(t - plan.beginn, tempoWert.value, props.raster, anzahl.value) : -1;
     },
-    () => {
+    beiEnde: () => {
       const ist = einsaetze(verlauf, MESS_SCHRITT);
       aufraeumen();
-      ergebnis.value = wertAus(ziel, ist, tempoWert.value, props.raster, plan.beginn);
+      ergebnis.value = wertAus(ziel, ist, tempoStart, props.raster, beginn, durchgaenge);
       meldung.value = "";
     },
-  );
+  });
 }
 
 // Gemessen wird im 25-ms-Takt des Zeitplans; MESS_SCHRITT (10 ms) ist die Auflösung des Verlaufs, Lücken werden gefüllt.
@@ -326,10 +400,9 @@ const ansage = computed(() => {
   if (vorbildMeldung.value !== "") return vorbildMeldung.value;
   return props.bearbeiten ? "Tippe die Felder: ● = Schlag, leer = Pause." : "";
 });
-// iPhone: Die Audio-Sitzung auf Wiedergabe stellen, damit der Stummschalter die Töne nicht verstummen lässt.
-onMounted(() => {
-  merkeSitzung((navigator as Navigator & { audioSession?: { type: string } }).audioSession);
-});
+const mehrere = computed(() =>
+  ergebnis.value ? new Set(ergebnis.value.felder.map((f) => f.durchgang)).size > 1 : false,
+);
 </script>
 
 <template>
@@ -346,13 +419,18 @@ onMounted(() => {
             <button
               type="button"
               class="feld"
-              :class="{ an: felder[i], jetzt: laufend === i, schlagfeld: aufSchlag(i % proTakt, raster) }"
+              :class="{
+                an: felder[i],
+                jetzt: laufend === i,
+                dran: dran === i,
+                schlagfeld: aufSchlag(i % proTakt, raster),
+              }"
               :aria-pressed="felder[i]"
               :aria-label="feldBeschriftung(i)"
               :disabled="!bearbeiten"
               @click="umschalten(i)"
             >
-              <span aria-hidden="true">{{ felder[i] ? "●" : "" }}</span>
+              <span aria-hidden="true">{{ dran === i ? "👏" : felder[i] ? "●" : "" }}</span>
             </button>
             <span class="zaehl" :class="{ zahl: z.hilfe[k] !== '+' }" aria-hidden="true">{{ z.hilfe[k] }}</span>
           </div>
@@ -362,11 +440,17 @@ onMounted(() => {
     <p class="sr">Zählhilfe: {{ hilfeText }}</p>
     <p class="noten">Rhythmus: {{ notenText }}</p>
 
+    <div v-if="zahlAnzeige > 0" class="einzaehlen" aria-hidden="true">
+      <span class="gross">{{ zahlAnzeige }}</span>
+      <span class="einz-text">Einzählen …</span>
+    </div>
+    <p class="durchgang" aria-live="polite">{{ durchgangZeile }}</p>
+
     <div class="knoepfe">
       <button type="button" :disabled="beschaeftigt" aria-label="Muster abspielen" @click="abspielen(felder, true)">
         ▶ Abspielen
       </button>
-      <button type="button" :disabled="!beschaeftigt" @click="stopp">■ Stopp</button>
+      <button type="button" :disabled="!beschaeftigt" aria-label="Abspielen stoppen" @click="stopp">■ Stopp</button>
       <button v-if="hatVorbild" type="button" :disabled="beschaeftigt" @click="abspielen(vorbildFelder, false)">
         Vorbild hören
       </button>
@@ -397,9 +481,35 @@ onMounted(() => {
         {{ metronomAn ? "Metronom an" : "Metronom aus" }}
       </button>
     </div>
+    <div class="knoepfe">
+      <label class="wahl">
+        <span>Wie oft?</span>
+        <select v-model="wahl" :disabled="beschaeftigt">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="4">4</option>
+          <option value="8">8</option>
+          <option value="dauer">Dauerhaft</option>
+        </select>
+      </label>
+      <label class="wahl">
+        <input v-model="einzaehlenAn" type="checkbox" :disabled="beschaeftigt || klatschen" />
+        <span>Einzählen</span>
+      </label>
+    </div>
+    <Lautstaerke />
 
     <div v-if="klatschen" class="mikro">
+      <div class="anleitung">
+        <p class="fett">So läuft die Übung:</p>
+        <ol>
+          <li>Du hörst einen Takt lang Klicks. Das ist das Einzählen: Es zeigt dir das Tempo.</li>
+          <li>Danach klatschst du das Muster. Dunkle Felder klatschst du, bei hellen Feldern bleibst du still.</li>
+          <li>Am Ende siehst du, wie viele Schläge du getroffen hast.</li>
+        </ol>
+      </div>
       <button type="button" :disabled="beschaeftigt" @click="ueben">🎤 Mit Klatschen üben</button>
+      <p v-if="dauerWahl" class="hinweis">Beim Klatschen zählt ein Durchgang.</p>
       <p class="hinweis">Tipp: Das Metronom kann das Mikrofon stören. Schalte es beim Klatschen auf leise oder aus.</p>
       <p class="hinweis">Das Mikrofon hört nur im Browser zu. Nichts wird gespeichert oder gesendet.</p>
     </div>
@@ -407,9 +517,10 @@ onMounted(() => {
     <p class="ansage" role="status" aria-live="polite">{{ ansage }}</p>
 
     <ul v-if="ergebnis && ergebnis.felder.length > 0" class="treffer" aria-label="Ergebnis je Feld">
-      <li v-for="f in ergebnis.felder" :key="f.index" :class="f.getroffen ? 'gut' : 'fehlt'">
+      <li v-for="(f, n) in ergebnis.felder" :key="n" :class="f.getroffen ? 'gut' : 'fehlt'">
         <span aria-hidden="true">{{ f.getroffen ? "✓" : "✗" }}</span>
-        {{ feldName(f.index, taktart, raster) }}: {{ f.getroffen ? "getroffen" : "gefehlt" }}
+        {{ mehrere ? `Durchgang ${f.durchgang}, ` : "" }}{{ feldName(f.index, taktart, raster) }}:
+        {{ f.getroffen ? "getroffen" : "gefehlt" }}
       </li>
     </ul>
   </div>
@@ -472,6 +583,70 @@ onMounted(() => {
 .mikro button:focus-visible {
   outline: 3px solid var(--page-accent);
   outline-offset: 2px;
+}
+.feld.dran {
+  outline: 4px dashed var(--page-accent);
+  outline-offset: 2px;
+  font-size: 1.4rem;
+}
+.einzaehlen {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0.5rem 0;
+  padding: 0.4rem 0.8rem;
+  border: 3px solid var(--page-text);
+  border-radius: 8px;
+}
+.gross {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1;
+  min-width: 2.5rem;
+  text-align: center;
+}
+.einz-text {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+.durchgang {
+  min-height: 1.4em;
+  margin: 0.25rem 0;
+}
+.wahl {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+}
+.wahl select {
+  min-height: 44px;
+  font: inherit;
+  padding: 0 0.5rem;
+  border: 1px solid var(--page-border);
+  border-radius: 6px;
+  background: var(--page-surface);
+  color: var(--page-text);
+}
+.wahl input {
+  width: 1.4rem;
+  height: 1.4rem;
+}
+.anleitung {
+  margin-bottom: 0.6rem;
+  padding: 0.5rem 0.8rem;
+  border-left: 4px solid var(--page-accent);
+  background: var(--page-surface);
+}
+.anleitung p,
+.anleitung ol {
+  margin: 0.2rem 0;
+}
+.anleitung ol {
+  padding-left: 1.3rem;
+}
+.fett {
+  font-weight: 700;
 }
 .zaehl {
   text-align: center;
