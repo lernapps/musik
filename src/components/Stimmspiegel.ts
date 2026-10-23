@@ -269,3 +269,8 @@ export function melodie(auswahl: number[], anzahl: number): number[] {
     return ton !== undefined && WEISSE_TOENE.includes(ton) ? ton : (VORGABE[i] ?? 0);
   });
 }
+
+/** Wie lange das Mikrofon nach `dauer` Sekunden Abspielen taub bleibt: Vorlauf 0,05 s, Ausklang des Klaviers 0,14 s, Nachhall 0,4 s. */
+export function sperrzeit(dauer: number): number {
+  return dauer + 0.05 + 0.14 + 0.4;
+}

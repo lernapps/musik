@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { frequenz, name, nameMitOktave } from "./Musik.ts";
+import Lautstaerke from "./Lautstaerke.vue";
 import { oeffneMikrofon, spiele, merkeSitzung } from "./Klang.ts";
 import type { Mikrofon } from "./Klang.ts";
 import { tonhoehe } from "./Analyse.ts";
@@ -18,6 +19,7 @@ import {
   melodie,
   neuerLauf,
   rueckmeldung,
+  sperrzeit,
   standardMelodie,
   verlaufKuerzen,
   weiter,
@@ -217,7 +219,7 @@ function hoeren(): void {
       dauer: istFolge.value ? dauerTon - 0.05 : 1,
     })),
   );
-  stummBis = Date.now() + dauer * 1000 + 400;
+  stummBis = Date.now() + sperrzeit(dauer) * 1000;
 }
 
 watch(
@@ -316,6 +318,7 @@ onMounted(() => {
       <button type="button" :aria-label="istFolge ? 'Folge hören' : 'Zielton hören'" @click="hoeren">
         {{ istFolge ? "▶ Folge hören" : "▶ Zielton hören" }}
       </button>
+      <Lautstaerke />
       <button v-if="zustand !== 'an'" type="button" :disabled="zustand === 'fragt'" @click="starten">
         🎤 Mikrofon starten
       </button>

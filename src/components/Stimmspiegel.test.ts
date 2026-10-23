@@ -7,6 +7,7 @@ import {
   auswahlName,
   eigeneAnzahl,
   melodie,
+  sperrzeit,
   standardMelodie,
   abbilden,
   centText,
@@ -273,5 +274,12 @@ describe("Eigene Melodie", () => {
     const l = lauf(neuerLauf(4), true, 0.4);
     expect(l.getroffen[0]).toBe(true);
     expect(neuerLauf(melodie([0, 2, 4, 5], 4).length).getroffen).toEqual([false, false, false, false]);
+  });
+});
+
+describe("Sperre nach dem Hören", () => {
+  it("wartet auf Vorlauf, Ausklang und Nachhall", () => {
+    expect(sperrzeit(2.4)).toBeCloseTo(3.03, 6);
+    expect(sperrzeit(1)).toBeGreaterThan(1 + 0.14 + 0.05);
   });
 });

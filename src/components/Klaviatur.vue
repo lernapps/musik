@@ -2,6 +2,7 @@
 import { computed, onMounted, ref } from "vue";
 import { frequenz, gegenname, istSchwarz, name, nameMitOktave } from "./Musik.ts";
 import { spiele, merkeSitzung } from "./Klang.ts";
+import Lautstaerke from "./Lautstaerke.vue";
 
 const props = withDefaults(
   defineProps<{
@@ -83,6 +84,7 @@ onMounted(() => {
       </button>
     </div>
     <p class="ansage" aria-live="polite">{{ ansage }}</p>
+    <Lautstaerke />
     <div class="knoepfe">
       <button type="button" :disabled="anfang === 0" @click="anfang = 0">Oktave c¹ bis c²</button>
       <button type="button" :disabled="anfang === 12" @click="anfang = 12">Oktave c² bis c³</button>

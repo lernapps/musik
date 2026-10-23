@@ -43,7 +43,7 @@ const INTERVALL_MENGE = [3, 4, 5, 7, 12];
 const TAKTE = 3;
 const TON_DAUER = 0.8;
 const PAUSE = 0.3;
-const SKALA_DAUER = 0.35;
+const SKALA_DAUER = 0.5;
 
 export const HOEHER_1 = "Ton 1 ist höher";
 export const HOEHER_2 = "Ton 2 ist höher";
@@ -92,7 +92,7 @@ export function generate(seed: number, props: { art?: string }): Aufgabe {
   }
   if (art === "lauter") {
     const ton = ganz(rnd, 0, 24);
-    const leise = [0.06, 0.08, 0.1][ganz(rnd, 0, 2)] ?? 0.08;
+    const leise = [0.06, 0.08][ganz(rnd, 0, 1)] ?? 0.08;
     const laut = [0.25, 0.3][ganz(rnd, 0, 1)] ?? 0.25;
     const ersterLauter = rnd() < 0.5;
     return {

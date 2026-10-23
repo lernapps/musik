@@ -64,6 +64,7 @@ onMounted(() => {
       </template>
       <button v-else type="button" @click="abspielen('alle')">▶ Anhören</button>
     </div>
+    <Lautstaerke />
     <div class="knoepfe" role="group" aria-label="Antworten">
       <button
         v-for="option in aufgabe.optionen"
