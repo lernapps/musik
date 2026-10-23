@@ -1,0 +1,145 @@
+# Musik erleben
+
+> Hör zu, klatsche, singe und probiere aus! In diesen Kapiteln erlebst du Töne, Rhythmen und Noten selbst. Du lernst, wie Musik aufgebaut ist, und baust zum Schluss eigene kleine Stücke. Die Klänge entstehen in deinem Browser. Das Mikrofon ist freiwillig: Jede Übung geht auch ohne. Nichts wird aufgenommen oder gespeichert. Für die Klassen 5 bis 7.
+
+## Hören und Klang beschreiben
+
+- [Laut und leise](hoeren/laut-leise/): Lautstärke hören, sehen und mit den Fachwörtern piano und forte beschreiben.
+  - [Ausprobieren](hoeren/laut-leise/#ausprobieren)
+  - [Das Wichtigste](hoeren/laut-leise/#merke)
+  - [Übung](hoeren/laut-leise/#uebung)
+- [Schnell und langsam](hoeren/schnell-langsam/): Grundschlag und Tempo erleben, Schläge pro Minute rechnen und Tempowörter kennen.
+  - [Ausprobieren](hoeren/schnell-langsam/#ausprobieren)
+  - [Das Wichtigste](hoeren/schnell-langsam/#merke)
+  - [Übung](hoeren/schnell-langsam/#uebung)
+- [Klangfarbe und Instrumentenfamilien](hoeren/klangfarbe/): Hören, warum zwei Instrumente bei gleichem Ton verschieden klingen, und Instrumente ihrer Familie zuordnen.
+  - [Ausprobieren](hoeren/klangfarbe/#ausprobieren)
+  - [Das Wichtigste](hoeren/klangfarbe/#merke)
+  - [Übung](hoeren/klangfarbe/#uebung)
+
+## Tonhöhe und Klaviatur
+
+- [Hoch und tief](tonhoehe/hoch-tief/): Hohe und tiefe Töne hören, ihre Frequenz in Hertz kennen und die Oktave als Verdopplung verstehen.
+  - [Ausprobieren](tonhoehe/hoch-tief/#ausprobieren)
+  - [Das Wichtigste](tonhoehe/hoch-tief/#merke)
+  - [Übung](tonhoehe/hoch-tief/#uebung)
+- [Die Klaviatur](tonhoehe/klaviatur/): Die Tasten des Klaviers benennen, das C finden und Halbtonschritte zählen.
+  - [Ausprobieren](tonhoehe/klaviatur/#ausprobieren)
+  - [Das Wichtigste](tonhoehe/klaviatur/#merke)
+  - [Übung](tonhoehe/klaviatur/#uebung)
+- [Meine Stimme hat eine Tonhöhe](tonhoehe/stimme/): Die eigene Stimme als Ton hören, einen Zielton singen und den Unterschied sehen.
+  - [Ausprobieren](tonhoehe/stimme/#ausprobieren)
+  - [Das Wichtigste](tonhoehe/stimme/#merke)
+  - [So übst du selbst](tonhoehe/stimme/#so-uebst-du-selbst)
+  - [Übung](tonhoehe/stimme/#uebung)
+
+## Rhythmus und Takt
+
+- [Grundschlag und Takt](rhythmus/grundschlag-takt/): Betonte und unbetonte Schläge hören und den 2/4-, 3/4- und 4/4-Takt unterscheiden.
+  - [Ausprobieren](rhythmus/grundschlag-takt/#ausprobieren)
+  - [Das Wichtigste](rhythmus/grundschlag-takt/#merke)
+  - [Übung](rhythmus/grundschlag-takt/#uebung)
+- [Notenwerte und Pausen](rhythmus/notenwerte/): Ganze, Halbe, Viertel und Achtel unterscheiden, ihre Dauer vergleichen und Pausen kennen.
+  - [Ausprobieren](rhythmus/notenwerte/#ausprobieren)
+  - [Das Wichtigste](rhythmus/notenwerte/#merke)
+  - [Übung](rhythmus/notenwerte/#uebung)
+- [Rhythmen klatschen](rhythmus/klatschen/): Ein Rhythmus-Muster hören, nachbauen und im Takt klatschen.
+  - [Ausprobieren](rhythmus/klatschen/#ausprobieren)
+  - [Das Wichtigste](rhythmus/klatschen/#merke)
+  - [So übst du selbst](rhythmus/klatschen/#so-uebst-du-selbst)
+  - [Übung](rhythmus/klatschen/#uebung)
+
+## Noten lesen
+
+- [Notenlinien und Violinschlüssel](noten/linien/): Das Notensystem mit fünf Linien, den Violinschlüssel und die Töne auf den Linien kennenlernen.
+  - [Ausprobieren](noten/linien/#ausprobieren)
+  - [Das Wichtigste](noten/linien/#merke)
+  - [Übung](noten/linien/#uebung)
+- [Noten benennen](noten/benennen/): Noten auf Linien, in Zwischenräumen und auf Hilfslinien erkennen und mit ihrem Namen benennen.
+  - [Ausprobieren](noten/benennen/#ausprobieren)
+  - [Das Wichtigste](noten/benennen/#merke)
+  - [Übung](noten/benennen/#uebung)
+- [Rhythmus und Melodie lesen](noten/lesen/): Eine kurze Melodie aus Noten ablesen, Notenwerte zusammenzählen und die Melodie anhören.
+  - [Ausprobieren](noten/lesen/#ausprobieren)
+  - [Das Wichtigste](noten/lesen/#merke)
+  - [Übung](noten/lesen/#uebung)
+
+## Tonleitern und Intervalle
+
+- [Ganzton, Halbton und die Dur-Tonleiter](tonleitern/dur-bauen/): Die Dur-Tonleiter aus Ganzton- und Halbtonschritten aufbauen.
+  - [Ausprobieren](tonleitern/dur-bauen/#ausprobieren)
+  - [Das Wichtigste](tonleitern/dur-bauen/#merke)
+  - [Übung](tonleitern/dur-bauen/#uebung)
+- [Dur und Moll hören](tonleitern/dur-moll/): Dur und Moll am Klang unterscheiden und den kleinen Unterschied im Aufbau erkennen.
+  - [Ausprobieren](tonleitern/dur-moll/#ausprobieren)
+  - [Das Wichtigste](tonleitern/dur-moll/#merke)
+  - [Übung](tonleitern/dur-moll/#uebung)
+- [Intervalle](tonleitern/intervalle/): Den Abstand zwischen zwei Tönen hören, zählen und mit dem Namen des Intervalls benennen.
+  - [Ausprobieren](tonleitern/intervalle/#ausprobieren)
+  - [Das Wichtigste](tonleitern/intervalle/#merke)
+  - [Übung](tonleitern/intervalle/#uebung)
+- [Tonfolgen nachsingen](tonleitern/nachsingen/): Eine kurze Tonfolge hören und nachsingen, Ton für Ton.
+  - [Ausprobieren](tonleitern/nachsingen/#ausprobieren)
+  - [Das Wichtigste](tonleitern/nachsingen/#merke)
+  - [So übst du selbst](tonleitern/nachsingen/#so-uebst-du-selbst)
+  - [Übung](tonleitern/nachsingen/#uebung)
+
+## Begleiten und Erfinden
+
+- [Ein Lied begleiten](erfinden/begleiten/): Mit dem gleichmäßigen Grundschlag ein Lied begleiten und im Tempo bleiben.
+  - [Ausprobieren](erfinden/begleiten/#ausprobieren)
+  - [Das Wichtigste](erfinden/begleiten/#merke)
+  - [So übst du selbst](erfinden/begleiten/#so-uebst-du-selbst)
+  - [Übung](erfinden/begleiten/#uebung)
+- [Einen eigenen Rhythmus erfinden](erfinden/rhythmus-erfinden/): Einen eigenen Rhythmus über vier Takte erfinden, anhören und in Notenwerten aufschreiben.
+  - [Ausprobieren](erfinden/rhythmus-erfinden/#ausprobieren)
+  - [Das Wichtigste](erfinden/rhythmus-erfinden/#merke)
+  - [So übst du selbst](erfinden/rhythmus-erfinden/#so-uebst-du-selbst)
+  - [Übung](erfinden/rhythmus-erfinden/#uebung)
+- [Eine eigene Melodie erfinden und singen](erfinden/melodie-erfinden/): Eine kurze eigene Melodie aus Tönen der Dur-Tonleiter wählen, anhören und nachsingen.
+  - [Ausprobieren](erfinden/melodie-erfinden/#ausprobieren)
+  - [Das Wichtigste](erfinden/melodie-erfinden/#merke)
+  - [So übst du selbst](erfinden/melodie-erfinden/#so-uebst-du-selbst)
+  - [Übung](erfinden/melodie-erfinden/#uebung)
+
+## Glossar
+
+- [Glossar](glossar/)
+
+## Hinweise für einen KI-Tutor
+
+- Die App ist das Arbeitsblatt, der Chat das Gespräch darüber. Gelöst wird in der App: Sie prüft die Ergebnisse, du erklärst.
+- Verlinke immer eine konkrete Aufgabe, nie nur die Startseite. Jede Übung hat einen Anker (`#<id>`); eine Aufgabe mit Nummer öffnest du mit `<seite>?<id>=<nummer>#<id>`. Die Links stehen in der Tutor-Datei jeder Seite.
+- Häng `von=tutor` an jeden Link, den du schickst, vor dem `#`: `<seite>?<id>=7&von=tutor#<id>`. Dann zeigt die Seite einen Knopf „Zurück zum Tutor“.
+- Jede Aufgabe mit Zufallszahlen hat eine Nummer: „Aufgabe Nr. 7“. Frag nach der Nummer, die auf dem Bildschirm steht, und schlag die Aufgabe in der Tutor-Datei der Seite nach. Dort stehen alle Nummern jeder Übung, von 1 bis höchstens 67, jede mit Aufgabe und Lösung; jede Nummer ist eine andere Aufgabe, und dieselbe Nummer zeigt in der App dieselbe Aufgabe.
+- Die Adresse einer Seite hält die Aufgabennummer jeder Übung: `<seite>?<id1>=3&<id2>=12`. Wer den Link der Seite teilt, teilt genau diese Aufgaben. Willst du wissen, welche Aufgaben die lernende Person gerade vor sich hat, bitte sie um die Adresse aus ihrem Browser und lies die Nummern daraus.
+- Verrate keine Lösung, bevor sich die lernende Person auf eine Antwort festgelegt hat. Die Tutor-Dateien enthalten die Lösungen: Nutze sie, um Fehler zu erkennen und gezielt Tipps zu geben, nicht um vorzusagen.
+- Bei jeder Übung stehen typische Fehler mit der Meldung der App. Benenne die Idee hinter einem Fehler, nicht nur „falsch“.
+- Die App sammelt nichts, sendet nichts und meldet dir nichts zurück. Ergebnisse kennst du nur, wenn die lernende Person sie dir sagt: Frag nach jeder verlinkten Aufgabe, was herauskam.
+- Ein kleiner Schritt pro Antwort. Prüfe Verständnis mit einer Aufgabe, nicht mit „Verstanden?“.
+
+### Ein fertiger Prompt für einen KI-Tutor (Rolle, Vorgehen, Checkliste der Seiten)
+
+- [tutor.md](tutor.md)
+
+### Tutor-Dateien der Seiten (Aufbau, Übungen, Aufgaben nach Nummer mit Lösungen)
+
+- [Laut und leise](hoeren/laut-leise/tutor.md)
+- [Schnell und langsam](hoeren/schnell-langsam/tutor.md)
+- [Klangfarbe und Instrumentenfamilien](hoeren/klangfarbe/tutor.md)
+- [Hoch und tief](tonhoehe/hoch-tief/tutor.md)
+- [Die Klaviatur](tonhoehe/klaviatur/tutor.md)
+- [Meine Stimme hat eine Tonhöhe](tonhoehe/stimme/tutor.md)
+- [Grundschlag und Takt](rhythmus/grundschlag-takt/tutor.md)
+- [Notenwerte und Pausen](rhythmus/notenwerte/tutor.md)
+- [Rhythmen klatschen](rhythmus/klatschen/tutor.md)
+- [Notenlinien und Violinschlüssel](noten/linien/tutor.md)
+- [Noten benennen](noten/benennen/tutor.md)
+- [Rhythmus und Melodie lesen](noten/lesen/tutor.md)
+- [Ganzton, Halbton und die Dur-Tonleiter](tonleitern/dur-bauen/tutor.md)
+- [Dur und Moll hören](tonleitern/dur-moll/tutor.md)
+- [Intervalle](tonleitern/intervalle/tutor.md)
+- [Tonfolgen nachsingen](tonleitern/nachsingen/tutor.md)
+- [Ein Lied begleiten](erfinden/begleiten/tutor.md)
+- [Einen eigenen Rhythmus erfinden](erfinden/rhythmus-erfinden/tutor.md)
+- [Eine eigene Melodie erfinden und singen](erfinden/melodie-erfinden/tutor.md)
