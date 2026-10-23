@@ -152,23 +152,25 @@ Scheiben (Unteragenten schrieben die Komponenten parallel, jede Datei gehört ei
 
 ### Tasks
 
-- [ ] `grep '^phase:'` prints `phase: commit`; else set it.
-- [ ] Load skill `lernapps-github`. Push the branch, open the preview pull request, see its checks to green as it
+- [x] `grep '^phase:'` prints `phase: commit`; else set it.
+- [x] Load skill `lernapps-github`. Push the branch, open the preview pull request, see its checks to green as it
       says.
-- [ ] **Checkpoint:** publish. Show what the increment adds and the preview link; ask whether it may go online. Wait
+- [x] **Checkpoint:** publish. Show what the increment adds and the preview link; ask whether it may go online. Wait
       for the yes.
-- [ ] Load skill `lernapps-commit`. Publish as skill `lernapps-github` says: the pull request squash-merged into
+- [x] Load skill `lernapps-commit`. Publish as skill `lernapps-github` says: the pull request squash-merged into
       `main` with the message from this plan, the run of `Pages` watched to the end.
-- [ ] Open the address the job `deploy` printed; confirm the new content. Never a derived address.
-- [ ] App listed and its entry changes (topics, school years, summary) → load skill `lernapps-listing` and write the
+- [x] Open the address the job `deploy` printed; confirm the new content. Never a derived address.
+- [x] App listed and its entry changes (topics, school years, summary) → load skill `lernapps-listing` and write the
       changed entry. Else skip the checkpoint "list".
-- [ ] Fill the retrospective.
-- [ ] Commit this plan on `main` and push it. A push of only `.vibe/` publishes nothing.
+- [x] Fill the retrospective.
+- [x] Commit this plan on `main` and push it. A push of only `.vibe/` publishes nothing.
 - [ ] **Checkpoint:** list. Open the pull request to the catalog without asking first: the pull request is the
       review. See it to "bestanden" as the skill says, then show the creator the pull request and its result.
 - [ ] Plan changed since its last push → commit it on `main`, push again.
 
 ### Completed
+
+Veröffentlicht per Squash-Commit auf `main`; Adresse http://lernapps.net/musik/. Kein Listing nötig (Eintrag unverändert).
 
 ## Retrospective
 
@@ -176,12 +178,16 @@ Scheiben (Unteragenten schrieben die Komponenten parallel, jede Datei gehört ei
 
 ### Phases reached
 
-<!-- Last phase completed, checkpoints passed. E.g. "commit; confirmed, published". -->
+commit; Vorschau-Checkpoint durchlaufen, Veröffentlichen vom Nutzer bestätigt („mach das, passt soweit“).
 
 ### Creator turns after the plan
 
-<!-- Number of creator messages after the confirmation, topic of each. Target: at most 3. -->
+3 Nachrichten nach dem Umsetzen: Rückmeldung zur Vorschau (zwei Regler im ersten Lautstärke-Beispiel verwirrend), Ja zum Veröffentlichen. Die fünf Wünsche kamen vor dem Plan (zählen als Antworten).
 
 ### Where I had to guess
 
-<!-- Each gap in plan, skills, content guide, messages or answers, and your choice. "None" if none. -->
+- „Taktanzahl“ gelesen als: Wie oft das ganze Muster durchläuft (1, 2, 4, 8, dauerhaft).
+- Lautstärke wird nicht gespeichert (sonst ändert sich der Katalogeintrag: `storage`).
+- Klavierklang selbst gebaut (Obertöne, Abklingen); wie er klingt, nur vom Nutzer hörbar, nicht von mir geprüft.
+- Im Klangbild genügt ein Regler „Lautstärke“ (Rückmeldung des Nutzers); auf Seiten ohne eigenen Lautstärkeregler der allgemeine.
+- Der Import der Lautstärke-Komponente fehlte in der Hör-Aufgabe; nur die Insel-Prüfung der Plattform fand es. Ergänzt.
