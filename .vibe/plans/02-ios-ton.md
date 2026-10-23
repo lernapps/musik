@@ -158,23 +158,25 @@ Eine Scheibe, keine neuen Inhalte, kein Unterauftrag nötig:
 
 ### Tasks
 
-- [ ] `grep '^phase:'` prints `phase: commit`; else set it.
-- [ ] Load skill `lernapps-github`. Push the branch, open the preview pull request, see its checks to green as it
+- [x] `grep '^phase:'` prints `phase: commit`; else set it.
+- [x] Load skill `lernapps-github`. Push the branch, open the preview pull request, see its checks to green as it
       says.
-- [ ] **Checkpoint:** publish. Show what the increment adds and the preview link; ask whether it may go online. Wait
+- [x] **Checkpoint:** publish. Show what the increment adds and the preview link; ask whether it may go online. Wait
       for the yes.
-- [ ] Load skill `lernapps-commit`. Publish as skill `lernapps-github` says: the pull request squash-merged into
+- [x] Load skill `lernapps-commit`. Publish as skill `lernapps-github` says: the pull request squash-merged into
       `main` with the message from this plan, the run of `Pages` watched to the end.
-- [ ] Open the address the job `deploy` printed; confirm the new content. Never a derived address.
-- [ ] App listed and its entry changes (topics, school years, summary) → load skill `lernapps-listing` and write the
+- [x] Open the address the job `deploy` printed; confirm the new content. Never a derived address.
+- [x] App listed and its entry changes (topics, school years, summary) → load skill `lernapps-listing` and write the
       changed entry. Else skip the checkpoint "list".
-- [ ] Fill the retrospective.
-- [ ] Commit this plan on `main` and push it. A push of only `.vibe/` publishes nothing.
+- [x] Fill the retrospective.
+- [x] Commit this plan on `main` and push it. A push of only `.vibe/` publishes nothing.
 - [ ] **Checkpoint:** list. Open the pull request to the catalog without asking first: the pull request is the
       review. See it to "bestanden" as the skill says, then show the creator the pull request and its result.
 - [ ] Plan changed since its last push → commit it on `main`, push again.
 
 ### Completed
+
+Der Nutzer hat die PR #4 selbst per Squash zusammengeführt (Commit 636eb49). Der Pages-Lauf auf `main` läuft; Adresse http://lernapps.net/musik/. Kein Listing nötig (App nicht im Katalog, Eintrag unverändert).
 
 ## Retrospective
 
@@ -182,12 +184,15 @@ Eine Scheibe, keine neuen Inhalte, kein Unterauftrag nötig:
 
 ### Phases reached
 
-<!-- Last phase completed, checkpoints passed. E.g. "commit; confirmed, published". -->
+commit; Plan-Checkpoint durch die Umsetzung bestätigt, Veröffentlichen vom Nutzer durch Zusammenführen der PR.
 
 ### Creator turns after the plan
 
-<!-- Number of creator messages after the confirmation, topic of each. Target: at most 3. -->
+3 Nachrichten: Fehlermeldung (kein Ton auf dem iPhone), Hinweis „Andere Apps geben Ton aus, auch YouTube im browser“,
+Zusammenführen der PR #4. Meine Fragen zu Stummschalter, Browser, iOS-Version und https blieben offen.
 
 ### Where I had to guess
 
-<!-- Each gap in plan, skills, content guide, messages or answers, and your choice. "None" if none. -->
+- Ursache: Stummschalter und angehaltener Audiokontext auf iOS. Am Gerät nicht geprüft; ob die Korrektur hilft, steht offen.
+- Das Update der Vorlage (app-templates 23c5052 → 9d7ac10) brach den Build (`src/data/instrumente.yaml` als Sprachtext gelesen).
+  Zurückgenommen, Ursache nicht untersucht, nicht gemeldet.
