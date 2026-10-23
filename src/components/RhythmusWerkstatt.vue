@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
-import { klick, oeffneMikrofon, spiele } from "./Klang.ts";
+import { klick, oeffneMikrofon, spiele, merkeSitzung } from "./Klang.ts";
 import type { Mikrofon } from "./Klang.ts";
 import {
   TEMPO_MAX,
@@ -325,6 +325,10 @@ const ansage = computed(() => {
   if (ergebnis.value) return ergebnisZeile.value;
   if (vorbildMeldung.value !== "") return vorbildMeldung.value;
   return props.bearbeiten ? "Tippe die Felder: ● = Schlag, leer = Pause." : "";
+});
+// iPhone: Die Audio-Sitzung auf Wiedergabe stellen, damit der Stummschalter die Töne nicht verstummen lässt.
+onMounted(() => {
+  merkeSitzung((navigator as Navigator & { audioSession?: { type: string } }).audioSession);
 });
 </script>
 

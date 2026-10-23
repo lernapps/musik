@@ -126,3 +126,4 @@ Kapitel-Ordner `src/<kapitel-id>/`, Seiten-Dateien `<seiten-id>.yaml`. Übungs-i
 - Ein Komma in einem YAML-Tabellenfeld ohne Anführungszeichen teilt die Zelle: Tabellenzellen mit Komma in Anführungszeichen setzen.
 - `matching` braucht `pairs` als `{ left, right }`, nicht als Liste.
 - Ein Doppelpunkt mit Leerzeichen in einem unquotierten YAML-Text (`summary: Laut: leise`) bricht das YAML: in Anführungszeichen setzen.
+- Töne auf dem iPhone: Der gemeinsame Audiokontext kommt aus `holeKontext()` in `Klang.ts` (nicht eigene `AudioContext` anlegen). Er stellt die Audio-Sitzung auf Wiedergabe, spielt ein stilles Audio und setzt den Kontext fort. Jede Klangkomponente ruft in `onMounted` `merkeSitzung(navigator.audioSession)` auf.
