@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { frequenz, name, nameMitOktave } from "./Musik.ts";
-import { oeffneMikrofon, spiele } from "./Klang.ts";
+import { oeffneMikrofon, spiele, merkeSitzung } from "./Klang.ts";
 import type { Mikrofon } from "./Klang.ts";
 import { tonhoehe } from "./Analyse.ts";
 import {
@@ -233,6 +233,10 @@ watch(
 onBeforeUnmount(() => {
   weg = true;
   freigeben();
+});
+// iPhone: Die Audio-Sitzung auf Wiedergabe stellen, damit der Stummschalter die Töne nicht verstummen lässt.
+onMounted(() => {
+  merkeSitzung((navigator as Navigator & { audioSession?: { type: string } }).audioSession);
 });
 </script>
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
-import { klick, spiele } from "./Klang.ts";
+import { computed, onMounted, ref, watch } from "vue";
+import { klick, spiele, merkeSitzung } from "./Klang.ts";
 import { frage, generate, klicks, reason, tonText, wiedergabe, type Art } from "./HoerAufgabe.ts";
 
 const props = withDefaults(
@@ -47,6 +47,10 @@ function antworten(antwort: string): void {
   rueckmeldung.value = ergebnis;
   emit("answered", ergebnis);
 }
+// iPhone: Die Audio-Sitzung auf Wiedergabe stellen, damit der Stummschalter die Töne nicht verstummen lässt.
+onMounted(() => {
+  merkeSitzung((navigator as Navigator & { audioSession?: { type: string } }).audioSession);
+});
 </script>
 
 <template>

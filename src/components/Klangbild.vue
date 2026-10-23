@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, ref } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import { naechsterTon } from "./Analyse.ts";
+import { holeKontext, merkeSitzung } from "./Klang.ts";
 import { nameMitOktave } from "./Musik.ts";
 import {
   FORMEN,
@@ -61,7 +62,7 @@ const pfad = computed(() => {
     .join(" ");
 });
 
-// Eigener Oszillator; der AudioContext entsteht erst nach dem Klick.
+// Eigener Oszillator; der gemeinsame AudioContext aus Klang.ts entsteht erst nach dem Klick.
 let ctx: AudioContext | undefined;
 let osc: OscillatorNode | undefined;
 let huelle: GainNode | undefined;
@@ -75,8 +76,7 @@ function uebernehme(): void {
 }
 
 function starten(): void {
-  ctx ??= new AudioContext();
-  if (ctx.state === "suspended") void ctx.resume();
+  ctx = holeKontext();
   osc = ctx.createOscillator();
   huelle = ctx.createGain();
   osc.type = aktuelleForm.value;
@@ -123,9 +123,11 @@ function waehleForm(f: Form): void {
 
 onBeforeUnmount(() => {
   stoppen();
-  const alt = ctx;
   ctx = undefined;
-  if (alt) setTimeout(() => void alt.close(), 200);
+});
+// iPhone: Die Audio-Sitzung auf Wiedergabe stellen, damit der Stummschalter die Töne nicht verstummen lässt.
+onMounted(() => {
+  merkeSitzung((navigator as Navigator & { audioSession?: { type: string } }).audioSession);
 });
 </script>
 

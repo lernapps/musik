@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { frequenz, gegenname, istSchwarz, name, nameMitOktave } from "./Musik.ts";
-import { spiele } from "./Klang.ts";
+import { spiele, merkeSitzung } from "./Klang.ts";
 
 const props = withDefaults(
   defineProps<{
@@ -48,6 +48,10 @@ const ansage = computed(() =>
     ? "Tippe eine Taste."
     : `Gewählt: ${name(gewaehlt.value)} (${nameMitOktave(gewaehlt.value)}), ${Math.round(frequenz(gewaehlt.value))} Hz`,
 );
+// iPhone: Die Audio-Sitzung auf Wiedergabe stellen, damit der Stummschalter die Töne nicht verstummen lässt.
+onMounted(() => {
+  merkeSitzung((navigator as Navigator & { audioSession?: { type: string } }).audioSession);
+});
 </script>
 
 <template>

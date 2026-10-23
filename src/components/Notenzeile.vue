@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, ref } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import { frequenz, name } from "./Musik.ts";
-import { spiele } from "./Klang.ts";
+import { spiele, merkeSitzung } from "./Klang.ts";
 import {
   ABSTAND,
   ansageNote,
@@ -110,6 +110,10 @@ function fahnePfad(p: { hals?: { x: number; y2: number }; unten: boolean }): str
 function hohl(wert: string): boolean {
   return wert === "ganze" || wert === "halbe";
 }
+// iPhone: Die Audio-Sitzung auf Wiedergabe stellen, damit der Stummschalter die Töne nicht verstummen lässt.
+onMounted(() => {
+  merkeSitzung((navigator as Navigator & { audioSession?: { type: string } }).audioSession);
+});
 </script>
 
 <template>

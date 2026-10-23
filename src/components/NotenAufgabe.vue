@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { frequenz, nameMitOktave } from "./Musik.ts";
-import { spiele } from "./Klang.ts";
+import { spiele, merkeSitzung } from "./Klang.ts";
 import Notenzeile from "./Notenzeile.vue";
 import { NAMEN, bildText, check, generate, reason, solution } from "./NotenAufgabe.ts";
 
@@ -43,6 +43,10 @@ const rueckmeldung = computed(() => {
 function hoeren(): void {
   spiele([{ hz: frequenz(aufgabe.value.ton), start: 0, dauer: 0.9 }]);
 }
+// iPhone: Die Audio-Sitzung auf Wiedergabe stellen, damit der Stummschalter die Töne nicht verstummen lässt.
+onMounted(() => {
+  merkeSitzung((navigator as Navigator & { audioSession?: { type: string } }).audioSession);
+});
 </script>
 
 <template>
