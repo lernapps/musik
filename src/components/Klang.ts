@@ -1,7 +1,10 @@
 // Klang im Browser: Töne erzeugen (Web Audio) und das Mikrofon öffnen. Alles läuft lokal; nichts wird gespeichert
 // oder gesendet. Die Funktionen werden erst nach einem Klick aufgerufen.
 
-export type Wellenform = "sine" | "triangle" | "square" | "sawtooth";
+import { ref } from "vue";
+import { OBERTOENE, filterEnde, filterStart, gainVonProzent, huelle } from "./Klavier.ts";
+
+export type Wellenform = "klavier" | "sine" | "triangle" | "square" | "sawtooth";
 
 let kontext: AudioContext | undefined;
 
@@ -54,6 +57,37 @@ export function holeKontext(): AudioContext {
   return kontext;
 }
 
+/** Die Lautstärke der App in Prozent, für alle Komponenten gleich, bis die Seite neu geladen wird. */
+export const lautstaerke = ref(80);
+
+let master: GainNode | undefined;
+let klavierWelle: PeriodicWave | undefined;
+
+/** Der gemeinsame Ausgang: alle Töne laufen über ihn, damit ein Regler für alle gilt. */
+export function ausgang(): AudioNode {
+  const ctx = holeKontext();
+  if (!master) {
+    master = ctx.createGain();
+    master.gain.value = gainVonProzent(lautstaerke.value);
+    master.connect(ctx.destination);
+  }
+  return master;
+}
+
+/** Setzt die Lautstärke (0 bis 100 Prozent); ein laufender Ton folgt sofort. */
+export function setzeLautstaerke(prozent: number): void {
+  lautstaerke.value = Math.min(Math.max(Math.round(prozent), 0), 100);
+  if (master && kontext) master.gain.setTargetAtTime(gainVonProzent(lautstaerke.value), kontext.currentTime, 0.02);
+}
+
+function welle(ctx: AudioContext): PeriodicWave {
+  klavierWelle ??= ctx.createPeriodicWave(
+    new Float32Array([0, ...OBERTOENE.map(() => 0)]),
+    new Float32Array([0, ...OBERTOENE]),
+  );
+  return klavierWelle;
+}
+
 export interface Ton {
   hz: number;
   /** Beginn in Sekunden ab jetzt. */
@@ -63,26 +97,59 @@ export interface Ton {
   form?: Wellenform;
 }
 
-/** Spielt Töne; gibt die Gesamtdauer in Sekunden zurück. */
+/** Spielt einen Ton wie ein Klavier: leicht verstimmte Saiten, Anschlag, Abklingen, dumpfer werdender Klang. */
+function klavierton(ctx: AudioContext, ziel: AudioNode, ton: Ton, an: number, laut: number): void {
+  const aus = an + ton.dauer;
+  const h = huelle(ton.hz, ton.dauer, laut);
+  const filter = ctx.createBiquadFilter();
+  filter.type = "lowpass";
+  filter.Q.value = 0.5;
+  filter.frequency.setValueAtTime(filterStart(ton.hz), an);
+  filter.frequency.exponentialRampToValueAtTime(filterEnde(ton.hz), Math.max(aus, an + 0.05));
+  const gain = ctx.createGain();
+  gain.gain.setValueAtTime(0.0001, an);
+  gain.gain.exponentialRampToValueAtTime(h.spitze, an + 0.006);
+  gain.gain.exponentialRampToValueAtTime(h.beiLoslassen, Math.max(aus, an + 0.01));
+  gain.gain.exponentialRampToValueAtTime(0.0001, Math.max(aus, an + 0.01) + h.ausklang);
+  filter.connect(gain).connect(ziel);
+  for (const verstimmung of [-3, 3]) {
+    const osc = ctx.createOscillator();
+    osc.setPeriodicWave(welle(ctx));
+    osc.frequency.value = ton.hz;
+    osc.detune.value = verstimmung;
+    const halb = ctx.createGain();
+    halb.gain.value = 0.5;
+    osc.connect(halb).connect(filter);
+    osc.start(an);
+    osc.stop(Math.max(aus, an + 0.01) + h.ausklang + 0.02);
+  }
+}
+
+/** Spielt Töne, standardmäßig wie ein Klavier; gibt die Gesamtdauer in Sekunden zurück. */
 export function spiele(toene: Ton[]): number {
   const ctx = holeKontext();
+  const ziel = ausgang();
   const jetzt = ctx.currentTime + 0.05;
   let ende = 0;
   for (const ton of toene) {
-    const osc = ctx.createOscillator();
-    const huelle = ctx.createGain();
-    osc.type = ton.form ?? "triangle";
-    osc.frequency.value = ton.hz;
     const laut = Math.min(Math.max(ton.laut ?? 0.3, 0), 1);
     const an = jetzt + ton.start;
-    const aus = an + ton.dauer;
-    huelle.gain.setValueAtTime(0.0001, an);
-    huelle.gain.exponentialRampToValueAtTime(Math.max(laut, 0.0002), an + 0.02);
-    huelle.gain.setValueAtTime(Math.max(laut, 0.0002), Math.max(an + 0.02, aus - 0.06));
-    huelle.gain.exponentialRampToValueAtTime(0.0001, aus);
-    osc.connect(huelle).connect(ctx.destination);
-    osc.start(an);
-    osc.stop(aus + 0.02);
+    if ((ton.form ?? "klavier") === "klavier") {
+      klavierton(ctx, ziel, ton, an, laut);
+    } else {
+      const osc = ctx.createOscillator();
+      const huellkurve = ctx.createGain();
+      osc.type = ton.form as OscillatorType;
+      osc.frequency.value = ton.hz;
+      const aus = an + ton.dauer;
+      huellkurve.gain.setValueAtTime(0.0001, an);
+      huellkurve.gain.exponentialRampToValueAtTime(Math.max(laut, 0.0002), an + 0.02);
+      huellkurve.gain.setValueAtTime(Math.max(laut, 0.0002), Math.max(an + 0.02, aus - 0.06));
+      huellkurve.gain.exponentialRampToValueAtTime(0.0001, aus);
+      osc.connect(huellkurve).connect(ziel);
+      osc.start(an);
+      osc.stop(aus + 0.02);
+    }
     ende = Math.max(ende, ton.start + ton.dauer);
   }
   return ende;

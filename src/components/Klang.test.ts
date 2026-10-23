@@ -8,6 +8,15 @@ interface Zustand {
   start: string;
 }
 
+function parameter() {
+  return {
+    value: 0,
+    setValueAtTime: () => undefined,
+    exponentialRampToValueAtTime: () => undefined,
+    setTargetAtTime: (wert: number) => wert,
+  };
+}
+
 function attrappen(zustand: Zustand): void {
   class AudioContext {
     state = zustand.start;
@@ -24,14 +33,21 @@ function attrappen(zustand: Zustand): void {
       return {
         type: "",
         frequency: { value: 0 },
-        connect: () => ({ connect: () => undefined }),
+        detune: { value: 0 },
+        setPeriodicWave: () => undefined,
+        connect: (ziel: unknown) => ziel,
         start: () => undefined,
         stop: () => undefined,
       };
     }
     createGain() {
-      const param = { setValueAtTime: () => undefined, exponentialRampToValueAtTime: () => undefined };
-      return { gain: param, connect: () => ({ connect: () => undefined }) };
+      return { gain: parameter(), connect: (ziel: unknown) => ziel };
+    }
+    createBiquadFilter() {
+      return { type: "", Q: { value: 0 }, frequency: parameter(), connect: (ziel: unknown) => ziel };
+    }
+    createPeriodicWave() {
+      return {};
     }
     destination = {};
   }
@@ -106,5 +122,22 @@ describe("Klang auf dem iPhone", () => {
     merkeSitzung(undefined);
     expect(() => holeKontext()).not.toThrow();
     expect(() => spiele([{ hz: 440, start: 0, dauer: 0.1 }])).not.toThrow();
+  });
+
+  it("hält die Lautstärke in Grenzen und gibt sie an den Ausgang weiter", async () => {
+    const { lautstaerke, setzeLautstaerke, ausgang } = await import("./Klang.ts");
+    ausgang();
+    setzeLautstaerke(150);
+    expect(lautstaerke.value).toBe(100);
+    setzeLautstaerke(-3);
+    expect(lautstaerke.value).toBe(0);
+    setzeLautstaerke(42.4);
+    expect(lautstaerke.value).toBe(42);
+  });
+
+  it("spielt Klavierklang ohne Fehler", async () => {
+    const { spiele } = await import("./Klang.ts");
+    expect(spiele([{ hz: 262, start: 0, dauer: 0.5 }])).toBe(0.5);
+    expect(spiele([{ hz: 1500, start: 0, dauer: 0.06, form: "square" }])).toBe(0.06);
   });
 });
