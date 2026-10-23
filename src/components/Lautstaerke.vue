@@ -4,6 +4,7 @@ import { lautstaerke, setzeLautstaerke } from "./Klang.ts";
 import { lautstaerkeAnsage, lautstaerkeWort } from "./Lautstaerke.ts";
 
 // Ein Regler für die Lautstärke der ganzen App: Er gilt für alle Töne und alle Komponenten auf der Seite.
+withDefaults(defineProps<{ titel?: string }>(), { titel: "Lautstärke" });
 const wort = computed(() => lautstaerkeWort(lautstaerke.value));
 const ansage = computed(() => lautstaerkeAnsage(lautstaerke.value));
 
@@ -14,7 +15,7 @@ function aendern(e: Event): void {
 
 <template>
   <label class="lautstaerke">
-    <span class="titel">Lautstärke</span>
+    <span class="titel">{{ titel }}</span>
     <input type="range" min="0" max="100" step="1" :value="lautstaerke" :aria-valuetext="ansage" @input="aendern" />
     <span class="wert">{{ wort }}, {{ lautstaerke }} %</span>
   </label>
