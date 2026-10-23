@@ -146,7 +146,7 @@ onMounted(() => {
       <span class="wert">{{ hzText }} Hz ({{ tonname }})</span>
     </div>
     <div v-if="zeigeLaut" class="regler">
-      <label for="kb-laut">Lautstärke des Tons</label>
+      <label for="kb-laut">Lautstärke</label>
       <input id="kb-laut" type="range" min="0" max="100" step="1" :value="lautProzent" @input="setzeLaut" />
       <span class="wert">{{ wort }}, {{ Math.round(lautProzent) }} %</span>
     </div>
@@ -164,7 +164,8 @@ onMounted(() => {
       </button>
     </div>
 
-    <Lautstaerke titel="Gesamtlautstärke" />
+    <!-- Der Regler für die Lautstärke des Tons ist zugleich der einzige Lautstärkeregler: zwei Regler wären verwirrend. -->
+    <Lautstaerke v-if="!zeigeLaut" />
 
     <button type="button" class="ton" :aria-pressed="an" @click="umschalten">
       {{ an ? "■ Ton aus" : "▶ Ton an" }}

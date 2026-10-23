@@ -88,7 +88,7 @@ Kapitel-Ordner `src/<kapitel-id>/`, Seiten-Dateien `<seiten-id>.yaml`. Übungs-i
   `where` ausschließen (sonst scheitert der Build).
 - Klang: `spiele` klingt standardmäßig wie ein Klavier (`Klavier.ts`: Obertöne, Abklingen, leicht verstimmte Saiten); Metronomklicks
   bleiben Klicks; im `Klangbild` bleiben die Wellenformen (Lernstoff). Jede Komponente mit Ton zeigt `<Lautstaerke />`
-  (ein gemeinsamer Regler, 80 % am Anfang, nicht gespeichert). „Stopp“ ruft `stoppeAlles()` auf.
+  (ein gemeinsamer Regler, 80 % am Anfang, nicht gespeichert). Im `Klangbild` mit dem Regler „Lautstärke“ (Höhe der Welle) gibt es keinen zweiten Regler: ein Regler genügt. „Stopp“ ruft `stoppeAlles()` auf.
 - Rhythmus: `RhythmusWerkstatt` und `Notenzeile` haben „Wie oft?“ (1, 2, 4, 8, dauerhaft; Props `durchgaenge`, `dauerhaft`).
   Metronomseiten setzen `dauerhaft: true`. Das Einzählen (ein Takt Klicks, große Zahl im Bild) steht im Klatschmodus immer
   und davor ein Kasten „So läuft die Übung“.
