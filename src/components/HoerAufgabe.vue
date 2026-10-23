@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from "vue";
 import { klick, spiele, merkeSitzung } from "./Klang.ts";
+import Lautstaerke from "./Lautstaerke.vue";
 import { frage, generate, klicks, reason, tonText, wiedergabe, type Art } from "./HoerAufgabe.ts";
 
 const props = withDefaults(

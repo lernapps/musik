@@ -80,6 +80,16 @@ export function setzeLautstaerke(prozent: number): void {
   if (master && kontext) master.gain.setTargetAtTime(gainVonProzent(lautstaerke.value), kontext.currentTime, 0.02);
 }
 
+/** Beendet sofort alle klingenden und eingeplanten Töne: Der Ausgang wird ausgeblendet und beim nächsten Ton neu angelegt. */
+export function stoppeAlles(): void {
+  if (!master || !kontext) return;
+  const alt = master;
+  master = undefined;
+  alt.gain.cancelScheduledValues(kontext.currentTime);
+  alt.gain.setTargetAtTime(0, kontext.currentTime, 0.01);
+  setTimeout(() => alt.disconnect(), 150);
+}
+
 function welle(ctx: AudioContext): PeriodicWave {
   klavierWelle ??= ctx.createPeriodicWave(
     new Float32Array([0, ...OBERTOENE.map(() => 0)]),

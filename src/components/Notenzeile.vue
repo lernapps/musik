@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import { frequenz, name } from "./Musik.ts";
-import { holeKontext, merkeSitzung, spiele } from "./Klang.ts";
+import { holeKontext, merkeSitzung, spiele, stoppeAlles } from "./Klang.ts";
 import Lautstaerke from "./Lautstaerke.vue";
 import {
   ABSTAND,
@@ -89,6 +89,11 @@ function stoppe(): void {
   spielt.value = false;
   aktiv.value = undefined;
   durchgangZeile.value = "";
+}
+
+function stoppKnopf(): void {
+  stoppe();
+  stoppeAlles();
 }
 
 function spieleAlle(): void {
@@ -288,7 +293,7 @@ onMounted(() => {
       <button type="button" :disabled="spielt" :aria-label="`Alles abspielen, Tempo ${tempo}`" @click="spieleAlle">
         {{ spielt ? "♪ spielt …" : "▶ Alles abspielen" }}
       </button>
-      <button type="button" :disabled="!spielt" @click="stoppe">■ Stopp</button>
+      <button type="button" :disabled="!spielt" @click="stoppKnopf">■ Stopp</button>
       <label class="oft">
         Wie oft?
         <select v-model="wahl" :disabled="spielt">

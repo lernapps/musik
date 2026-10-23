@@ -16,6 +16,7 @@ blocks:
           taktart: "4/4"
           raster: achtel
           tempo: 70
+          durchgaenge: 2
           vorbild: [true, false, true, true, true, false, true, false]
           klatschen: true
         nojs: |

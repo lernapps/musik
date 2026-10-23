@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
-import { klick, oeffneMikrofon, spiele } from "./Klang.ts";
+import { klick, oeffneMikrofon, spiele, stoppeAlles } from "./Klang.ts";
 import type { Mikrofon } from "./Klang.ts";
 import Lautstaerke from "./Lautstaerke.vue";
 import {
@@ -218,6 +218,7 @@ function aufraeumen(): void {
 function stopp(): void {
   abgebrochen = true;
   aufraeumen();
+  stoppeAlles();
   meldung.value = "Gestoppt.";
 }
 
@@ -450,7 +451,7 @@ const mehrere = computed(() =>
       <button type="button" :disabled="beschaeftigt" aria-label="Muster abspielen" @click="abspielen(felder, true)">
         ▶ Abspielen
       </button>
-      <button type="button" :disabled="!beschaeftigt" aria-label="Abspielen stoppen" @click="stopp">■ Stopp</button>
+      <button type="button" :disabled="!beschaeftigt" @click="stopp">■ Stopp</button>
       <button v-if="hatVorbild" type="button" :disabled="beschaeftigt" @click="abspielen(vorbildFelder, false)">
         Vorbild hören
       </button>
