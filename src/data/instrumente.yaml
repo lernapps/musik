@@ -1,20 +1,21 @@
 # Instrumente und ihre Familie (Sinfonieorchester und Tasteninstrumente).
 # Quellen: de.wikipedia.org/wiki/Orchester, de.wikipedia.org/wiki/Musikinstrument
-- { name: Geige, familie: Streicher }
-- { name: Bratsche, familie: Streicher }
-- { name: Cello, familie: Streicher }
-- { name: Kontrabass, familie: Streicher }
-- { name: Querflöte, familie: Holzbläser }
-- { name: Oboe, familie: Holzbläser }
-- { name: Klarinette, familie: Holzbläser }
-- { name: Fagott, familie: Holzbläser }
-- { name: Trompete, familie: Blechbläser }
-- { name: Horn, familie: Blechbläser }
-- { name: Posaune, familie: Blechbläser }
-- { name: Tuba, familie: Blechbläser }
-- { name: Pauke, familie: Schlagwerk }
-- { name: Triangel, familie: Schlagwerk }
-- { name: Becken, familie: Schlagwerk }
-- { name: Glockenspiel, familie: Schlagwerk }
-- { name: Klavier, familie: Tasteninstrumente }
-- { name: Orgel, familie: Tasteninstrumente }
+# nr: laufende Nummer. Ein Datensatz nur aus Texten gilt der Runtime als Text nach Sprachen; die Zahl verhindert das.
+- { nr: 1, name: Geige, familie: Streicher }
+- { nr: 2, name: Bratsche, familie: Streicher }
+- { nr: 3, name: Cello, familie: Streicher }
+- { nr: 4, name: Kontrabass, familie: Streicher }
+- { nr: 5, name: Querflöte, familie: Holzbläser }
+- { nr: 6, name: Oboe, familie: Holzbläser }
+- { nr: 7, name: Klarinette, familie: Holzbläser }
+- { nr: 8, name: Fagott, familie: Holzbläser }
+- { nr: 9, name: Trompete, familie: Blechbläser }
+- { nr: 10, name: Horn, familie: Blechbläser }
+- { nr: 11, name: Posaune, familie: Blechbläser }
+- { nr: 12, name: Tuba, familie: Blechbläser }
+- { nr: 13, name: Pauke, familie: Schlagwerk }
+- { nr: 14, name: Triangel, familie: Schlagwerk }
+- { nr: 15, name: Becken, familie: Schlagwerk }
+- { nr: 16, name: Glockenspiel, familie: Schlagwerk }
+- { nr: 17, name: Klavier, familie: Tasteninstrumente }
+- { nr: 18, name: Orgel, familie: Tasteninstrumente }
