@@ -180,3 +180,13 @@ beschreibe("HoerAufgabe", () => {
     expect(about.mistakes.length).toBeGreaterThan(0);
   });
 });
+
+beschreibe("die Töne in Worten", () => {
+  it("nennen den Namen, nie die Frequenz: sonst lösen sie die Aufgabe ohne Hören", () => {
+    for (let seed = 1; seed <= 30; seed++) {
+      const task = generate(seed, { art: "hoeher" });
+      for (const wert of Object.values(params(task, { art: "hoeher" }, "de"))) expect(String(wert)).not.toMatch(/Hz/);
+      expect(describe(task, { art: "hoeher" }, "de").task).not.toMatch(/Hz/);
+    }
+  });
+});

@@ -157,8 +157,9 @@ export function wrong(task: Aufgabe): string {
   return task.optionen.find((o) => o !== richtigeAntwort) ?? "";
 }
 
-function hz(ton: number): string {
-  return `${nameMitOktave(ton)} (${Math.round(frequenz(ton))} Hz)`;
+/** Ein Ton in Worten: sein Name mit Oktave, ohne Frequenz, die die Frage nach dem höheren Ton ohne Hören beantwortete. */
+function inWorten(ton: number): string {
+  return nameMitOktave(ton);
 }
 
 function lautWort(task: Aufgabe, i: number): string {
@@ -184,7 +185,11 @@ export function params(task: Aufgabe, _props?: unknown, _lang?: string): Record<
   }
   if (task.art === "dur-moll") return { Töne: task.toene.map(nameMitOktave).join(", "), Antworten: antworten };
   const [a = 0, b = 0] = task.toene;
-  return { Ton1: `${hz(a)}${lautWort(task, 0)}`, Ton2: `${hz(b)}${lautWort(task, 1)}`, Antworten: antworten };
+  return {
+    Ton1: `${inWorten(a)}${lautWort(task, 0)}`,
+    Ton2: `${inWorten(b)}${lautWort(task, 1)}`,
+    Antworten: antworten,
+  };
 }
 
 /** Füllt die Platzhalter `{Name}` eines Texts mit den Werten aus `params`. */
