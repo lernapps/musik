@@ -6,8 +6,12 @@ import {
   describe,
   generate,
   klicks,
+  mistakes,
+  params,
   reason,
+  show,
   solution,
+  template,
   wiedergabe,
   wrong,
   type Art,
@@ -28,8 +32,8 @@ beschreibe("HoerAufgabe", () => {
         const d = describe(task, { art }, "de");
         expect(d.task.trim()).not.toBe("");
         expect(d.solution.trim()).not.toBe("");
-        expect(reason(task, solution(task)).correct).toBe(true);
-        expect(reason(task, wrong(task)).correct).toBe(false);
+        expect(reason(task, solution(task))).toBeUndefined();
+        expect(reason(task, wrong(task))?.length).toBeGreaterThan(10);
         alle.add(JSON.stringify(task));
       }
       expect(alle.size).toBeGreaterThanOrEqual(20);
@@ -75,8 +79,66 @@ beschreibe("HoerAufgabe", () => {
   it("intervall: nennt Halbtöne und den Fehler um einen Halbton", () => {
     const t = generate(1, { art: "intervall" });
     const nah = INTERVALLE.find((i) => Math.abs(i.halbtoene - (t.toene[1] ?? 0) + (t.toene[0] ?? 0)) === 1);
-    const text = reason(t, nah?.name ?? "Prime").reason;
+    const text = reason(t, nah?.name ?? "Prime");
+    expect(text).toContain("Knapp daneben");
     expect(text).toContain("Halbton");
+  });
+
+  for (const art of ARTEN) {
+    it(`${art}: die Meldung zu jeder falschen Antwort nennt nie die Lösung`, () => {
+      for (let seed = 1; seed <= 200; seed++) {
+        const t = generate(seed, { art });
+        for (const option of t.optionen.filter((o) => o !== solution(t))) {
+          const text = reason(t, option) ?? "";
+          expect(text.length).toBeGreaterThan(10);
+          expect(text).not.toContain("Richtig ist");
+          // Dur und Moll nennt die Regel beide; sonst steht die Lösung nie in der Meldung
+          if (art !== "dur-moll") expect(text).not.toContain(solution(t));
+        }
+      }
+    });
+
+    it(`${art}: Tabelle für den Tutor: Vorlage mit Werten ist die Aufgabe, jeder Fehlwert wird abgelehnt`, () => {
+      const names = Object.keys(params(generate(1, { art })));
+      for (let seed = 1; seed <= 200; seed++) {
+        const t = generate(seed, { art });
+        const werte = params(t);
+        expect(Object.keys(werte)).toEqual(names);
+        let text = template({ art }, "de");
+        for (const [name, wert] of Object.entries(werte)) text = text.replace(`{${name}}`, String(wert));
+        expect(text).toBe(describe(t, { art }, "de").task);
+        const fehler = mistakes(t);
+        expect(fehler).toHaveLength(about.mistakes.length);
+        for (const antwort of fehler) {
+          if (antwort === undefined) continue;
+          expect(check(t, antwort)).toBe(false);
+          expect(t.optionen).toContain(antwort);
+        }
+        expect(show(solution(t))).toBe(solution(t));
+      }
+    });
+  }
+
+  it("hoeher: wer den lauteren, tieferen Ton wählt, hört vom Unterschied zwischen laut und hoch", () => {
+    let gesehen = 0;
+    for (let seed = 1; seed <= 200; seed++) {
+      const t = generate(seed, { art: "hoeher" });
+      const [lautUndTief] = mistakes(t);
+      if (lautUndTief === undefined) continue;
+      gesehen++;
+      expect(reason(t, lautUndTief)).toContain("Lauter heißt aber nicht höher");
+    }
+    expect(gesehen).toBeGreaterThan(20);
+  });
+
+  it("feste Fehlwerte: Terzen beim Intervall, das andere Tongeschlecht bei Dur und Moll, keiner beim Takt", () => {
+    const terz = Array.from({ length: 200 }, (_, i) => generate(i + 1, { art: "intervall" })).find(
+      (t) => (t.toene[1] ?? 0) - (t.toene[0] ?? 0) === 3 && t.optionen.includes("große Terz"),
+    );
+    expect(terz && mistakes(terz)[1]).toBe("große Terz");
+    const tonart = generate(1, { art: "dur-moll" });
+    expect(mistakes(tonart)[2]).toBe(wrong(tonart));
+    expect(mistakes(generate(1, { art: "takt" }))).toEqual([undefined, undefined, undefined, undefined]);
   });
 
   it("dur-moll: Tonleitern haben die richtige Terz", () => {
@@ -116,5 +178,15 @@ beschreibe("HoerAufgabe", () => {
     expect(about.answer).not.toBe("");
     expect(about.correct).not.toBe("");
     expect(about.mistakes.length).toBeGreaterThan(0);
+  });
+});
+
+beschreibe("die Töne in Worten", () => {
+  it("nennen den Namen, nie die Frequenz: sonst lösen sie die Aufgabe ohne Hören", () => {
+    for (let seed = 1; seed <= 30; seed++) {
+      const task = generate(seed, { art: "hoeher" });
+      for (const wert of Object.values(params(task, { art: "hoeher" }, "de"))) expect(String(wert)).not.toMatch(/Hz/);
+      expect(describe(task, { art: "hoeher" }, "de").task).not.toMatch(/Hz/);
+    }
   });
 });

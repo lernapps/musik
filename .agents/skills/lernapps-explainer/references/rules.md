@@ -163,17 +163,38 @@ scope: archetype:explainer
 severity: error
 ```
 
-- Emits `answered` → `src/components/<Name>.ts` with pure, deterministic `generate(seed, props)`,
-  `check(task, answer)`, `solution(task)`, `wrong(task)`; property test passes.
+- Emits `answer` → `src/components/<Name>.ts` with pure, deterministic `generate(seed, props)`,
+  `check(task, answer)`, `solution(task)`, `wrong(task)`, `reason(task, answer, props, lang)`; property test passes.
+- Emits no `answered` (the old contract): the explainer draws "Prüfen" and checks; a component draws none.
 - Block lists `examples` with at least one `accepted` and one `rejected`, `{ answer, seed? }` in the shape of
   `check` (no seed: seeds 1–50), incl. another correct answer where the text allows.
 - Declares prop `seed: number`, shows `generate(seed, props)`. The explainer gives the seed, shows "Aufgabe Nr.",
   "Neue Aufgabe", keeps `?<id>=<n>`: never draw a seed or offer "next" inside.
 - Also exports `describe(task, props, lang)` → `{ task, solution }` (restricted Markdown, task exactly as shown) and
-  `about = { task, answer, correct, mistakes }` (texts by language). The tutor reads only these (`tutor.md`, no-JS
+  `about = { task, answer, correct, mistakes }` (texts by language). The tutor reads only these (the tutor page, no-JS
   text).
 - Any exercise may carry `examples: { accepted, rejected }`; `generated`: expressions of `given` and `answer`, per
   seed (e.g. `reverse(answer)`).
+- With `template`, `params`, `mistakes` and `show` (all four or none, rule `vue-component-tutor-table`): `check`
+  accepts the solution and rejects each mistake's answer, `params` gives the same names for every task, each
+  placeholder of `template` is one of them.
+
+## `vue-component-tutor-table`: An exercise component declares its exercise for the tutor
+
+```rule
+id: vue-component-tutor-table
+scope: archetype:explainer
+severity: hint
+```
+
+- The logic module also exports `template(props, lang)`: the task once, `{name}` for each input;
+  `params(task, props, lang)`: the inputs by name (`{ G: 1260, p: 15 }`), numbers or texts, the same names for every
+  task; `mistakes(task, props)`: per `about.mistakes`, in order, the answer it gives, `undefined` where none;
+  `show(answer, task, props, lang)`: an answer as text, short ("C", "3 Kästchen").
+- The tutor page then has the task once, the mistakes as F1, F2 … and a table of every number (inputs, solution,
+  each mistake), like `generated`. Without them: each number's `describe` as far as 64 kB allow, and the build's hint
+  names the block.
+- Example: `src/components/ProzentFeld.ts` of the template.
 
 ## `vue-component-tested`: A test per component
 

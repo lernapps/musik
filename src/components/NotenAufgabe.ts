@@ -97,40 +97,84 @@ export function check(task: Aufgabe, answer: unknown): boolean {
 const EZEL =
   "Linien von unten: E G H D F, „Eine Gans hüpft durch Felder“. Zwischenräume von unten: F A C E, wie das Wort „face“.";
 
-/** Rückmeldung zu einer Antwort: leer bei richtig, sonst der typische Fehler. */
-export function reason(task: Aufgabe, answer: unknown): string {
-  if (check(task, answer)) return "";
+/** Der Buchstabe `schritte` Stufen über (negativ: unter) dem Namen der Note, mit Sprung von H zu C. */
+function nachbar(task: Aufgabe, schritte: number): string {
+  const i = NAMEN.indexOf(name(task.ton) as (typeof NAMEN)[number]);
+  return NAMEN[(i + schritte + NAMEN.length) % NAMEN.length] ?? "C";
+}
+
+/**
+ * Die Antwort jedes typischen Fehlers aus `about.mistakes`, in derselben Reihenfolge; undefined, wo die Aufgabe keinen
+ * festen Fehlwert hat. Auf einer Hilfslinie ist der Nachbarton der Fehler „Hilfslinie nicht beachtet“: der Ton direkt
+ * unter (d¹) oder über (g²) dem System. Von einer anderen Linie aus zählen gibt viele Antworten, darum keine.
+ */
+export function mistakes(task: Aufgabe, _props?: AufgabenProps): (string | undefined)[] {
+  const hilfslinie = anzahlHilfslinien(task.ton) > 0;
+  if (hilfslinie) return [undefined, undefined, nachbar(task, lage(task.ton) < 0 ? 1 : -1), undefined];
+  return [nachbar(task, 1), nachbar(task, -1), undefined, undefined];
+}
+
+/**
+ * Die Meldung der App zu einer falschen Antwort: was nicht passt und wie man den Namen findet, nie der Name selbst.
+ * undefined für eine richtige Antwort.
+ */
+export function reason(task: Aufgabe, answer: unknown, _props?: AufgabenProps, _lang?: string): string | undefined {
+  if (check(task, answer)) return undefined;
   const gegeben = normalisiere(answer);
   if (gegeben === "") return "Wähle einen der Namen C, D, E, F, G, A oder H.";
-  const ziel = NAMEN.indexOf(name(task.ton) as (typeof NAMEN)[number]);
-  const wahl = NAMEN.indexOf(gegeben as (typeof NAMEN)[number]);
-  const abstand = (wahl - ziel + NAMEN.length) % NAMEN.length;
+  // Steht die Note selbst auf e¹, verriete „von e¹ aus zählen“ ihren Namen: dann nur die Eselsbrücke
+  const vonUnten =
+    name(task.ton) === "E" && lage(task.ton) === 0
+      ? "Zähle von der untersten Linie aus. Die Namen der Linien von unten sagt dir die Eselsbrücke „Eine Gans hüpft durch Felder“."
+      : "Zähle von der untersten Linie e¹ aus.";
   if (anzahlHilfslinien(task.ton) > 0) {
-    return `Die Hilfslinie zählt mit: Die Note steht ${position(task.ton)}. Zähle von der untersten Linie e¹ aus weiter.`;
+    const richtung = lage(task.ton) < 0 ? "nach unten" : "nach oben";
+    return `Die Hilfslinie zählt mit: Die Note steht ${position(task.ton)}. Zähle von der untersten Linie e¹ aus Schritt für Schritt ${richtung}, Linie, Zwischenraum, Linie …, bis zur Hilfslinie.`;
   }
-  if (abstand === 1 || abstand === NAMEN.length - 1) {
+  const [hoeher, tiefer] = mistakes(task);
+  if (gegeben === hoeher || gegeben === tiefer) {
     return istLinie(task.ton)
-      ? "Du hast Linie und Zwischenraum verwechselt: Diese Note sitzt auf einer Linie, nicht im Zwischenraum. Zähle von der untersten Linie e¹ aus."
-      : "Du hast Linie und Zwischenraum verwechselt: Diese Note sitzt in einem Zwischenraum, nicht auf einer Linie. Zähle von der untersten Linie e¹ aus.";
+      ? `Du hast Linie und Zwischenraum verwechselt: Diese Note sitzt auf einer Linie, nicht im Zwischenraum. ${vonUnten}`
+      : `Du hast Linie und Zwischenraum verwechselt: Diese Note sitzt nicht auf einer Linie, sondern dazwischen. ${vonUnten}`;
   }
-  return "Zähle von der untersten Linie e¹ aus: e¹ g¹ h¹ d² f² sitzen auf den Linien, f¹ a¹ c² e² in den Zwischenräumen.";
+  return `Du hast von einer anderen Linie aus gezählt. ${vonUnten} Jede Linie und jeder Zwischenraum ist einen Ton weiter.`;
+}
+
+/** Die Aufgabe, wie das Kind sie liest, mit `{Note}` und `{Lage}` für die Werte aus `params`. */
+export function template(_props?: AufgabenProps, _lang?: string): string {
+  return "{Note} {Lage} im Violinschlüssel. Wie heißt der Ton? Zur Wahl stehen C, D, E, F, G, A und H.";
+}
+
+/** Was eine Aufgabe festlegt: der Notenwert und die Lage der Note im System. */
+export function params(task: Aufgabe, _props?: AufgabenProps, _lang?: string): Record<string, string> {
+  return { Note: wertText(task.wert), Lage: position(task.ton) };
+}
+
+/** Eine Antwort, wie das Kind sie gibt: der Buchstabe. */
+export function show(answer: unknown, _task?: Aufgabe, _props?: AufgabenProps, _lang?: string): string {
+  return normalisiere(answer) || (typeof answer === "string" ? answer : "");
 }
 
 /** Text für Tutor und Screenreader: die Aufgabe wie gezeigt und die Lösung. */
-export function describe(task: Aufgabe, _props: AufgabenProps, _lang: string): { task: string; solution: string } {
+export function describe(task: Aufgabe, props: AufgabenProps, lang: string): { task: string; solution: string } {
+  const werte = params(task, props, lang);
   return {
-    task: `${bildText(task)}. Wie heißt der Ton? Zur Wahl stehen C, D, E, F, G, A und H.`,
+    task: template(props, lang)
+      .replace("{Note}", werte["Note"] ?? "")
+      .replace("{Lage}", werte["Lage"] ?? ""),
     solution: `${name(task.ton)} (${nameMitOktave(task.ton)}). Die Note steht ${position(task.ton)}. Eselsbrücke: ${EZEL}`,
   };
 }
 
 export const about = {
   task: "Das Kind sieht eine Note im Violinschlüssel (auch mit Hilfslinie) und wählt ihren Namen.",
-  answer: "Der Notenname als ein Buchstabe: C, D, E, F, G, A oder H (Groß- oder Kleinschreibung ist egal).",
+  answer:
+    "Das Kind tippt auf einen der Knöpfe C, D, E, F, G, A oder H und drückt „Prüfen“ unter der Aufgabe; die Wahl lässt sich vorher ändern. Nach dem Prüfen spielt „▶ Ton hören“ die Note.",
   correct: "Die Antwort ist richtig, wenn der Buchstabe dem Namen der gezeigten Note entspricht.",
   mistakes: [
-    "Linie und Zwischenraum verwechselt: der Nachbarton wird gewählt.",
-    "Die Hilfslinie nicht beachtet (bei c¹ und a²).",
+    "Linie und Zwischenraum verwechselt: den Nachbarton eine Stufe höher gewählt.",
+    "Linie und Zwischenraum verwechselt: den Nachbarton eine Stufe tiefer gewählt.",
+    "Die Hilfslinie nicht beachtet (bei c¹ und a²): die Note für den Ton direkt unter dem System (d¹) oder direkt darüber (g²) gehalten.",
     "Nicht von der untersten Linie e¹ aus gezählt, sondern von einer anderen Linie.",
   ],
 };

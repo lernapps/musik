@@ -29,7 +29,7 @@
       "source": "lernapps/tooling",
       "sourceType": "github",
       "skillPath": "skills/content/lernapps-content-questions/SKILL.md",
-      "computedHash": "b3e70ceb3267d203c87d350028f87f1548da6cbfc26cae5a2926769456e95daf"
+      "computedHash": "6df509aae1eaca5126b1427189e5faa1eb38260f5aacf86ed1efb06411c5e4f0"
     },
     "lernapps-content-research": {
       "source": "lernapps/tooling",
@@ -47,7 +47,13 @@
       "source": "lernapps/tooling",
       "sourceType": "github",
       "skillPath": "skills/archetypes/lernapps-explainer/SKILL.md",
-      "computedHash": "5135be0d222d1b12fcc006244b28899b467ff62fed47a83320993ab419fdb7d5"
+      "computedHash": "7a29caedfb347f4696fb090c68934d261063aae1a35cfc5d19ee81305bec190a"
+    },
+    "lernapps-explainer-design": {
+      "source": "lernapps/tooling",
+      "sourceType": "github",
+      "skillPath": "skills/archetypes/lernapps-explainer-design/SKILL.md",
+      "computedHash": "bacc1782974bc502ff2036a79b681092af3d324a891455ffa135ab1535222949"
     },
     "lernapps-github": {
       "source": "lernapps/tooling",

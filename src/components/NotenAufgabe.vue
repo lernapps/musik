@@ -1,45 +1,36 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from "vue";
+// Die Übung „Note benennen“ der Nummer seed: eine Note im Violinschlüssel und die Knöpfe C bis H. Sie ist nur die
+// Eingabe der Aufgabe: Sie meldet den gewählten Namen mit answer; der Explainer zeichnet „Prüfen“, prüft mit
+// NotenAufgabe.ts und gibt die Rückmeldung. Nach dem Prüfen markiert sie die Wahl und spielt auf Klick den Ton.
+import { computed, onMounted, ref } from "vue";
 import { frequenz, nameMitOktave } from "./Musik.ts";
 import { spiele, merkeSitzung } from "./Klang.ts";
 import Lautstaerke from "./Lautstaerke.vue";
 import Notenzeile from "./Notenzeile.vue";
-import { NAMEN, bildText, check, generate, hoerDauer, reason, solution } from "./NotenAufgabe.ts";
+import { NAMEN, bildText, check, generate, hoerDauer, solution } from "./NotenAufgabe.ts";
 
 const props = defineProps<{
   /** Samen der Aufgabe; die Seite vergibt ihn. */
   seed: number;
   /** Welche Noten vorkommen: nur auf Linien, nur in Zwischenräumen oder alle (c¹ bis a²). */
   bereich?: "linien" | "zwischenraeume" | "alle";
+  /** Ob der Explainer die jetzige Antwort geprüft hat. */
+  checked?: boolean;
 }>();
 
-const emit = defineEmits<{ answered: [result: { correct: boolean; reason: string }] }>();
+const emit = defineEmits<{ answer: [antwort: string | undefined] }>();
 
+// „Neue Aufgabe“ baut die Komponente mit einer anderen Nummer neu auf
 const aufgabe = computed(() => generate(props.seed, { bereich: props.bereich }));
 const noten = computed(() => [{ ton: aufgabe.value.ton, wert: aufgabe.value.wert }]);
 const gewaehlt = ref<string | undefined>(undefined);
-const richtig = ref(false);
+const geprueft = computed(() => props.checked === true && gewaehlt.value !== undefined);
+const richtig = computed(() => geprueft.value && check(aufgabe.value, gewaehlt.value));
 
-watch(
-  () => props.seed,
-  () => {
-    gewaehlt.value = undefined;
-    richtig.value = false;
-  },
-);
-
-function antworte(antwort: string): void {
-  if (gewaehlt.value !== undefined) return;
+function waehle(antwort: string): void {
   gewaehlt.value = antwort;
-  richtig.value = check(aufgabe.value, antwort);
-  emit("answered", { correct: richtig.value, reason: reason(aufgabe.value, antwort) });
+  emit("answer", antwort);
 }
-
-const rueckmeldung = computed(() => {
-  if (gewaehlt.value === undefined) return "";
-  const lösung = `${solution(aufgabe.value)} (${nameMitOktave(aufgabe.value.ton)})`;
-  return richtig.value ? `Richtig: ${lösung}.` : `Nicht ganz. Die Note heißt ${lösung}.`;
-});
 
 function hoeren(): void {
   spiele([{ hz: frequenz(aufgabe.value.ton), start: 0, dauer: hoerDauer(aufgabe.value) }]);
@@ -63,21 +54,22 @@ onMounted(() => {
         type="button"
         class="name"
         :class="{
-          gewaehlt: gewaehlt === n,
-          gut: gewaehlt !== undefined && n === solution(aufgabe),
-          schlecht: gewaehlt === n && !richtig,
+          gewaehlt: gewaehlt === n && !geprueft,
+          gut: richtig && gewaehlt === n,
+          schlecht: geprueft && !richtig && gewaehlt === n,
         }"
-        :disabled="gewaehlt !== undefined"
         :aria-pressed="gewaehlt === n"
-        @click="antworte(n)"
+        @click="waehle(n)"
       >
         {{ n }}
-        <span v-if="gewaehlt !== undefined && n === solution(aufgabe)" aria-hidden="true">✓</span>
-        <span v-else-if="gewaehlt === n" aria-hidden="true">✗</span>
+        <span v-if="richtig && gewaehlt === n" aria-hidden="true">✓</span>
+        <span v-else-if="geprueft && gewaehlt === n" aria-hidden="true">✗</span>
       </button>
     </div>
-    <p class="rueckmeldung" aria-live="polite">{{ rueckmeldung }}</p>
-    <div v-if="gewaehlt !== undefined">
+    <p v-if="richtig" class="rueckmeldung">
+      Die Note heißt {{ solution(aufgabe) }}, genauer {{ nameMitOktave(aufgabe.ton) }}.
+    </p>
+    <div v-if="geprueft">
       <button type="button" class="hoeren" @click="hoeren">▶ Ton hören</button>
       <Lautstaerke />
     </div>
@@ -119,8 +111,10 @@ onMounted(() => {
   outline: 3px solid var(--page-accent);
   outline-offset: 2px;
 }
-.name:disabled {
-  cursor: default;
+.gewaehlt {
+  border-color: var(--page-accent);
+  background: var(--page-accent);
+  color: var(--page-on-accent);
 }
 .gut {
   border-color: var(--page-right);

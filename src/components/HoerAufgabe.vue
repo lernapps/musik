@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from "vue";
+// Die Hör-Aufgabe der Nummer seed: Töne oder Klicks zum Anhören (nur nach einem Klick) und die Antwortknöpfe. Sie ist
+// nur die Eingabe der Aufgabe: Sie meldet die gewählte Antwort mit answer; der Explainer zeichnet „Prüfen“, prüft mit
+// HoerAufgabe.ts und gibt die Rückmeldung. Nach einer richtig geprüften Antwort zeigt sie die Erklärung mit den Tönen.
+import { computed, onMounted, ref } from "vue";
 import { klick, spiele, merkeSitzung } from "./Klang.ts";
 import Lautstaerke from "./Lautstaerke.vue";
-import { frage, generate, klicks, reason, tonText, wiedergabe, type Art } from "./HoerAufgabe.ts";
+import { check, erklaerung, frage, generate, klicks, tonText, wiedergabe, type Art } from "./HoerAufgabe.ts";
 
 const props = withDefaults(
   defineProps<{
@@ -10,28 +13,22 @@ const props = withDefaults(
     seed: number;
     /** Art der Aufgabe. */
     art?: "hoeher" | "lauter" | "intervall" | "dur-moll" | "takt";
+    /** Ob der Explainer die jetzige Antwort geprüft hat. */
+    checked?: boolean;
   }>(),
-  { art: "hoeher" },
+  { art: "hoeher", checked: false },
 );
 
-const emit = defineEmits<{ answered: [ergebnis: { correct: boolean; reason: string }] }>();
+const emit = defineEmits<{ answer: [antwort: string | undefined] }>();
 
+// „Neue Aufgabe“ baut die Komponente mit einer anderen Nummer neu auf
 const aufgabe = computed(() => generate(props.seed, props));
 const gewaehlt = ref<string | undefined>(undefined);
-const rueckmeldung = ref<{ correct: boolean; reason: string } | undefined>(undefined);
 const textZeigen = ref(false);
-
-watch(
-  () => [props.seed, props.art],
-  () => {
-    gewaehlt.value = undefined;
-    rueckmeldung.value = undefined;
-    textZeigen.value = false;
-  },
-);
 
 const zweiTone = computed(() => (["hoeher", "lauter", "intervall"] as Art[]).includes(aufgabe.value.art));
 const text = computed(() => tonText(aufgabe.value));
+const geloest = computed(() => props.checked && check(aufgabe.value, gewaehlt.value));
 
 function abspielen(welche: "1" | "2" | "alle"): void {
   if (aufgabe.value.art === "takt") {
@@ -41,12 +38,9 @@ function abspielen(welche: "1" | "2" | "alle"): void {
   spiele(wiedergabe(aufgabe.value, welche));
 }
 
-function antworten(antwort: string): void {
-  if (rueckmeldung.value) return;
+function waehle(antwort: string): void {
   gewaehlt.value = antwort;
-  const ergebnis = reason(aufgabe.value, antwort);
-  rueckmeldung.value = ergebnis;
-  emit("answered", ergebnis);
+  emit("answer", antwort);
 }
 // iPhone: Die Audio-Sitzung auf Wiedergabe stellen, damit der Stummschalter die Töne nicht verstummen lässt.
 onMounted(() => {
@@ -73,9 +67,8 @@ onMounted(() => {
         type="button"
         class="antwort"
         :class="{ gewaehlt: gewaehlt === option }"
-        :disabled="rueckmeldung !== undefined"
         :aria-pressed="gewaehlt === option"
-        @click="antworten(option)"
+        @click="waehle(option)"
       >
         {{ gewaehlt === option ? "● " : "" }}{{ option }}
       </button>
@@ -88,12 +81,7 @@ onMounted(() => {
     <p v-if="textZeigen" class="text">
       {{ text }} Hinweis: Wenn du die Töne liest, zählt das nicht mehr als Hörtest. Zum Üben hilft es trotzdem.
     </p>
-    <p class="rueckmeldung" aria-live="polite">
-      <template v-if="rueckmeldung">
-        <strong>{{ rueckmeldung.correct ? "✓ " : "✗ " }}</strong
-        >{{ rueckmeldung.reason }}
-      </template>
-    </p>
+    <p v-if="geloest" class="erklaerung">{{ erklaerung(aufgabe) }}</p>
   </div>
 </template>
 
@@ -127,10 +115,6 @@ button:focus-visible {
   outline: 3px solid var(--page-accent);
   outline-offset: 2px;
 }
-button:disabled {
-  cursor: default;
-  opacity: 0.75;
-}
 .antwort.gewaehlt {
   border-color: var(--page-accent);
   background: var(--page-accent);
@@ -138,7 +122,7 @@ button:disabled {
   opacity: 1;
 }
 .text,
-.rueckmeldung {
+.erklaerung {
   margin: 0 0 0.5rem;
   overflow-wrap: anywhere;
 }

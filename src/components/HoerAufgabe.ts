@@ -32,11 +32,6 @@ export interface Klick {
   betont: boolean;
 }
 
-export interface Rueckmeldung {
-  correct: boolean;
-  reason: string;
-}
-
 const ARTEN: Art[] = ["hoeher", "lauter", "intervall", "dur-moll", "takt"];
 const TAKTARTEN: Taktart[] = ["2/4", "3/4", "4/4"];
 const INTERVALL_MENGE = [3, 4, 5, 7, 12];
@@ -162,8 +157,9 @@ export function wrong(task: Aufgabe): string {
   return task.optionen.find((o) => o !== richtigeAntwort) ?? "";
 }
 
-function hz(ton: number): string {
-  return `${nameMitOktave(ton)} (${Math.round(frequenz(ton))} Hz)`;
+/** Ein Ton in Worten: sein Name mit Oktave, ohne Frequenz, die die Frage nach dem höheren Ton ohne Hören beantwortete. */
+function inWorten(ton: number): string {
+  return nameMitOktave(ton);
 }
 
 function lautWort(task: Aufgabe, i: number): string {
@@ -172,18 +168,41 @@ function lautWort(task: Aufgabe, i: number): string {
   return (task.laut[i] ?? 0) > Math.min(la, lb) ? " (laut gespielt)" : " (leise gespielt)";
 }
 
-/** Die Töne in Worten und Tonnamen; so ist die Aufgabe auch ohne Hören lösbar. */
-export function tonText(task: Aufgabe): string {
+/** Die Töne in Worten, mit Platzhaltern für `params`: so ist die Aufgabe auch ohne Hören lösbar. */
+function tonVorlage(art: Art): string {
+  if (art === "takt") return `${TAKTE} Takte, {Tempo} Schläge pro Minute. Jeder Takt: {Takt}.`;
+  if (art === "dur-moll") return "Acht Töne aufwärts: {Töne}.";
+  return "Ton 1: {Ton1}, Ton 2: {Ton2}.";
+}
+
+/** Die Werte, die eine Aufgabe festlegen; für jede Aufgabe einer Art dieselben Namen. */
+export function params(task: Aufgabe, _props?: unknown, _lang?: string): Record<string, string | number> {
+  const antworten = task.optionen.join(", ");
   if (task.art === "takt") {
     const n = schlaege(task.taktart ?? "4/4");
     const takt = Array.from({ length: n }, (_, i) => (i === 0 ? "BETONT" : "leicht")).join(", ");
-    return `${TAKTE} Takte, ${task.bpm ?? 90} Schläge pro Minute. Jeder Takt: ${takt}.`;
+    return { Tempo: task.bpm ?? 90, Takt: takt, Antworten: antworten };
   }
-  if (task.art === "dur-moll") {
-    return `Acht Töne aufwärts: ${task.toene.map(nameMitOktave).join(", ")}.`;
-  }
+  if (task.art === "dur-moll") return { Töne: task.toene.map(nameMitOktave).join(", "), Antworten: antworten };
   const [a = 0, b = 0] = task.toene;
-  return `Ton 1: ${hz(a)}${lautWort(task, 0)}, Ton 2: ${hz(b)}${lautWort(task, 1)}`;
+  return {
+    Ton1: `${inWorten(a)}${lautWort(task, 0)}`,
+    Ton2: `${inWorten(b)}${lautWort(task, 1)}`,
+    Antworten: antworten,
+  };
+}
+
+/** Füllt die Platzhalter `{Name}` eines Texts mit den Werten aus `params`. */
+function fuelle(text: string, werte: Record<string, string | number>): string {
+  return text.replace(/\{([^{}\s]+)\}/gu, (treffer, name: string) => {
+    const wert = werte[name];
+    return wert === undefined ? treffer : String(wert);
+  });
+}
+
+/** Die Töne in Worten und Tonnamen; so ist die Aufgabe auch ohne Hören lösbar. */
+export function tonText(task: Aufgabe): string {
+  return fuelle(tonVorlage(task.art), params(task));
 }
 
 /** Was die Aufgabe fragt. */
@@ -209,15 +228,15 @@ export function erklaerung(task: Aufgabe): string {
   switch (task.art) {
     case "hoeher": {
       const hoeher = a > b ? 1 : 2;
-      return `${toene}. Ton ${hoeher} ist höher: Er schwingt schneller. Höher heißt: schneller schwingen, nicht lauter.`;
+      return `${toene} Ton ${hoeher} ist höher: Er schwingt schneller. Höher heißt: schneller schwingen, nicht lauter.`;
     }
     case "lauter": {
       const lauter = (task.laut[0] ?? 0) > (task.laut[1] ?? 0) ? 1 : 2;
-      return `${toene}. Beide Töne sind gleich hoch. Ton ${lauter} ist lauter: Er schwingt stärker, aber nicht schneller.`;
+      return `${toene} Beide Töne sind gleich hoch. Ton ${lauter} ist lauter: Er schwingt stärker, aber nicht schneller.`;
     }
     case "intervall": {
       const h = Math.abs(b - a);
-      return `${toene}. Die Töne sind ${h} Halbtöne auseinander: ${intervallName(h)}.`;
+      return `${toene} Die Töne sind ${h} Halbtöne auseinander: ${intervallName(h)}.`;
     }
     case "dur-moll": {
       const dur = richtig(task) === "Dur";
@@ -230,28 +249,64 @@ export function erklaerung(task: Aufgabe): string {
   }
 }
 
-/** Rückmeldung zu einer Antwort: richtig oder falsch, mit Grund. */
-export function reason(task: Aufgabe, answer: string): Rueckmeldung {
-  const correct = check(task, answer);
-  const kopf = correct ? "Richtig." : `Nicht ganz. Richtig ist: ${richtig(task)}.`;
-  let extra = "";
-  if (!correct && task.art === "intervall") {
-    const [a = 0, b = 0] = task.toene;
-    const echt = Math.abs(b - a);
-    const gewaehlt = INTERVALLE.find((i) => i.name === answer)?.halbtoene;
-    if (gewaehlt !== undefined) {
-      extra =
-        Math.abs(gewaehlt - echt) === 1
-          ? ` Du hast nur um einen Halbton danebengelegen (richtig wären ${echt} Halbtöne).`
-          : ` Richtig wären ${echt} Halbtöne, ${answer} hat ${gewaehlt}.`;
-    } else {
-      extra = ` Richtig wären ${echt} Halbtöne.`;
+/** Halbtöne eines Intervalls aus seinem Namen; undefined für einen anderen Text. */
+const halbtoeneVon = (name: string) => INTERVALLE.find((i) => i.name === name)?.halbtoene;
+
+/**
+ * Die Antwort jedes typischen Fehlers aus `about.mistakes`, in derselben Reihenfolge; undefined, wo die Aufgabe
+ * keinen festen Fehlwert hat. 1: der lautere, tiefere Ton (nur bei „hoeher“, wenn der höhere leiser klingt);
+ * 2: Terz statt Terz oder Quarte statt großer Terz, wenn dieser Knopf da ist; 3: das andere Tongeschlecht;
+ * 4: Raten umfasst jede andere Taktart, darum keiner.
+ */
+export function mistakes(task: Aufgabe, _props?: unknown): (string | undefined)[] {
+  const [a = 0, b = 0] = task.toene;
+  const [la = 0, lb = 0] = task.laut;
+  const lautUndTief = task.art === "hoeher" && la !== lb && a > b === la < lb ? wrong(task) : undefined;
+  let halbtonDaneben: string | undefined;
+  if (task.art === "intervall") {
+    const nah = { 3: 4, 4: 3, 5: 4 }[Math.abs(b - a)];
+    const name = nah === undefined ? undefined : intervallName(nah);
+    halbtonDaneben = name !== undefined && task.optionen.includes(name) ? name : undefined;
+  }
+  const geschlecht = task.art === "dur-moll" ? wrong(task) : undefined;
+  return [lautUndTief, halbtonDaneben, geschlecht, undefined];
+}
+
+/**
+ * Die Meldung der App zu einer falschen Antwort: was nicht passt und wie man es findet, nie die Lösung selbst.
+ * undefined für eine richtige Antwort.
+ */
+export function reason(task: Aufgabe, answer: unknown, _props?: unknown, _lang?: string): string | undefined {
+  if (check(task, answer) || typeof answer !== "string") return undefined;
+  const [a = 0, b = 0] = task.toene;
+  switch (task.art) {
+    case "hoeher":
+      return answer === mistakes(task)[0]
+        ? "Der Ton, den du gewählt hast, klingt lauter. Lauter heißt aber nicht höher. Hör beide Töne noch einmal einzeln und achte nur darauf, welcher heller klingt."
+        : "Hör beide Töne noch einmal einzeln. Ein höherer Ton klingt heller, er schwingt schneller. Summe beide Töne nach: Bei welchem geht deine Stimme nach oben?";
+    case "lauter":
+      return "Beide Töne sind gleich hoch. Hör sie noch einmal einzeln und achte nur darauf, welcher stärker klingt.";
+    case "intervall": {
+      const gewaehlt = halbtoeneVon(answer);
+      if (gewaehlt === undefined) return "Wähle eines der Intervalle auf den Knöpfen.";
+      const echt = Math.abs(b - a);
+      return Math.abs(gewaehlt - echt) === 1
+        ? `Knapp daneben: Das Intervall, das du hörst, ist nur einen Halbton größer oder kleiner als ${answer} (${gewaehlt} Halbtöne). Hör beide Töne noch einmal und zähle die Halbtöne auf der Klaviatur.`
+        : `${answer} hat ${gewaehlt} Halbtöne. Das passt nicht zum Abstand der beiden Töne. Hör noch einmal: Ist der Abstand größer oder kleiner? Zähle die Halbtöne auf der Klaviatur.`;
+    }
+    case "dur-moll":
+      return "Fröhlich oder traurig stimmt oft, aber nicht immer. Verlass dich auf die Terz: Hör auf den dritten Ton. Liegt er 4 Halbtöne über dem Grundton, ist es Dur, bei 3 Halbtönen Moll.";
+    case "takt": {
+      const n = TAKTARTEN.includes(answer as Taktart) ? schlaege(answer as Taktart) : undefined;
+      const bei = n === undefined ? "" : ` Bei ${answer} käme nach ${n} Schlägen wieder ein betonter.`;
+      return `Zähle von einem betonten Schlag bis zum nächsten: So viele Schläge hat ein Takt.${bei}`;
     }
   }
-  if (!correct && task.art === "dur-moll") {
-    extra = " Fröhlich oder traurig stimmt oft, aber nicht immer. Verlass dich auf die Terz.";
-  }
-  return { correct, reason: `${kopf}${extra} ${erklaerung(task)}` };
+}
+
+/** Eine Antwort als Text, wie das Kind sie gibt: der Text des Knopfs. */
+export function show(answer: unknown, _task?: Aufgabe, _props?: unknown, _lang?: string): string {
+  return typeof answer === "string" ? answer : "";
 }
 
 /** Töne für Ton 1, Ton 2 oder alle zusammen (für `spiele`). */
@@ -293,20 +348,26 @@ const BESCHREIBUNG: Record<Art, string> = {
   takt: "Du hörst ein Muster aus Klicks, drei Takte lang. Der erste Schlag jedes Takts ist lauter und höher.",
 };
 
+/** Die Aufgabe, wie das Kind sie liest, mit `{Name}` für jeden Wert aus `params`. */
+export function template(props: { art?: string }, _lang?: string): string {
+  const art = artVon(props);
+  return `Hörübung. ${BESCHREIBUNG[art]} In Worten: ${tonVorlage(art)} ${frage(art)} Antworten: {Antworten}.`;
+}
+
 /** Aufgabe und Lösung als Text, so wie die Aufgabe gezeigt wird (für den Tutor und ohne JavaScript). */
 export function describe(task: Aufgabe, _props: unknown, _lang: string): { task: string; solution: string } {
-  const text = `Hörübung. ${BESCHREIBUNG[task.art]} In Worten: ${tonText(task)} ${frage(task.art)} Antworten: ${task.optionen.join(", ")}.`;
-  return { task: text, solution: `${richtig(task)}. ${erklaerung(task)}` };
+  return { task: fuelle(template({ art: task.art }), params(task)), solution: `${richtig(task)}. ${erklaerung(task)}` };
 }
 
 export const about = {
   task: "Du hörst Töne oder Klicks (zwei Töne, eine Tonleiter oder ein Taktmuster) und beantwortest eine Frage dazu. Wer nicht hören kann, liest die Töne als Text.",
-  answer: "Du tippst auf einen der Antwortknöpfe, zum Beispiel „Ton 2 ist höher“, „Quinte“, „Dur“ oder „3/4“.",
+  answer:
+    "Das Kind hört die Töne mit „▶ Ton 1“, „▶ Ton 2“ (beim Intervall auch „▶ Beide“) oder „▶ Anhören“, so oft es will; „Töne als Text zeigen“ zeigt sie in Worten. Dann tippt es auf einen Antwortknopf, zum Beispiel „Ton 2 ist höher“, „Quinte“, „Dur“ oder „3/4“, und drückt „Prüfen“ unter der Aufgabe. Die Wahl lässt sich vor dem Prüfen ändern.",
   correct:
     "Richtig ist die Antwort, die zu den gespielten Tönen passt: der höhere oder lautere Ton, das Intervall mit der passenden Zahl Halbtöne, Dur bei großer Terz, Moll bei kleiner Terz, die Taktart nach der Zahl der Schläge zwischen zwei betonten Schlägen.",
   mistakes: [
-    "Lautstärke und Tonhöhe verwechseln: Höher heißt schneller schwingen, nicht lauter.",
-    "Ein Intervall um einen Halbton verfehlen, zum Beispiel Quarte (5 Halbtöne) statt Quinte (7) oder große statt kleine Terz.",
+    "Lautstärke und Tonhöhe verwechseln: den lauteren, aber tieferen Ton für höher halten. Höher heißt schneller schwingen, nicht lauter.",
+    "Ein Intervall um einen Halbton verfehlen: große statt kleine Terz, kleine statt große Terz oder große Terz (4 Halbtöne) statt Quarte (5).",
     "Dur und Moll nach Gefühl (fröhlich oder traurig) statt nach der Terz entscheiden.",
     "Die Taktart raten, statt bis zum nächsten betonten Schlag zu zählen.",
   ],
