@@ -7,14 +7,18 @@ import {
   describe,
   generate,
   hoerDauer,
+  mistakes,
+  params,
   position,
   reason,
+  show,
   solution,
+  template,
   toene,
   wrong,
   type Bereich,
 } from "./NotenAufgabe.ts";
-import { name } from "./Musik.ts";
+import { name, nameMitOktave } from "./Musik.ts";
 
 const samen = Array.from({ length: 50 }, (_, i) => i + 1);
 const bereiche: Bereich[] = ["linien", "zwischenraeume", "alle"];
@@ -94,14 +98,23 @@ gruppe("NotenAufgabe: Rückmeldung", () => {
     expect(reason({ ton: 14, wert: "viertel" }, "A")).toContain("e¹");
   });
   it("ist bei richtig leer und bei Unsinn freundlich", () => {
-    expect(reason({ ton: 7, wert: "viertel" }, "G")).toBe("");
+    expect(reason({ ton: 7, wert: "viertel" }, "G")).toBeUndefined();
     expect(reason({ ton: 7, wert: "viertel" }, "x")).toContain("Wähle");
   });
   it("gibt für jede wrong-Antwort einen Grund", () => {
     for (const s of samen) {
       const t = generate(s, {});
-      expect(reason(t, wrong(t)).length).toBeGreaterThan(10);
+      expect(reason(t, wrong(t))?.length).toBeGreaterThan(10);
     }
+  });
+  it("nennt in keiner Meldung den Namen der Note", () => {
+    for (const ton of toene("alle"))
+      for (const antwort of NAMEN.filter((n) => n !== name(ton))) {
+        const text = reason({ ton, wert: "viertel" }, antwort) ?? "";
+        expect(text).not.toMatch(new RegExp(`\\b${name(ton)}\\b`, "u"));
+        expect(text).not.toContain("heißt");
+        expect(text).not.toContain(nameMitOktave(ton));
+      }
   });
 });
 
@@ -127,6 +140,30 @@ gruppe("NotenAufgabe: Beschreibung", () => {
       expect(d.solution.trim()).not.toBe("");
     }
     expect(about.mistakes.length).toBeGreaterThanOrEqual(3);
+  });
+});
+
+gruppe("NotenAufgabe: Tabelle für den Tutor", () => {
+  it("Vorlage mit Werten ist die Aufgabe; jeder Fehlwert wird abgelehnt", () => {
+    for (const bereich of bereiche)
+      for (const s of samen) {
+        const t = generate(s, { bereich });
+        let text = template({ bereich }, "de");
+        for (const [n, wert] of Object.entries(params(t, { bereich }, "de"))) text = text.replace(`{${n}}`, wert);
+        expect(text).toBe(describe(t, { bereich }, "de").task);
+        const fehler = mistakes(t);
+        expect(fehler).toHaveLength(about.mistakes.length);
+        for (const antwort of fehler) if (antwort !== undefined) expect(check(t, antwort)).toBe(false);
+      }
+  });
+  it("Nachbartöne mit Sprung von H zu C; auf der Hilfslinie d¹ und g²", () => {
+    expect(mistakes({ ton: 11, wert: "viertel" })).toEqual(["C", "A", undefined, undefined]);
+    expect(mistakes({ ton: 0, wert: "viertel" })).toEqual([undefined, undefined, "D", undefined]);
+    expect(mistakes({ ton: 21, wert: "viertel" })).toEqual([undefined, undefined, "G", undefined]);
+  });
+  it("zeigt eine Antwort als Buchstaben", () => {
+    expect(show(" g ")).toBe("G");
+    expect(show("H")).toBe("H");
   });
 });
 

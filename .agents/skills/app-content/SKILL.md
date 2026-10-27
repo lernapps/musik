@@ -82,6 +82,10 @@ Kapitel-Ordner `src/<kapitel-id>/`, Seiten-Dateien `<seiten-id>.yaml`. Übungs-i
   `RhythmusWerkstatt` (`taktart`, `takte`, `raster`, `tempo`, `muster`, `vorbild`, `klatschen`), `Stimmspiegel` (`ziel`,
   `folge`, `eigene`, `ohneOktave`), `HoerAufgabe` (Übung, `art` hoeher, lauter, intervall, dur-moll, takt). Logik in
   `Musik.ts` (Töne, Frequenzen, Tonleitern), `Analyse.ts` (Tonhöhe, Klatschen), `Klang.ts` (Web Audio, Mikrofon).
+- Übungskomponenten (`HoerAufgabe`, `NotenAufgabe`) sind nur die Eingabe: Sie melden die Wahl mit `answer`; „Prüfen“ und
+  die Rückmeldung zeichnet der Explainer. Die Meldung zu einer falschen Antwort (`reason`) sagt, was nicht passt und wie
+  man es findet, nennt aber nie die Lösung selbst; die Lösung bekommt das Kind nach der richtigen Antwort oder vom Tutor.
+  Für den Tutor exportiert die Logik `template`, `params`, `mistakes` (nur feste Fehlwerte) und `show`.
 - Übungskomponenten brauchen `examples` mit `seed`: Antworten aus `solution(generate(seed, props))` und `wrong(...)`
   berechnen (z. B. mit `node`), nicht raten.
 - Eine `generated`-Aufgabe darf keine Falschantwort haben, die bei einem Wert mit der richtigen übereinstimmt: mit
