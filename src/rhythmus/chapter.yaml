@@ -2,3 +2,10 @@
 title: Rhythmus und Takt
 summary: Den Grundschlag finden, Taktarten heraushören, Notenwerte vergleichen und Rhythmen klatschen.
 pages: [grundschlag-takt, notenwerte, klatschen]
+selfAssessment:
+  pages:
+    - exercises:
+        - /rhythmus/notenwerte/#achtel-zaehlen
+        - /rhythmus/notenwerte/#wie-viele-passen
+        - /rhythmus/klatschen/#pause-zaehlt
+        - /rhythmus/klatschen/#achtel-im-takt
