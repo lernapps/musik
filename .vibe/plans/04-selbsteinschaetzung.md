@@ -8,7 +8,7 @@ phase: code
 # prePushFailures: failed pre-push runs of this increment, written by the hook. Never change it.
 prePushFailures: 0
 # failedChecks: failed rules and runs, written by lernapps check and the hooks. Never change it.
-failedChecks: {}
+failedChecks: { checks-pass: 1 }
 ---
 
 # Increment: Selbsteinschätzung
@@ -99,8 +99,10 @@ Lernende können vor dem Lernen einschätzen, was sie schon können: eine Selbst
 
 - [x] `grep '^phase:'` prints `phase: code`; else set it.
 - [x] `git switch -c increment/04-selbsteinschaetzung` from `main`. Commit this plan on it.
-- [ ] Load skill `lernapps-cli`. Update the app as it says. Commit the update alone; fix its findings before
-      content. The update replaces the `lernapps-*` skills: reread those you use.
+- [x] Load skill `lernapps-cli`. Update the app as it says. Commit the update alone; fix its findings before
+      content. The update replaces the `lernapps-*` skills: reread those you use. (app-templates 281e572, tooling
+      ea78052; `lernapps-check` heißt jetzt `lernapps-cli`. Ein Ende-zu-Ende-Test der Vorlage schlug einmal fehl
+      und lief danach 6-mal grün: wackelig, kein Befund der App.)
 - [ ] Load skill `lernapps-<archetype>` and the content guide. Questions with options and feedback: also skill
       `lernapps-content-questions`.
 - [ ] Scheibe: das Update der App ist der Code; die Selbsteinschätzung selbst kommt in Commit (Skill).
