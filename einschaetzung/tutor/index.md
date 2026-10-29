@@ -30,37 +30,37 @@ Eltern und Lehrkräfte sehen hier, was der Tutor bekommt. [Zur Selbsteinschätzu
 ### Kapitel „Hören und Klang beschreiben“
 
 - Selbsteinschätzung des Kapitels
-- „Laut und leise“ · nicht abgefragt
-- „Schnell und langsam“ · Aufgaben A1, A2
-- „Klangfarbe und Instrumentenfamilien“ · Aufgaben A3, A4
+- „Laut und leise“ · Aufgaben A1, A2
+- „Schnell und langsam“ · Aufgaben A3, A4
+- „Klangfarbe und Instrumentenfamilien“ · Aufgaben A5, A6
 
 ### Kapitel „Tonhöhe und Klaviatur“
 
 - Selbsteinschätzung des Kapitels
-- „Hoch und tief“ · Aufgaben A5, A6
-- „Die Klaviatur“ · Aufgaben A7, A8
+- „Hoch und tief“ · Aufgaben A7, A8
+- „Die Klaviatur“ · Aufgaben A9, A10
 - „Meine Stimme hat eine Tonhöhe“ · nicht abgefragt
 
 ### Kapitel „Rhythmus und Takt“
 
 - Selbsteinschätzung des Kapitels
-- „Grundschlag und Takt“ · nicht abgefragt
-- „Notenwerte und Pausen“ · Aufgaben A9, A10
-- „Rhythmen klatschen“ · Aufgaben A11, A12
+- „Grundschlag und Takt“ · Aufgaben A11, A12
+- „Notenwerte und Pausen“ · Aufgaben A13, A14
+- „Rhythmen klatschen“ · Aufgaben A15, A16
 
 ### Kapitel „Noten lesen“
 
 - Selbsteinschätzung des Kapitels
-- „Notenlinien und Violinschlüssel“ · Aufgaben A13, A14
-- „Noten benennen“ · nicht abgefragt
+- „Notenlinien und Violinschlüssel“ · Aufgaben A17, A18
+- „Noten benennen“ · Aufgaben A19, A20
 - „Rhythmus und Melodie lesen“ · nicht abgefragt
 
 ### Kapitel „Tonleitern und Intervalle“
 
 - Selbsteinschätzung des Kapitels
-- „Ganzton, Halbton und die Dur-Tonleiter“ · Aufgaben A15, A16
-- „Dur und Moll hören“ · nicht abgefragt
-- „Intervalle“ · Aufgaben A17, A18
+- „Ganzton, Halbton und die Dur-Tonleiter“ · Aufgaben A21, A22
+- „Dur und Moll hören“ · Aufgaben A23, A24
+- „Intervalle“ · Aufgaben A25, A26
 - „Tonfolgen nachsingen“ · nicht abgefragt
 
 ### Kapitel „Begleiten und Erfinden“
@@ -72,21 +72,29 @@ Eltern und Lehrkräfte sehen hier, was der Tutor bekommt. [Zur Selbsteinschätzu
 
 ## Die Aufgaben dieser Selbsteinschätzung
 
-- A1: Übung tempo-ordnen der Seite „Schnell und langsam“ (immer dieselbe Aufgabe, auch auf der Seite: richtig kann gemerkt sein)
-- A2: Übung schlaege-zaehlen der Seite „Schnell und langsam“
-- A3: Übung familien-zuordnen der Seite „Klangfarbe und Instrumentenfamilien“ (immer dieselbe Aufgabe, auch auf der Seite: richtig kann gemerkt sein)
-- A4: Übung familie-nennen der Seite „Klangfarbe und Instrumentenfamilien“
-- A5: Übung hz-hoeher der Seite „Hoch und tief“ (immer dieselbe Aufgabe, auch auf der Seite: richtig kann gemerkt sein)
-- A6: Übung oktave-hz der Seite „Hoch und tief“ (immer dieselbe Aufgabe, auch auf der Seite: richtig kann gemerkt sein)
-- A7: Übung c-finden der Seite „Die Klaviatur“ (immer dieselbe Aufgabe, auch auf der Seite: richtig kann gemerkt sein)
-- A8: Übung halbtoene-zaehlen der Seite „Die Klaviatur“
-- A9: Übung achtel-zaehlen der Seite „Notenwerte und Pausen“
-- A10: Übung wie-viele-passen der Seite „Notenwerte und Pausen“
-- A11: Übung pause-zaehlt der Seite „Rhythmen klatschen“ (immer dieselbe Aufgabe, auch auf der Seite: richtig kann gemerkt sein)
-- A12: Übung achtel-im-takt der Seite „Rhythmen klatschen“
-- A13: Übung linien-zuordnen der Seite „Notenlinien und Violinschlüssel“ (immer dieselbe Aufgabe, auch auf der Seite: richtig kann gemerkt sein)
-- A14: Übung linien-zaehlen der Seite „Notenlinien und Violinschlüssel“ (immer dieselbe Aufgabe, auch auf der Seite: richtig kann gemerkt sein)
-- A15: Übung stufe-halbtoene der Seite „Ganzton, Halbton und die Dur-Tonleiter“
-- A16: Übung stufe-halbtoene der Seite „Ganzton, Halbton und die Dur-Tonleiter“
-- A17: Übung intervall-halbtoene der Seite „Intervalle“
-- A18: Übung quinte-sieben der Seite „Intervalle“ (immer dieselbe Aufgabe, auch auf der Seite: richtig kann gemerkt sein)
+- A1: Übung lautstaerken-ordnen der Seite „Laut und leise“ (immer dieselbe Aufgabe, auch auf der Seite: richtig kann gemerkt sein)
+- A2: Übung forte-bedeutung der Seite „Laut und leise“ (immer dieselbe Aufgabe, auch auf der Seite: richtig kann gemerkt sein)
+- A3: Übung tempo-ordnen der Seite „Schnell und langsam“ (immer dieselbe Aufgabe, auch auf der Seite: richtig kann gemerkt sein)
+- A4: Übung schlaege-zaehlen der Seite „Schnell und langsam“
+- A5: Übung familien-zuordnen der Seite „Klangfarbe und Instrumentenfamilien“ (immer dieselbe Aufgabe, auch auf der Seite: richtig kann gemerkt sein)
+- A6: Übung familie-nennen der Seite „Klangfarbe und Instrumentenfamilien“
+- A7: Übung oktave-hz der Seite „Hoch und tief“ (immer dieselbe Aufgabe, auch auf der Seite: richtig kann gemerkt sein)
+- A8: Übung hoer-hoeher der Seite „Hoch und tief“
+- A9: Übung c-finden der Seite „Die Klaviatur“ (immer dieselbe Aufgabe, auch auf der Seite: richtig kann gemerkt sein)
+- A10: Übung halbtoene-zaehlen der Seite „Die Klaviatur“
+- A11: Übung hoer-takt der Seite „Grundschlag und Takt“
+- A12: Übung hoer-takt der Seite „Grundschlag und Takt“
+- A13: Übung achtel-zaehlen der Seite „Notenwerte und Pausen“
+- A14: Übung wie-viele-passen der Seite „Notenwerte und Pausen“
+- A15: Übung pause-zaehlt der Seite „Rhythmen klatschen“ (immer dieselbe Aufgabe, auch auf der Seite: richtig kann gemerkt sein)
+- A16: Übung achtel-im-takt der Seite „Rhythmen klatschen“
+- A17: Übung linien-zuordnen der Seite „Notenlinien und Violinschlüssel“ (immer dieselbe Aufgabe, auch auf der Seite: richtig kann gemerkt sein)
+- A18: Übung noten-linien der Seite „Notenlinien und Violinschlüssel“
+- A19: Übung noten-alle der Seite „Noten benennen“
+- A20: Übung noten-alle der Seite „Noten benennen“
+- A21: Übung stufe-halbtoene der Seite „Ganzton, Halbton und die Dur-Tonleiter“
+- A22: Übung stufe-halbtoene der Seite „Ganzton, Halbton und die Dur-Tonleiter“
+- A23: Übung hoer-dur-moll der Seite „Dur und Moll hören“
+- A24: Übung hoer-dur-moll der Seite „Dur und Moll hören“
+- A25: Übung hoer-intervall der Seite „Intervalle“
+- A26: Übung intervall-halbtoene der Seite „Intervalle“

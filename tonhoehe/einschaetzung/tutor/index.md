@@ -72,7 +72,7 @@ Eltern und Lehrkräfte sehen hier, was der Tutor bekommt. [Zur Selbsteinschätzu
 
 ## Die Aufgaben dieser Selbsteinschätzung
 
-- A1: Übung hz-hoeher der Seite „Hoch und tief“ (immer dieselbe Aufgabe, auch auf der Seite: richtig kann gemerkt sein)
-- A2: Übung oktave-hz der Seite „Hoch und tief“ (immer dieselbe Aufgabe, auch auf der Seite: richtig kann gemerkt sein)
+- A1: Übung oktave-hz der Seite „Hoch und tief“ (immer dieselbe Aufgabe, auch auf der Seite: richtig kann gemerkt sein)
+- A2: Übung hoer-hoeher der Seite „Hoch und tief“
 - A3: Übung c-finden der Seite „Die Klaviatur“ (immer dieselbe Aufgabe, auch auf der Seite: richtig kann gemerkt sein)
 - A4: Übung halbtoene-zaehlen der Seite „Die Klaviatur“

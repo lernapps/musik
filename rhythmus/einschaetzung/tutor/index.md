@@ -44,9 +44,9 @@ Eltern und Lehrkräfte sehen hier, was der Tutor bekommt. [Zur Selbsteinschätzu
 ### Kapitel „Rhythmus und Takt“
 
 - Selbsteinschätzung des Kapitels
-- „Grundschlag und Takt“ · nicht abgefragt
-- „Notenwerte und Pausen“ · Aufgaben A1, A2
-- „Rhythmen klatschen“ · Aufgaben A3, A4
+- „Grundschlag und Takt“ · Aufgaben A1, A2
+- „Notenwerte und Pausen“ · Aufgaben A3, A4
+- „Rhythmen klatschen“ · Aufgaben A5, A6
 
 ### Kapitel „Noten lesen“
 
@@ -72,7 +72,9 @@ Eltern und Lehrkräfte sehen hier, was der Tutor bekommt. [Zur Selbsteinschätzu
 
 ## Die Aufgaben dieser Selbsteinschätzung
 
-- A1: Übung achtel-zaehlen der Seite „Notenwerte und Pausen“
-- A2: Übung wie-viele-passen der Seite „Notenwerte und Pausen“
-- A3: Übung pause-zaehlt der Seite „Rhythmen klatschen“ (immer dieselbe Aufgabe, auch auf der Seite: richtig kann gemerkt sein)
-- A4: Übung achtel-im-takt der Seite „Rhythmen klatschen“
+- A1: Übung hoer-takt der Seite „Grundschlag und Takt“
+- A2: Übung hoer-takt der Seite „Grundschlag und Takt“
+- A3: Übung achtel-zaehlen der Seite „Notenwerte und Pausen“
+- A4: Übung wie-viele-passen der Seite „Notenwerte und Pausen“
+- A5: Übung pause-zaehlt der Seite „Rhythmen klatschen“ (immer dieselbe Aufgabe, auch auf der Seite: richtig kann gemerkt sein)
+- A6: Übung achtel-im-takt der Seite „Rhythmen klatschen“

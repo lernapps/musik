@@ -59,8 +59,8 @@ Eltern und Lehrkräfte sehen hier, was der Tutor bekommt. [Zur Selbsteinschätzu
 
 - Selbsteinschätzung des Kapitels
 - „Ganzton, Halbton und die Dur-Tonleiter“ · Aufgaben A1, A2
-- „Dur und Moll hören“ · nicht abgefragt
-- „Intervalle“ · Aufgaben A3, A4
+- „Dur und Moll hören“ · Aufgaben A3, A4
+- „Intervalle“ · Aufgaben A5, A6
 - „Tonfolgen nachsingen“ · nicht abgefragt
 
 ### Kapitel „Begleiten und Erfinden“
@@ -74,5 +74,7 @@ Eltern und Lehrkräfte sehen hier, was der Tutor bekommt. [Zur Selbsteinschätzu
 
 - A1: Übung stufe-halbtoene der Seite „Ganzton, Halbton und die Dur-Tonleiter“
 - A2: Übung stufe-halbtoene der Seite „Ganzton, Halbton und die Dur-Tonleiter“
-- A3: Übung intervall-halbtoene der Seite „Intervalle“
-- A4: Übung quinte-sieben der Seite „Intervalle“ (immer dieselbe Aufgabe, auch auf der Seite: richtig kann gemerkt sein)
+- A3: Übung hoer-dur-moll der Seite „Dur und Moll hören“
+- A4: Übung hoer-dur-moll der Seite „Dur und Moll hören“
+- A5: Übung hoer-intervall der Seite „Intervalle“
+- A6: Übung intervall-halbtoene der Seite „Intervalle“

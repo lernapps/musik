@@ -52,7 +52,7 @@ Eltern und Lehrkräfte sehen hier, was der Tutor bekommt. [Zur Selbsteinschätzu
 
 - Selbsteinschätzung des Kapitels
 - „Notenlinien und Violinschlüssel“ · Aufgaben A1, A2
-- „Noten benennen“ · nicht abgefragt
+- „Noten benennen“ · Aufgaben A3, A4
 - „Rhythmus und Melodie lesen“ · nicht abgefragt
 
 ### Kapitel „Tonleitern und Intervalle“
@@ -73,4 +73,6 @@ Eltern und Lehrkräfte sehen hier, was der Tutor bekommt. [Zur Selbsteinschätzu
 ## Die Aufgaben dieser Selbsteinschätzung
 
 - A1: Übung linien-zuordnen der Seite „Notenlinien und Violinschlüssel“ (immer dieselbe Aufgabe, auch auf der Seite: richtig kann gemerkt sein)
-- A2: Übung linien-zaehlen der Seite „Notenlinien und Violinschlüssel“ (immer dieselbe Aufgabe, auch auf der Seite: richtig kann gemerkt sein)
+- A2: Übung noten-linien der Seite „Notenlinien und Violinschlüssel“
+- A3: Übung noten-alle der Seite „Noten benennen“
+- A4: Übung noten-alle der Seite „Noten benennen“

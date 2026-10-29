@@ -30,9 +30,9 @@ Eltern und Lehrkräfte sehen hier, was der Tutor bekommt. [Zur Selbsteinschätzu
 ### Kapitel „Hören und Klang beschreiben“
 
 - Selbsteinschätzung des Kapitels
-- „Laut und leise“ · nicht abgefragt
-- „Schnell und langsam“ · Aufgaben A1, A2
-- „Klangfarbe und Instrumentenfamilien“ · Aufgaben A3, A4
+- „Laut und leise“ · Aufgaben A1, A2
+- „Schnell und langsam“ · Aufgaben A3, A4
+- „Klangfarbe und Instrumentenfamilien“ · Aufgaben A5, A6
 
 ### Kapitel „Tonhöhe und Klaviatur“
 
@@ -72,7 +72,9 @@ Eltern und Lehrkräfte sehen hier, was der Tutor bekommt. [Zur Selbsteinschätzu
 
 ## Die Aufgaben dieser Selbsteinschätzung
 
-- A1: Übung tempo-ordnen der Seite „Schnell und langsam“ (immer dieselbe Aufgabe, auch auf der Seite: richtig kann gemerkt sein)
-- A2: Übung schlaege-zaehlen der Seite „Schnell und langsam“
-- A3: Übung familien-zuordnen der Seite „Klangfarbe und Instrumentenfamilien“ (immer dieselbe Aufgabe, auch auf der Seite: richtig kann gemerkt sein)
-- A4: Übung familie-nennen der Seite „Klangfarbe und Instrumentenfamilien“
+- A1: Übung lautstaerken-ordnen der Seite „Laut und leise“ (immer dieselbe Aufgabe, auch auf der Seite: richtig kann gemerkt sein)
+- A2: Übung forte-bedeutung der Seite „Laut und leise“ (immer dieselbe Aufgabe, auch auf der Seite: richtig kann gemerkt sein)
+- A3: Übung tempo-ordnen der Seite „Schnell und langsam“ (immer dieselbe Aufgabe, auch auf der Seite: richtig kann gemerkt sein)
+- A4: Übung schlaege-zaehlen der Seite „Schnell und langsam“
+- A5: Übung familien-zuordnen der Seite „Klangfarbe und Instrumentenfamilien“ (immer dieselbe Aufgabe, auch auf der Seite: richtig kann gemerkt sein)
+- A6: Übung familie-nennen der Seite „Klangfarbe und Instrumentenfamilien“
