@@ -135,13 +135,23 @@ Kapitel-Ordner `src/<kapitel-id>/`, Seiten-Dateien `<seiten-id>.yaml`. Übungs-i
 
 ## Self-assessment
 
-- `selfAssessment` in jedem `chapter.yaml` außer `erfinden`: Dessen Seiten lehren Begleiten und Erfinden (etwas
-  machen); seine Rechenfragen prüfen das nicht. Der Tutor geht es Seite für Seite durch.
-- Nur Fragen und `generated`, nie Übungskomponenten (`HoerAufgabe`, `NotenAufgabe`; Build-Problem). Keine Frage, die
-  einen Klang oder eine Abbildung der Seite braucht („in der Melodie oben“).
-- Etwa 4 Übungen je Kapitel, 2 je abgefragter Seite, zusammen 18 (etwa zehn Minuten). „Nicht abgefragt“ bleiben:
-  `stimme`, `grundschlag-takt`, `benennen`, `dur-moll` (außer der Komponente nur ratbare Fragen), `lesen` (nur eine
-  Frage ohne die Melodie der Seite), `nachsingen` (Singen, nicht abfragbar), `laut-leise` (für die Länge).
+- Ziel ist Abdeckung: jede Seite, deren Kompetenz eine ihrer Übungen prüft, wird abgefragt, je Seite 2 Aufgaben.
+  Schritte zu 2 oder 3 Aufgaben, in der Reihenfolge des Kurses; je Kapitel höchstens etwa 10 Aufgaben.
+- Übungskomponenten dürfen hinein (`HoerAufgabe`, `NotenAufgabe`): Ihre Frage steht in der Komponente selbst, die Töne
+  spielen erst nach einem Klick in ihr, sie brauchen nichts von der Seite. Eine Komponente oder ein `generated` darf
+  zweimal stehen (jede Nennung zieht eine eigene Aufgabe); eine Frage nur einmal. `Klaviatur`, `RhythmusWerkstatt`,
+  `Klangbild`, `Notenzeile` und `Stimmspiegel` melden keine Antwort und gehen nicht.
+- Hör-Kompetenzen über die Hör-Aufgabe: `hoch-tief` (`hoer-hoeher` und `oktave-hz`), `grundschlag-takt`
+  (`hoer-takt` zweimal), `dur-moll` (`hoer-dur-moll` zweimal), `intervalle` (`hoer-intervall` und
+  `intervall-halbtoene`). Noten benennen über die Noten-Aufgabe: `linien` (`linien-zuordnen`, `noten-linien`),
+  `benennen` (`noten-alle` zweimal).
+- Fragen, die einen Klang oder eine Abbildung der Seite brauchen („in der Melodie oben“, „im Bild“), nie.
+- Jetzt: `hoeren` 6, `tonhoehe` 4, `rhythmus` 6, `noten` 4, `tonleitern` 6 Aufgaben; die ganze App 26 (etwa 15
+  Minuten). 13 von 19 Seiten werden abgefragt.
+- „Nicht abgefragt“ bleiben: `stimme` und `nachsingen` (die Kompetenz ist Singen), `lesen` (nur eine Frage ist ohne
+  die Melodie der Seite klar, und sie liest keine Noten), das Kapitel `erfinden` (Begleiten und Erfinden ist Machen;
+  seine Rechenaufgaben prüfen das nicht; der Tutor geht es Seite für Seite durch).
+- `klatschen` wird über das Wissen dahinter abgefragt (`pause-zaehlt`, `achtel-im-takt`), nicht über das Klatschen.
 
 ## Rules learned from mistakes
 

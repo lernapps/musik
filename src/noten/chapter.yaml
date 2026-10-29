@@ -6,4 +6,7 @@ selfAssessment:
   pages:
     - exercises:
         - /noten/linien/#linien-zuordnen
-        - /noten/linien/#linien-zaehlen
+        - /noten/linien/#noten-linien
+    - exercises:
+        - /noten/benennen/#noten-alle
+        - /noten/benennen/#noten-alle
