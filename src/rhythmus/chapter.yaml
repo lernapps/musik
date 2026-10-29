@@ -5,7 +5,10 @@ pages: [grundschlag-takt, notenwerte, klatschen]
 selfAssessment:
   pages:
     - exercises:
+        - /rhythmus/grundschlag-takt/#hoer-takt
+        - /rhythmus/grundschlag-takt/#hoer-takt
         - /rhythmus/notenwerte/#achtel-zaehlen
+    - exercises:
         - /rhythmus/notenwerte/#wie-viele-passen
         - /rhythmus/klatschen/#pause-zaehlt
         - /rhythmus/klatschen/#achtel-im-takt

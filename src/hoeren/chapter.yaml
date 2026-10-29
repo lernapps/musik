@@ -5,7 +5,10 @@ pages: [laut-leise, schnell-langsam, klangfarbe]
 selfAssessment:
   pages:
     - exercises:
+        - /hoeren/laut-leise/#lautstaerken-ordnen
+        - /hoeren/laut-leise/#forte-bedeutung
         - /hoeren/schnell-langsam/#tempo-ordnen
+    - exercises:
         - /hoeren/schnell-langsam/#schlaege-zaehlen
         - /hoeren/klangfarbe/#familien-zuordnen
         - /hoeren/klangfarbe/#familie-nennen

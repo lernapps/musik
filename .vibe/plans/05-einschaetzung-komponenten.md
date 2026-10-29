@@ -4,7 +4,7 @@
 # Archetype as in the app's first plan; set it when you start. Never changes.
 archetype: explainer
 # Current phase. Allowed values: explore, plan, code, commit. Change the value line below, never this comment.
-phase: code
+phase: commit
 # prePushFailures: failed pre-push runs of this increment, written by the hook. Never change it.
 prePushFailures: 0
 # failedChecks: failed rules and runs, written by lernapps check and the hooks. Never change it.
@@ -26,6 +26,13 @@ Die Selbsteinschätzung fragt möglichst viele Inhaltsseiten ab, auch mit den Ü
 - Eine Komponente nur, wenn ihre Aufgabe in ihr selbst klar ist und sie nichts von der Seite braucht.
 - Seiten, deren Kompetenz Singen oder Machen ist, bleiben „nicht abgefragt“.
 - Der Ersteller hat allem zugestimmt, auch dem Veröffentlichen („Mach … mergen“): keine Checkpoints, an denen ich warte.
+  Der Auftrag an mich endet beim Vorschau-Pull-Request; zusammenführen ist nicht meine Aufgabe.
+- Neu abgefragt: `laut-leise` (Ordnen, Bedeutung von f), `grundschlag-takt` (`hoer-takt` zweimal), `benennen`
+  (`noten-alle` zweimal), `dur-moll` (`hoer-dur-moll` zweimal). `hoch-tief` jetzt mit `hoer-hoeher`, `linien` mit
+  `noten-linien`, `intervalle` mit `hoer-intervall` statt der ratbaren Fragen.
+- Nicht abgefragt: `stimme`, `nachsingen` (Singen), `lesen` (nur eine Frage ohne die Melodie der Seite, und die liest
+  keine Noten), Kapitel `erfinden` (Machen; der Tutor geht es Seite für Seite durch).
+- Je Kapitel 4 bis 6 Aufgaben, zusammen 26: mehr als die alte Richtzahl 15–20, weil Abdeckung vorgeht (Ersteller).
 
 ## Notes
 
@@ -75,34 +82,22 @@ Die Selbsteinschätzung fragt möglichst viele Inhaltsseiten ab, auch mit den Ü
 
 ## Code
 
-<!--
-- Build locally on the branch. Commit after each slice; the hooks check. A check fails → skill `lernapps-cli`. Fix from the message; never
-  bypass a hook.
-- Undecidable → choose, mark "(guess)", go on.
-- Creator asks for a change → first say your reading in one sentence; never narrow it silently.
-- Skills: `lernapps-cli`, `lernapps-<archetype>`, `lernapps-content-questions`, the content guide.
--->
-
 ### Tasks
-
-- [ ] Load skill `lernapps-cli`. Update the app as it says. Commit the update alone; fix its findings before
-      content. The update replaces the `lernapps-*` skills: reread those you use.
-- [ ] Load skill `lernapps-<archetype>` and the content guide. Questions with options and feedback: also skill
-      `lernapps-content-questions`.
-- [ ] <the slices written in Plan; each: competency, content, exercise, the entry's topic, check, commit>
-- [ ] After the first slice: show the creator a first look (`early-preview`) and go on.
-      Parallel slices: send each sub-agent `@lernapps/tooling/guidance/subagent-brief.md`, filled in.
-- [ ] The content guide describes the app as it is now (`app-content-matches`). `grep -c "FILL IN"
-      .agents/skills/app-content/SKILL.md` prints 0.
-- [ ] `npx lernapps check` passes.
-- [ ] Every box of Explore, Plan and Code ticked.
-- [ ] Set `phase: commit`: change the value line (`grep '^phase:'` prints `phase: commit`).
-      No checkpoint here: set it before you ask or report anything, then start Commit in the same message.
 
 ### Completed
 
 - [x] `grep '^phase:'` prints `phase: code`; else set it.
 - [x] `git switch -c increment/05-einschaetzung-komponenten` from `main`. Commit this plan on it.
+- [x] Load skill `lernapps-cli`. Update the app as it says. Commit the update alone; fix its findings before
+      content. (app-templates 2c99933, tooling a62ad03; `lernapps check` ohne Befund. Ersetzt wurde nur der Skill
+      `lernapps-explainer-self-assessment`, neu gelesen.)
+- [x] Load skill `lernapps-explainer` and the content guide. Keine neuen Fragen: `lernapps-content-questions` entfällt.
+- [x] Scheibe: das Update ist der Code; die Selbsteinschätzung selbst kommt in Commit (Skill).
+- [x] After the first slice: show the creator a first look. Entfällt: keine neue Seite.
+- [x] The content guide describes the app as it is now (`app-content-matches`); 0 × „FILL IN“.
+- [x] `npx lernapps check` passes.
+- [x] Every box of Explore, Plan and Code ticked.
+- [x] Set `phase: commit`.
 
 ## Commit
 
@@ -116,10 +111,6 @@ Die Selbsteinschätzung fragt möglichst viele Inhaltsseiten ab, auch mit den Ü
 
 ### Tasks
 
-- [ ] `grep '^phase:'` prints `phase: commit`; else set it.
-- [ ] An explainer whose pages or exercises changed: install skill `lernapps-explainer-self-assessment` if missing
-      (`npx --yes skills add lernapps/tooling -y -s lernapps-explainer-self-assessment`), load it. Update the
-      self-assessment as it says (add one, if the app has none and the skill says so). Commit; the hooks check.
 - [ ] Load skill `lernapps-github`. Push the branch, open the preview pull request, see its checks to green as it
       says.
 - [ ] **Checkpoint:** publish. Show what the increment adds and the preview link; ask whether it may go online. Wait
@@ -136,6 +127,13 @@ Die Selbsteinschätzung fragt möglichst viele Inhaltsseiten ab, auch mit den Ü
 - [ ] Plan changed since its last push → commit it on `main`, push again.
 
 ### Completed
+
+- [x] `grep '^phase:'` prints `phase: commit`; else set it.
+- [x] Skill `lernapps-explainer-self-assessment` neu geladen. `selfAssessment` in fünf Kapiteln neu: 26 Aufgaben,
+      13 von 19 Seiten, je Seite 2; Hör- und Noten-Aufgaben dabei. Build, `lernapps check` und Ende-zu-Ende-Tests
+      grün; selbst durchlaufen (Playwright, gebaute App): `/einschaetzung/` und `/<kapitel>/einschaetzung/?via=tutor`.
+      Jede Komponente ist geladen und zeigt ihre ganze Aufgabe; Töne erst nach einem Klick; richtige Antworten zählen
+      richtig, falsche erscheinen bei „Zurück zum Tutor“ mit Eingabe und, wenn typisch, mit F1 oder F3.
 
 ## Retrospective
 

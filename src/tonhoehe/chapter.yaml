@@ -5,7 +5,8 @@ pages: [hoch-tief, klaviatur, stimme]
 selfAssessment:
   pages:
     - exercises:
-        - /tonhoehe/hoch-tief/#hz-hoeher
         - /tonhoehe/hoch-tief/#oktave-hz
+        - /tonhoehe/hoch-tief/#hoer-hoeher
+    - exercises:
         - /tonhoehe/klaviatur/#c-finden
         - /tonhoehe/klaviatur/#halbtoene-zaehlen
