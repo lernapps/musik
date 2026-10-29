@@ -111,21 +111,6 @@ Die Selbsteinschätzung fragt möglichst viele Inhaltsseiten ab, auch mit den Ü
 
 ### Tasks
 
-- [ ] Load skill `lernapps-github`. Push the branch, open the preview pull request, see its checks to green as it
-      says.
-- [ ] **Checkpoint:** publish. Show what the increment adds and the preview link; ask whether it may go online. Wait
-      for the yes.
-- [ ] Load skill `lernapps-commit`. Publish as skill `lernapps-github` says: the pull request squash-merged into
-      `main` with the message from this plan, the run of `Pages` watched to the end.
-- [ ] Open the address the job `deploy` printed; confirm the new content. Never a derived address.
-- [ ] App listed and its entry changes (topics, school years, summary) → load skill `lernapps-listing` and write the
-      changed entry. Else skip the checkpoint "list".
-- [ ] Fill the retrospective.
-- [ ] Commit this plan on `main` and push it. A push of only `.vibe/` publishes nothing.
-- [ ] **Checkpoint:** list. Open the pull request to the catalog without asking first: the pull request is the
-      review. See it to "bestanden" as the skill says, then show the creator the pull request and its result.
-- [ ] Plan changed since its last push → commit it on `main`, push again.
-
 ### Completed
 
 - [x] `grep '^phase:'` prints `phase: commit`; else set it.
@@ -134,6 +119,17 @@ Die Selbsteinschätzung fragt möglichst viele Inhaltsseiten ab, auch mit den Ü
       grün; selbst durchlaufen (Playwright, gebaute App): `/einschaetzung/` und `/<kapitel>/einschaetzung/?via=tutor`.
       Jede Komponente ist geladen und zeigt ihre ganze Aufgabe; Töne erst nach einem Klick; richtige Antworten zählen
       richtig, falsche erscheinen bei „Zurück zum Tutor“ mit Eingabe und, wenn typisch, mit F1 oder F3.
+- [x] Load skill `lernapps-github`. Pull Request #9, alle Prüfungen grün.
+- [x] **Checkpoint:** publish. Der Ersteller hatte vorab „bei grüner CI mergen“ gesagt.
+- [x] Load skill `lernapps-commit`. Squash-merged (7f5339e), der Lauf von `Pages` erfolgreich.
+- [x] Open the address the job `deploy` printed; confirm the new content. <https://lernapps.net/musik/einschaetzung/>
+      zeigt 26 Aufgaben und 6 nicht abgefragte Seiten.
+- [x] Fix nach dem Merge (Pull Request #10): lernapps/app-templates#105, eine geleerte Antwort einer Komponente zählt
+      als offen, eigene ids je Komponente; @lernapps/app-templates 9affe7b, @lernapps/tooling b4d606c. Online geprüft.
+- [x] App listed and its entry changes → der Eintrag in lernapps/apps bekommt den neuen Commit und `storage: device`
+      (das letzte Ergebnis der Selbsteinschätzung bleibt auf dem Gerät).
+- [x] Fill the retrospective.
+- [x] Commit this plan on `main` and push it.
 
 ## Retrospective
 
@@ -141,12 +137,16 @@ Die Selbsteinschätzung fragt möglichst viele Inhaltsseiten ab, auch mit den Ü
 
 ### Phases reached
 
-<!-- Last phase completed, checkpoints passed. E.g. "commit; confirmed, published". -->
+commit; veröffentlicht. Die Checkpoints entfielen, weil der Ersteller alles vorab freigegeben hatte.
 
 ### Creator turns after the plan
 
-<!-- Number of creator messages after the confirmation, topic of each. Target: at most 3. -->
+0.
 
 ### Where I had to guess
 
-<!-- Each gap in plan, skills, content guide, messages or answers, and your choice. "None" if none. -->
+- Lesen, Stimme, Nachsingen und das Kapitel Erfinden bleiben ohne Abfrage (Singen, Machen, keine Übung ohne die
+  Melodie der Seite).
+- Die Abdeckung geht vor der alten Grenze von 15 bis 20 Aufgaben: 26 für die ganze App.
+- Zwei Laufzeitfehler der Komponenten in der Selbsteinschätzung fand die Mathe-Karte; behoben in
+  lernapps/app-templates#105, hier mit Pull Request #10 übernommen.
