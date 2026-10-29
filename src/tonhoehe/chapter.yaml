@@ -2,3 +2,10 @@
 title: Tonhöhe und Klaviatur
 summary: Hohe und tiefe Töne unterscheiden, die Tasten des Klaviers benennen und die eigene Stimme hören.
 pages: [hoch-tief, klaviatur, stimme]
+selfAssessment:
+  pages:
+    - exercises:
+        - /tonhoehe/hoch-tief/#hz-hoeher
+        - /tonhoehe/hoch-tief/#oktave-hz
+        - /tonhoehe/klaviatur/#c-finden
+        - /tonhoehe/klaviatur/#halbtoene-zaehlen

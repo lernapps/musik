@@ -2,3 +2,8 @@
 title: Noten lesen
 summary: Die Notenlinien und den Violinschlüssel kennen, Noten benennen und kurze Melodien ablesen.
 pages: [linien, benennen, lesen]
+selfAssessment:
+  pages:
+    - exercises:
+        - /noten/linien/#linien-zuordnen
+        - /noten/linien/#linien-zaehlen

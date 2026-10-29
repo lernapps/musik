@@ -2,3 +2,10 @@
 title: Tonleitern und Intervalle
 summary: Dur und Moll bauen und unterscheiden, Intervalle hören und benennen und eine Tonfolge nachsingen.
 pages: [dur-bauen, dur-moll, intervalle, nachsingen]
+selfAssessment:
+  pages:
+    - exercises:
+        - /tonleitern/dur-bauen/#stufe-halbtoene
+        - /tonleitern/dur-bauen/#stufe-halbtoene
+        - /tonleitern/intervalle/#intervall-halbtoene
+        - /tonleitern/intervalle/#quinte-sieben

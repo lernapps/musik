@@ -2,3 +2,10 @@
 title: Hören und Klang beschreiben
 summary: "Laut oder leise, schnell oder langsam, hell oder dunkel: Du lernst, wie du Klänge in Worte fasst."
 pages: [laut-leise, schnell-langsam, klangfarbe]
+selfAssessment:
+  pages:
+    - exercises:
+        - /hoeren/schnell-langsam/#tempo-ordnen
+        - /hoeren/schnell-langsam/#schlaege-zaehlen
+        - /hoeren/klangfarbe/#familien-zuordnen
+        - /hoeren/klangfarbe/#familie-nennen

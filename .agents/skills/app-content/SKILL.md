@@ -130,7 +130,18 @@ Kapitel-Ordner `src/<kapitel-id>/`, Seiten-Dateien `<seiten-id>.yaml`. Übungs-i
 3. Jede Seite als `<id>.yaml` mit den Abschnitten aus „Content structure“; Fakten in die Datendateien in `src/data/`.
 4. Komponenten wiederverwenden; eine neue nur, wenn kein Block und keine vorhandene reicht (mit Test und `nojs`-Text).
 5. Übungen nach den Mustern; jede falsche Option mit Grund.
-6. `npx lernapps check`, dann committen.
+6. 1 bis 3 ihrer Übungen in `selfAssessment` aufnehmen, wie Skill `lernapps-explainer-self-assessment` sagt.
+7. `npx lernapps check`, dann committen.
+
+## Self-assessment
+
+- `selfAssessment` in jedem `chapter.yaml` außer `erfinden`: Dessen Seiten lehren Begleiten und Erfinden (etwas
+  machen); seine Rechenfragen prüfen das nicht. Der Tutor geht es Seite für Seite durch.
+- Nur Fragen und `generated`, nie Übungskomponenten (`HoerAufgabe`, `NotenAufgabe`; Build-Problem). Keine Frage, die
+  einen Klang oder eine Abbildung der Seite braucht („in der Melodie oben“).
+- Etwa 4 Übungen je Kapitel, 2 je abgefragter Seite, zusammen 18 (etwa zehn Minuten). „Nicht abgefragt“ bleiben:
+  `stimme`, `grundschlag-takt`, `benennen`, `dur-moll` (außer der Komponente nur ratbare Fragen), `lesen` (nur eine
+  Frage ohne die Melodie der Seite), `nachsingen` (Singen, nicht abfragbar), `laut-leise` (für die Länge).
 
 ## Rules learned from mistakes
 
