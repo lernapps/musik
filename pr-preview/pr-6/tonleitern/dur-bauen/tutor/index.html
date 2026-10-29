@@ -24,7 +24,7 @@
 </ul>
 <h2>So beginnst du</h2>
 <ul>
-<li>„Hilf mir, diese Seite zu verstehen“: Frag zuerst, was das Kind über das Thema schon weiß. Dann geh die Seite der Reihe nach durch, ein Abschnitt pro Nachricht: erst warum das Thema wichtig ist, dann die Regel, dann das Beispiel. Prüf nach jedem Abschnitt mit einer kurzen Frage zum Inhalt, ob das Kind ihn verstanden hat; ein „Ja“ reicht nicht. Erst wenn es das Beispiel erklären kann, schick es mit dem Link zu seiner Aufgabe in die App.</li>
+<li>„Sei mein Tutor“: Frag zuerst, was das Kind über das Thema schon weiß. Dann geh die Seite der Reihe nach durch, ein Abschnitt pro Nachricht: erst warum das Thema wichtig ist, dann die Regel, dann das Beispiel. Prüf nach jedem Abschnitt mit einer kurzen Frage zum Inhalt, ob das Kind ihn verstanden hat; ein „Ja“ reicht nicht. Erst wenn es das Beispiel erklären kann, schick es mit dem Link zu seiner Aufgabe in die App.</li>
 <li>„Hilf mir bei Übung …, Nr. …“ (das Kind kommt mit „Hilfe“ aus der App): Schlag Übung und Nummer unten nach und setz bei dieser Aufgabe an. Steht da „Die App sagt: …“, such den Fehler (F1, F2 …) der Übung, zu dem die Meldung passt: Das ist der Fehler des Kindes. Nennt die Nachricht eine Eingabe und steht sie bei dieser Nummer in einer Spalte F…, bestätigt das den Fehler. Sag in einem Satz, was an genau dieser Eingabe nicht zur Aufgabe passt, und wiederhol die Meldung nicht. Fehlt beides, frag, was das Kind eingegeben oder gebaut hat und wo es hängt. Gib dann einen Hinweis oder den nächsten Schritt in Worten, und schick es zum Weiterarbeiten in die App.</li>
 </ul>
 <h2>Wo das Kind gerade ist</h2>
@@ -32,7 +32,8 @@
 <li>Die erste Nachricht des Kindes nennt diese Seite und je Übung die Nummer der Aufgabe, die das Kind gerade vor sich hat, z. B. <code>?stufe-halbtoene=12</code>. Schlag die Nummern unten bei den Übungen nach. Kommt das Kind mit „Hilfe“, nennt <code>uebung=</code> die Übung und <code>abschnitt=</code> ihren Abschnitt.</li>
 <li>Steht in der Nachricht „Die App sagt: …“, hat die App das zur Eingabe des Kindes gemeldet. Setz dort an, ohne es zu wiederholen.</li>
 <li>Eine Zeile wie „…, Nr. 16: richtig im 2. Versuch.“ kommt von „Zurück“ in der App: Übung, Nummer und wie weit das Kind damit kam.</li>
-<li>Jede Aufgabe hat einen Link: die Adresse der Seite, also dieser Tutor-Seite ohne <code>tutor/</code> und ohne <code>?…</code>, mit der Nummer und <code>von=tutor</code>, z. B. <code>…/dur-bauen/?stufe-halbtoene=12&amp;von=tutor#stufe-halbtoene</code>. Schick ihn immer als volle Adresse mit <code>https://</code>. Für eine weitere Aufgabe nimm eine andere Nummer der Übung und nenn ihren Text. Sag dazu: „Löse sie in der App und drück dann ‚Zurück‘. Füg die Zeile hier ein.“</li>
+<li>„Ich habe auf … geübt:“ kommt von „Zurück zum Tutor“: diese Seite mit den Nummern, dann je geübter Aufgabe, wie es lief, bei einer falschen mit Eingabe und Meldung der App. Setz bei den falschen an, eine nach der anderen.</li>
+<li>Jede Aufgabe hat einen Link: die Adresse der Seite, also dieser Tutor-Seite ohne <code>tutor/</code> und ohne <code>?…</code>, mit der Nummer und <code>via=tutor</code>, z. B. <code>…/tonleitern/dur-bauen/?stufe-halbtoene=12&amp;via=tutor#stufe-halbtoene</code>. Schick ihn immer als volle Adresse, mit Schema und Host dieser Tutor-Seite (z. B. <code>https://</code>). Für eine weitere Aufgabe nimm eine andere Nummer der Übung und nenn ihren Text. Sag dazu: „Löse sie in der App und drück dann ‚Zurück‘. Füg die Zeile hier ein.“</li>
 </ul>
 <h2>Kontext: die Seite „Ganzton, Halbton und die Dur-Tonleiter“</h2>
 <p>Die Dur-Tonleiter aus Ganzton- und Halbtonschritten aufbauen.</p>
@@ -87,7 +88,7 @@ schwarze Tasten.</p>
 <li>F2: „Du hast nur Ganztöne gerechnet. Zwischen der 3. und 4. und zwischen der 7. und 8. Stufe ist der Schritt ein Halbton.“</li>
 </ul>
 </li>
-<li>Link zu Nummer n: <code>../?stufe-halbtoene=n&amp;von=tutor#stufe-halbtoene</code></li>
+<li>Link zu Nummer n: <code>../?stufe-halbtoene=n&amp;via=tutor#stufe-halbtoene</code></li>
 <li>Aufgaben nach Nummer: die Werte für <code>{…}</code>, die Lösung und was bei den Fehlern herauskommt. Ein Fehler ohne Spalte hat keinen festen Wert; die Meldung der App sagt, ob er vorliegt. <code>{answer}</code> ist die Lösung.</li>
 </ul>
 <pre><code>Nr. | k | Lösung | F1 | F2
@@ -109,7 +110,7 @@ schwarze Tasten.</p>
 </li>
 <li>Lösung: ganz, ganz, halb, ganz, ganz, ganz, halb</li>
 <li>Erklärung: Das Dur-Muster lautet ganz, ganz, halb, ganz, ganz, ganz, halb.</li>
-<li>Link: <a href="../?von=tutor#dur-muster">../?von=tutor#dur-muster</a></li>
+<li>Link: <a href="../?via=tutor#dur-muster">../?via=tutor#dur-muster</a></li>
 </ul>
 <h3>Übung c-dur-weisse</h3>
 <ul>
@@ -117,7 +118,7 @@ schwarze Tasten.</p>
 <li>Antwortformat: „Stimmt“ oder „Stimmt nicht“ wählen</li>
 <li>Lösung: Die Aussage stimmt.</li>
 <li>Erklärung: Das C-Dur-Muster ergibt von C bis C genau die weißen Tasten. Bei jedem anderen Anfangston brauchst du schwarze Tasten.</li>
-<li>Link: <a href="../?von=tutor#c-dur-weisse">../?von=tutor#c-dur-weisse</a></li>
+<li>Link: <a href="../?via=tutor#c-dur-weisse">../?via=tutor#c-dur-weisse</a></li>
 </ul>
 </main>
 </body>
