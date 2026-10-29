@@ -91,6 +91,18 @@ Lernende können vor dem Lernen einschätzen, was sie schon können: eine Selbst
 
 ### Completed
 
+- [x] Load skill `lernapps-github`. Push the branch, open the preview pull request, see its checks to green as it
+      says. Pull request #8, alle Prüfungen grün.
+- [x] **Checkpoint:** publish. Der Ersteller hat schon zugestimmt („Mach grüner ci Mergen“): nicht warten.
+- [x] Load skill `lernapps-commit`. Publish as skill `lernapps-github` says: the pull request squash-merged into
+      `main` with the message from this plan, the run of `Pages` watched to the end. c22861c, Lauf von `Pages`
+      erfolgreich.
+- [x] Open the address the job `deploy` printed; confirm the new content. <https://lernapps.net/musik/einschaetzung/>
+      zeigt 18 Aufgaben auf 5 Seiten.
+- [x] App listed and its entry changes → no: Themen, Klassen und Zusammenfassung bleiben gleich. Checkpoint "list"
+      entfällt.
+- [x] Fill the retrospective.
+- [x] Commit this plan on `main` and push it.
 - [x] `grep '^phase:'` prints `phase: plan`; else set it.
 - [x] Load skill `lernapps-content-growth`: eine einzige Scheibe „Selbsteinschätzung“, keine parallelen Scheiben.
 - [x] Write "Content method".
@@ -123,20 +135,6 @@ Lernende können vor dem Lernen einschätzen, was sie schon können: eine Selbst
 
 ### Tasks
 
-- [ ] Load skill `lernapps-github`. Push the branch, open the preview pull request, see its checks to green as it
-      says.
-- [ ] **Checkpoint:** publish. Der Ersteller hat schon zugestimmt („Mach grüner ci Mergen“): nicht warten.
-- [ ] Load skill `lernapps-commit`. Publish as skill `lernapps-github` says: the pull request squash-merged into
-      `main` with the message from this plan, the run of `Pages` watched to the end.
-- [ ] Open the address the job `deploy` printed; confirm the new content. Never a derived address.
-- [ ] App listed and its entry changes (topics, school years, summary) → load skill `lernapps-listing` and write the
-      changed entry. Else skip the checkpoint "list".
-- [ ] Fill the retrospective.
-- [ ] Commit this plan on `main` and push it. A push of only `.vibe/` publishes nothing.
-- [ ] **Checkpoint:** list. Open the pull request to the catalog without asking first: the pull request is the
-      review. See it to "bestanden" as the skill says, then show the creator the pull request and its result.
-- [ ] Plan changed since its last push → commit it on `main`, push again.
-
 ### Completed
 
 - [x] `grep '^phase:'` prints `phase: commit`; else set it.
@@ -151,12 +149,15 @@ Lernende können vor dem Lernen einschätzen, was sie schon können: eine Selbst
 
 ### Phases reached
 
-<!-- Last phase completed, checkpoints passed. E.g. "commit; confirmed, published". -->
+commit; veröffentlicht. Die Checkpoints entfielen, weil der Ersteller alles vorab freigegeben hatte.
 
 ### Creator turns after the plan
 
-<!-- Number of creator messages after the confirmation, topic of each. Target: at most 3. -->
+0.
 
 ### Where I had to guess
 
-<!-- Each gap in plan, skills, content guide, messages or answers, and your choice. "None" if none. -->
+- Hör-Aufgaben nur, wenn ihr Klang mit der Frage kommt. Keine der gewählten Aufgaben braucht einen Klang.
+- Etwa 3 Übungen je Kapitel, zusammen 18. `laut-leise` wird deshalb nicht abgefragt.
+- „Begleiten und Erfinden“ hat keine Einschätzung, weil dort Machen gelernt wird, nicht Rechnen.
+- Ein Kapitel mit nur einem Schritt (Noten) zeigt „auf 1 Seiten“. Das ist ein Fehler der Vorlage, korrigiert in lernapps/app-templates#103.
