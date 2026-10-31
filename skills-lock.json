@@ -11,7 +11,7 @@
       "source": "lernapps/tooling",
       "sourceType": "github",
       "skillPath": "skills/tooling/lernapps-cli/SKILL.md",
-      "computedHash": "af08bf2341bdd21c52c9cb49e1e0fa254b5326ca1f85e228f606a42532f0fdcd"
+      "computedHash": "ee41e1a4208794a04dc8c4177d91dda825663aac10ba0d3ead95f829a8672b96"
     },
     "lernapps-commit": {
       "source": "lernapps/tooling",
@@ -47,7 +47,7 @@
       "source": "lernapps/tooling",
       "sourceType": "github",
       "skillPath": "skills/archetypes/lernapps-explainer/SKILL.md",
-      "computedHash": "f2549fc5cf04b491dafc017ca77802d4e3ad5d2127671211297a0b31b4fd5f6c"
+      "computedHash": "284577ec2a03e97ba557da6edebdab950e5c47526b19ebe32639862c850c06ec"
     },
     "lernapps-explainer-design": {
       "source": "lernapps/tooling",
@@ -71,7 +71,7 @@
       "source": "lernapps/tooling",
       "sourceType": "github",
       "skillPath": "skills/process/lernapps-listing/SKILL.md",
-      "computedHash": "0d720c85c381d4741f938eec2ff2b6d51eafeceb14a36834740e579482446835"
+      "computedHash": "372c336a1c361473d5d4f4baef35bc302483ee8cf8b12712e587bf742cba25f0"
     }
   }
 }
