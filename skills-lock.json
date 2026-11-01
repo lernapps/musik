@@ -11,7 +11,7 @@
       "source": "lernapps/tooling",
       "sourceType": "github",
       "skillPath": "skills/tooling/lernapps-cli/SKILL.md",
-      "computedHash": "ee41e1a4208794a04dc8c4177d91dda825663aac10ba0d3ead95f829a8672b96"
+      "computedHash": "2e44a0f15509b1647300e413850865c31658b741bb2890092ae71b671ec384d0"
     },
     "lernapps-commit": {
       "source": "lernapps/tooling",
