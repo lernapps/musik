@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=../../node_modules/@lernapps/app-templates/runtime/explainer/explainer.v1.schema.json
+# yaml-language-server: $schema=../../node_modules/@lernapps/app-templates/runtime/explainer/explainer.v2.schema.json
 title: Klangfarbe und Instrumentenfamilien
 description: Hören, warum zwei Instrumente bei gleichem Ton verschieden klingen, und Instrumente ihrer Familie zuordnen.
 blocks:

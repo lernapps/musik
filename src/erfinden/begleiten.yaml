@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=../../node_modules/@lernapps/app-templates/runtime/explainer/explainer.v1.schema.json
+# yaml-language-server: $schema=../../node_modules/@lernapps/app-templates/runtime/explainer/explainer.v2.schema.json
 title: Ein Lied begleiten
 description: Mit dem gleichmäßigen Grundschlag ein Lied begleiten und im Tempo bleiben.
 blocks:

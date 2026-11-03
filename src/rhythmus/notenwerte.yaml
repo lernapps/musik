@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=../../node_modules/@lernapps/app-templates/runtime/explainer/explainer.v1.schema.json
+# yaml-language-server: $schema=../../node_modules/@lernapps/app-templates/runtime/explainer/explainer.v2.schema.json
 title: Notenwerte und Pausen
 description: Ganze, Halbe, Viertel und Achtel unterscheiden, ihre Dauer vergleichen und Pausen kennen.
 blocks:

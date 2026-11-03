@@ -81,6 +81,8 @@ severity: warning
 
 - At least one link per question, best the German Wikipedia (`https://de.wikipedia.org/wiki/...`).
 - `title` names the page ("Uluru (Wikipedia)").
+- No page of its own (a term like "Wortgleichung"): the page that fits best, preferably the one the question's facts
+  came from. Never no link (the schema needs one).
 - HTTP 429 → tell the creator which; mark the facts "not checked" in the plan; go on.
 
 ## `quiz-own-words`: Write in your own words

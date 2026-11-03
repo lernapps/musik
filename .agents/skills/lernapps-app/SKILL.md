@@ -27,17 +27,20 @@ license: MIT
 
 ## What each archetype can do
 
+The READMEs are files of the package `@lernapps/app-templates`, which `init` installed: read them from the folder, in full.
+
 | Archetype | Learners … | Can and cannot (README of its template) |
 |---|---|---|
-| `quiz` | answer questions with options and feedback | <https://raw.githubusercontent.com/lernapps/app-templates/main/quiz/README.md> |
-| `explainer` | read pages that explain, each with exercises | <https://raw.githubusercontent.com/lernapps/app-templates/main/explainer/README.md> |
-| `interactive` | act in one app page, by turns or in real time | <https://raw.githubusercontent.com/lernapps/app-templates/main/interactive/README.md> |
+| `quiz` | answer questions with options and feedback | `node_modules/@lernapps/app-templates/quiz/README.md` |
+| `explainer` | read pages that explain, each with exercises | `node_modules/@lernapps/app-templates/explainer/README.md` |
+| `interactive` | act in one app page, by turns or in real time | `node_modules/@lernapps/app-templates/interactive/README.md` |
 
 ## Choose the archetype
 
 - Choose after the interview topics "Goal" and "Learners", from what learners do. Read the patterns of the subject
   first (skill `lernapps-exercise-patterns`): how learners practise points to the archetype.
-- Before you choose, read the README of each archetype in question, in full. Tell the creator in plain words what the
+- Before you choose, read the README of every archetype you consider, in full. One you rule out from the kind of
+  practice alone needs no README: say in one sentence why it does not fit. Tell the creator in plain words what the
   chosen one can and cannot do, before you ask about content, amount and look.
 - A few background sections on the start page keep an app `interactive`.
 - Explanation pages with one interactive exercise → `explainer` with a component.
