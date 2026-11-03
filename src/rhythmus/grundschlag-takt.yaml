@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=../../node_modules/@lernapps/app-templates/runtime/explainer/explainer.v1.schema.json
+# yaml-language-server: $schema=../../node_modules/@lernapps/app-templates/runtime/explainer/explainer.v2.schema.json
 title: Grundschlag und Takt
 description: Betonte und unbetonte Schläge hören und den 2/4-, 3/4- und 4/4-Takt unterscheiden.
 blocks:

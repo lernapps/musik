@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=../../node_modules/@lernapps/app-templates/runtime/explainer/explainer.v1.schema.json
+# yaml-language-server: $schema=../../node_modules/@lernapps/app-templates/runtime/explainer/explainer.v2.schema.json
 title: Hoch und tief
 description: Hohe und tiefe Töne hören, ihre Frequenz in Hertz kennen und die Oktave als Verdopplung verstehen.
 blocks:

@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=../../node_modules/@lernapps/app-templates/runtime/explainer/explainer.v1.schema.json
+# yaml-language-server: $schema=../../node_modules/@lernapps/app-templates/runtime/explainer/explainer.v2.schema.json
 title: Noten benennen
 description: Noten auf Linien, in Zwischenräumen und auf Hilfslinien erkennen und mit ihrem Namen benennen.
 blocks:

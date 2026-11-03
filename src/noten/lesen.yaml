@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=../../node_modules/@lernapps/app-templates/runtime/explainer/explainer.v1.schema.json
+# yaml-language-server: $schema=../../node_modules/@lernapps/app-templates/runtime/explainer/explainer.v2.schema.json
 title: Rhythmus und Melodie lesen
 description: Eine kurze Melodie aus Noten ablesen, Notenwerte zusammenzählen und die Melodie anhören.
 blocks:
