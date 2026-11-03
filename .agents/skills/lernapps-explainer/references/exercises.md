@@ -27,6 +27,9 @@
 - New task per seed.
 - `given`: `int: [min, max]` + `step`; `decimal: [min, max]` + `step`; `oneOf: [...]`; `pick: <n>` `from:` list or
   `{ data: <name> }` (`distinct: true`; `pick: 1` = one record).
+- An inline `from:` list holds numbers or texts only: a record in it (`{ de: …, en: … }`) is read as a text by
+  language and takes text values only. Records with numbers (`{ name: Stein, masse: 2 }`) → a data file
+  (`src/data/<name>.yaml`, `blocks.md`) and `from: { data: <name> }`.
 - `where`: boolean expressions; failing draws are redrawn.
 - `task`: `text`. A figure that changes with the task: an exercise component (`components.md`).
 - `answer`: `value` (expression) and `compare`: `number` or
@@ -36,6 +39,9 @@
 - Expressions (no eval): exact fractions, `+ - * /`, parentheses, `== != < <= > >=`, `and`, `or`, `not`, strings,
   fields (`e.year`), index (`xs[0]`), lists, `round(x, n)`, `decimals`, `map(xs, field)`,
   `sortBy(xs, field)`, `reverse`.
+- `sqrt(x)`, `pow(x, n)`, `sin(x)`, `cos(x)`, `tan(x)`, `asin(x)`, `acos(x)`, `atan(x)`, angles in degrees
+  (`sin(30)` is `1/2`, `asin(0.5)` is `30`). A rational result is exact; any other (`sqrt(2)`, `sin(10)`) has 12
+  decimal places: give the answer with `round(…, n)` and `compare: { number: { decimals: n, tolerance } }`.
 
 ### Placeholders
 

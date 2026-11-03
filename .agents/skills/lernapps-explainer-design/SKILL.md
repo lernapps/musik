@@ -15,12 +15,25 @@ license: MIT
 
 ## Can and cannot
 
-- The README of the template says it: <https://raw.githubusercontent.com/lernapps/app-templates/main/explainer/README.md>.
+- The README of the template says it: `node_modules/@lernapps/app-templates/explainer/README.md` (in the folder `init` made).
   Read it before this skill's mapping, if you have not yet.
 
 ## Map the content
 
-- A chapter of competencies → an app chapter. A competency → a page or a section.
+- A competency (one teachable thing, one or two lessons) → a page. A large competency may take several pages.
+- A chapter → competencies that build on each other. Order chapters and pages along the map's `requires`: what
+  learners need first comes first.
+- Prerequisites: for each page's competency, read its `requires` in the map.
+  - The app practises it (a page of its own) → it orders the pages; the text may link the page that teaches it.
+  - The app does not practise it → of another strand (one app, one strand), or of the app's strand outside the
+    app's scope. The page names it. The app may repeat it on a recap page (`recap: <subject>/<competency>`):
+    descriptive blocks only, no exercise; the runtime writes the link to its page on the map. Place the recap page
+    before the page that needs it ([structure](../lernapps-explainer/references/structure.md)). Never both: a
+    competency the app practises gets no recap page.
+- The app has one strand of the subject's learning map (recommended, skill `lernapps-content-research`), or `none`.
+  Every page names the competency of the map it practises (`competencies`, ids of the app's strand). A competency
+  the map lacks is proposed to the catalog, not invented here. With `strand: none` pages name none.
+- Show the creator this structure in Explore: which competency on which page, which pages in which chapter.
 - Depth: chapter, page, section, subsection. Need more levels → two apps.
 - The content structure → the same sections on every page, with fixed ids and titles (e.g. "Regel", "Beispiel",
   "Übung").
@@ -33,7 +46,7 @@ license: MIT
 - Text: prose (restricted Markdown), `definition` (also in the glossary), `example` and `note` boxes, `quote`,
   `code`.
 - Formulas: `formula` and inline `$…$`, LaTeX subset incl. chemistry (`\ce`), rendered as MathML.
-- Figures: drawn (`hundred-grid`, `bar`), an image (`images/<name>.svg`, with source and licence), a
+- Figures: drawn (`hundred-grid`, `bar`: both a part of a whole), an image (`images/<name>.svg`, with source and licence), a
   `labelled-figure` with numbered markers, a `table`, a `timeline`.
 - Exercises: the six question types of the quiz; `generated` (a new task per seed, with drawn values, typical
   mistakes, hint and steps); a component.
@@ -44,8 +57,40 @@ license: MIT
 
 ## Decide
 
-- Languages: German; English as a second language is supported. Each declared language complete.
+- Strand: `<subject>/<strand>` from the map where one fits, or `none`. The plan records it, the competency ids of
+  each page, each page's prerequisites the app does not practise and which of them get a recap page (format 2,
+  [structure](../lernapps-explainer/references/structure.md)).
+- Languages: German; English as a second language is supported. Each declared language complete. Never English
+  only: without `languages` the page and the runtime's texts are German. English wanted → `[de, en]`.
 - The tutor: the build writes it from the content. Plan only app-specific tutor rules, if any.
+
+## `one-competency-per-page`: One page per competency
+
+```rule
+id: one-competency-per-page
+scope: tooling
+severity: hint
+```
+
+- Each page teaches one competency of the map: `competencies` with one id. Several pages for one large competency
+  are fine.
+- Several competencies on one page: allowed by the schema, not recommended. Split the page, one per competency.
+- `lernapps check` gives a hint for every page of a format-2 explainer with more than one competency.
+
+## `prerequisites-linked`: Prerequisites the app does not practise are recapped or linked
+
+```rule
+id: prerequisites-linked
+scope: tooling
+severity: hint
+```
+
+- A competency of a page requires one the app does not practise (`requires` in the map), of another strand or of
+  the app's own: learners find it from the app.
+- Either a recap page of the app repeats it (`recap: <subject>/<competency>`), or the page's text names it with a link
+  to its page on the map: `https://lernapps.net/apps/map/<subject>/c/<id>/`.
+- `lernapps check` gives a hint for each such prerequisite with neither, naming the page and the prerequisite. Without
+  the map it finds nothing (`competencies-on-map` says it could not check).
 
 ## Gotchas
 

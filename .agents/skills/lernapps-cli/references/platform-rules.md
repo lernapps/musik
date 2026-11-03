@@ -2,7 +2,7 @@
 
 - Every app on lernapps.net, however built (this tooling, by hand, another framework, Lovable, bolt.new).
 - Scope `listing`: every listed app, wherever hosted. Severity `error` never break; `hint` advice.
-- Check a built or published app: `npx --yes github:lernapps/tooling check <dir|url>` (= `lernapps check`);
+- Check a built or published app: `npx --yes @lernapps/tooling check <dir|url>` (= `lernapps check`);
   `--entry <file>` checks the catalog entry against it.
 - Published at its own address (e.g. `https://<owner>.github.io/<repo>/`); once listed, lernapps.net serves a copy at
   `https://lernapps.net/apps/start/<id>/`, built from the entry's `commit`.
@@ -147,6 +147,7 @@ severity: error
 ```
 
 - Texts for learners, teachers, parents: German, plain (short sentences, active voice, no jargon).
+- Never English only: an app in English is German and English, German first.
 - More languages only where the archetype supports them (explainer, quiz: `languages`, German first); each declared
   language complete, no other.
 - Texts out of code: in the content (explainer YAML, quiz bank) or message files (`src/messages/de.json`, shown
