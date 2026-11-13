@@ -47,7 +47,7 @@
       "source": "lernapps/tooling",
       "sourceType": "github",
       "skillPath": "skills/content/lernapps-exercise-patterns/SKILL.md",
-      "computedHash": "5b4594ed87b68b5a8ecb7320385a7c4cb91a529d6721d96626df04cef9d0010e"
+      "computedHash": "20d8aa2ccdd1eb3506b2f57625a8bbee16162136a80620677a59f45e3b67e94b"
     },
     "lernapps-explainer": {
       "source": "lernapps/tooling",
@@ -83,7 +83,7 @@
       "source": "lernapps/tooling",
       "sourceType": "github",
       "skillPath": "skills/content/lernapps-map-assignment/SKILL.md",
-      "computedHash": "b89ea55ee189e717ebc30bd5ead97843e68d2e90f3c351a1d50ae744909196f0"
+      "computedHash": "62894de6d1e83466f014c80f8f252eeb39802d211c6abaeb4b326cce471599ae"
     }
   }
 }
