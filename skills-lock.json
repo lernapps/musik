@@ -11,7 +11,7 @@
       "source": "lernapps/tooling",
       "sourceType": "github",
       "skillPath": "skills/content/lernapps-audio/SKILL.md",
-      "computedHash": "fcf509fef4bd554544b18acc98f0a18f8695360ec3c5df462115ff85fc494472"
+      "computedHash": "43fade07e739637e8ce500525102c0d46d08c7441c2edd01eb4e3d6ac581ac43"
     },
     "lernapps-cli": {
       "source": "lernapps/tooling",
