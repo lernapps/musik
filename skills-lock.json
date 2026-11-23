@@ -47,13 +47,13 @@
       "source": "lernapps/tooling",
       "sourceType": "github",
       "skillPath": "skills/content/lernapps-exercise-patterns/SKILL.md",
-      "computedHash": "212cab5b92994c38bc3660069e2995669e914553136a8acc7eb95239c23af098"
+      "computedHash": "b025b49a31619ce3b10d04d220e903047f64217803349a0a5909f456ed8164d0"
     },
     "lernapps-explainer": {
       "source": "lernapps/tooling",
       "sourceType": "github",
       "skillPath": "skills/archetypes/lernapps-explainer/SKILL.md",
-      "computedHash": "04ce7e471762b5a390b6086822a8a73082e980a86980366d9682fd1fb3a361f9"
+      "computedHash": "a2f0a354e1ec0f85e4cfb6543617e2fbc2056eed64d2989e339db74628303008"
     },
     "lernapps-explainer-design": {
       "source": "lernapps/tooling",
