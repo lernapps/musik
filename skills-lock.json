@@ -53,13 +53,13 @@
       "source": "lernapps/tooling",
       "sourceType": "github",
       "skillPath": "skills/archetypes/lernapps-explainer/SKILL.md",
-      "computedHash": "efa3bba5c457c74ccdc8f1fa95d9c8466e2fe82c8a3ba6f2d0cc3e98eb5f73bc"
+      "computedHash": "aaaf5a7ef727f5425b7e5a74e6c56806603eeb5230ec71a6c9591b249ea4db53"
     },
     "lernapps-explainer-design": {
       "source": "lernapps/tooling",
       "sourceType": "github",
       "skillPath": "skills/archetypes/lernapps-explainer-design/SKILL.md",
-      "computedHash": "ed7d827a4004a005f3e93629f8cfba106816f14a874015836654d35be623aef6"
+      "computedHash": "6678ceae49bf8260b3ef24c67ef732307e0a4a72ba3ae2d1fff68641b9ab7c7f"
     },
     "lernapps-explainer-self-assessment": {
       "source": "lernapps/tooling",
