@@ -20,7 +20,7 @@ permissions:
 
 jobs:
   cleanup:
-    uses: lernapps/tooling/.github/workflows/preview-cleanup.yml@141cc87486e1b041e71fee11b83250e9bfe5c5c9 # v0.19.0
+    uses: lernapps/tooling/.github/workflows/preview-cleanup.yml@v0.20.1 # v0.19.0
     with:
-      tooling-ref: "v0.19.0" # the script of the same version
+      tooling-ref: "v0.20.1" # the script of the same version
       dry-run: ${{ inputs.dry-run == true }}
